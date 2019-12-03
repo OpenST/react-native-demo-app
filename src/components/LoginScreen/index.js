@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react'
 import {Image, SafeAreaView, StatusBar, Text} from 'react-native'
 import Colors from '../../../src/theme/styles/Colors'
 import ostLog from '../../assets/ostLogoBlue.png'
-import deepGet from 'lodash/get';
+import {OutlinedTextField} from 'react-native-material-textfield';
 
 import { SwitchActions } from 'react-navigation';
 
@@ -42,7 +42,9 @@ class LoginScreen extends PureComponent {
         <SafeAreaView>
           <Image source={ostLog}/>
           <Text>Version 1.0.0</Text>
+          <OutlinedTextField label='Phone number'/>
         </SafeAreaView>
+
       </>
     )
   }

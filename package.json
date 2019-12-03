@@ -19,7 +19,8 @@
     "react-native-device-info": "2.3.2",
     "@react-native-community/netinfo": "3.2.1",
     "qs": "6.7.0",
-    "lodash": "4.17.11"
+    "lodash": "4.17.11",
+    "react-native-material-textfield": "0.16.1"
   },
   "devDependencies": {
     "@babel/core": "^7.7.4",
