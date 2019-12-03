@@ -1,11 +1,9 @@
 import DefaultStyleGenerator from "../../theme/styles/DefaultStyleGenerator";
-import {
-  Colors
-} from 'react-native/Libraries/NewAppScreen';
+import Colors from '../../../src/theme/styles/Colors'
 
 const stylesMap = {
   scrollView: {
-    backgroundColor: Colors.lighter,
+    backgroundColor: Colors.primary,
   },
   engine: {
     position: 'absolute',

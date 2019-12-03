@@ -1,29 +1,36 @@
 import React from 'react';
 import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-import NavigationService from './src/services/NavigationService'
+import { createStackNavigator } from 'react-navigation-stack';
 
 import IntroScreen from './src/components/IntroScreen'
+import LoginScreen from './src/components/LoginScreen'
 
 
-const modalStackConfig = {
-  headerLayoutPreset: 'center',
-  headerMode: 'none',
-  mode: 'modal',
-  navigationOptions: ({ navigation }) => {
-    const routeName = utilities.getLastChildRoutename(navigation.state);
-    return {
-      tabBarVisible: !customTabHiddenRoutes.includes(routeName)
-    };
+const Onboarding = createStackNavigator(
+  {
+    IntroScreen: IntroScreen,
+    LoginScreen: LoginScreen
   }
-};
+);
+
+const Wallet = createStackNavigator(
+  {
+    LoginScreen: LoginScreen
+  }
+);
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(
     {
-      introScreen: IntroScreen
+      Onboarding: Onboarding,
+      Wallet: Wallet
     },
     {
-      initialRouteName: 'introScreen'
+      initialRouteName: 'Onboarding',
+      headerMode: 'none',
+      navigationOptions: {
+        headerVisible: false,
+      }
     }
   )
 );

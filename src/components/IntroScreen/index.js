@@ -1,31 +1,29 @@
 import React, {PureComponent} from 'react';
 import {
   SafeAreaView,
-  ScrollView,
-  View,
   Text,
   StatusBar,
-  Platform,
-  TouchableWithoutFeedback,
   Image
 } from 'react-native';
-import {
-  Header,
-  LearnMoreLinks,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
 import styles from './style'
 import ostLog from '../../assets/ostLogoBlue.png'
 
 class IntroScreen extends PureComponent {
+  static navigationOptions = ({ navigation, navigationOptions }) => {
+    return {
+      header: null,
+      headerBackTitle: null
+    };
+  };
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-
+    // setTimeout(() => {
+    //   this.props.navigation.push('LoginScreen')
+    // }, 1000)
   }
 
   render() {
