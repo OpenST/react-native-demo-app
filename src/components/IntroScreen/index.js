@@ -21,9 +21,9 @@ class IntroScreen extends PureComponent {
   }
 
   componentDidMount() {
-    // setTimeout(() => {
-    //   this.props.navigation.push('LoginScreen')
-    // }, 1000)
+    setTimeout(() => {
+      this.props.navigation.push('LoginScreen', {"navTitle": "Login to your Account", "isSingupView": true})
+    }, 1000)
   }
 
   render() {
@@ -33,8 +33,6 @@ class IntroScreen extends PureComponent {
         <SafeAreaView>
           <Image style={styles.ostLogo} source={ostLog}/>
           <Text>Version 1.0.0</Text>
-
-
         </SafeAreaView>
       </>
     )
