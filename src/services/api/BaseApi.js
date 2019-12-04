@@ -7,7 +7,6 @@ const LOG_TAG = 'services/BaseApi';
 export default class BaseApi {
   constructor(url) {
     this.url = url;
-    this.params = params;
     this.defaultParams = {};
     this._cleanUrl();
     this._parseParams();
@@ -39,7 +38,7 @@ export default class BaseApi {
   }
 
   _parseParams() {
-    this.parsedParams = AssignIn(this.defaultParams, this.params);
+    this.parsedParams = AssignIn(this.defaultParams);
   }
 
   _getIDList(resultData, key = 'id') {

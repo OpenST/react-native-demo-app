@@ -168,4 +168,3 @@ class LoginScreen extends PureComponent {
 }
 
 export default LoginScreen;
-  
