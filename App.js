@@ -16,6 +16,7 @@ import {
   StatusBar,
 } from 'react-native';
 
+
 import RootNavigationContainer from './RootNavigationContainer'
 
 const App: () => React$Node = () => {

@@ -36,7 +36,7 @@ class LoginScreen extends PureComponent {
 
     this.viewModel = new LoginScreenViewModel();
 
-    this.isSignupView = this.props.navigation.getParam("isSignupView") || false;
+    this.viewModel.isSignupView = this.props.navigation.getParam("isSignupView") || false;
     this.username=null;
     this.password=null;
     this.userNamefieldRef = React.createRef();
@@ -58,7 +58,7 @@ class LoginScreen extends PureComponent {
   }
 
   isSignupViewType() {
-    return this.isSignupView || false
+    return this.viewModel.isSignupView
   }
 
   getPrimaryActionButtonText = () => {
@@ -83,7 +83,7 @@ class LoginScreen extends PureComponent {
   };
 
   onSecondayActionButtonTapped = () => {
-    this.isSignupView = !this.isSignupViewType();
+    this.viewModel.isSignupView = !this.isSignupViewType();
     this.reRenderView()
   };
 
