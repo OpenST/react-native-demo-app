@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {Button, View, Image, SafeAreaView, StatusBar, Text, Alert, TouchableOpacity} from 'react-native'
+import {Button, View, Image, SafeAreaView, StatusBar, Text, Alert, TouchableOpacity, TouchableHighlight, Modal} from 'react-native'
 
 import styles from './style'
 import Colors from '../../../src/theme/styles/Colors'
@@ -10,6 +10,7 @@ import {LoginScreenViewModel} from './LoginScreenViewModel'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { SwitchActions } from 'react-navigation';
+import AppLoader from '../CommonComponent/AppLoader'
 
 class LoginScreen extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -43,7 +44,8 @@ class LoginScreen extends PureComponent {
     this.passwordfieldRef = React.createRef();
     this.economyfieldRef = React.createRef();
     this.state = {
-      reRender: false
+      reRender: false,
+      modalVisible: false
     }
   }
 
@@ -89,6 +91,13 @@ class LoginScreen extends PureComponent {
 
   onPrimaryActionButtonTapped = () => {
     let oThis = this;
+
+    this.setModalVisible(true);
+    setTimeout(() => {
+      this.setModalVisible(false);
+    }, 2000);
+
+    return;
     let { current: userNameField } = this.userNamefieldRef;
     let { current: passwordField } = this.passwordfieldRef;
     this.viewModel.setupUser(userNameField.value(), passwordField.value())
@@ -108,11 +117,20 @@ class LoginScreen extends PureComponent {
     }
   };
 
+  setModalVisible = (val) => {
+    this.setState({
+      modalVisible: val
+    })
+  }
+
   render() {
     return(
       <>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView style={styles.safeAreaView}>
+
+          <AppLoader modalVisible={this.state.modalVisible}/>
+
           <KeyboardAwareScrollView
             showsVerticalScrollIndicator={false}>
           <View style={styles.safeAreaViewContainer}>
@@ -170,7 +188,6 @@ class LoginScreen extends PureComponent {
           </View>
           </KeyboardAwareScrollView>
         </SafeAreaView>
-
       </>
     )
   }
