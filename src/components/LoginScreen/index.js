@@ -88,7 +88,16 @@ class LoginScreen extends PureComponent {
   };
 
   onPrimaryActionButtonTapped = () => {
-
+    let oThis = this;
+    let { current: userNameField } = this.userNamefieldRef;
+    let { current: passwordField } = this.passwordfieldRef;
+    this.viewModel.setupUser(userNameField.value(), passwordField.value())
+      .then( (res) => {
+        console.log("")
+      })
+      .catch((err) => {
+        console.log("")
+      })
   };
 
   onSubmit = (textFiled) => {

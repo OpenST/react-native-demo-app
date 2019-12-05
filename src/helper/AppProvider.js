@@ -1,4 +1,5 @@
 import AppServerApi from "../services/api/AppServerApi";
+import {RegisterDeviceHelper} from "./OstSdkHelpers/RegisterDeviceHelper"
 
 const LOG_TAG = 'helper/AppProvider';
 
@@ -71,6 +72,10 @@ class AppProvider {
 	getAppServerClient() {
 		let url = `${this.getMappyApiEndpoint()}api/${this.getTokenId()}/${this.getUrlId()}`;
 		return new AppServerApi(url);
+	}
+
+	getRegisgerDeviceHelper() {
+		return new RegisterDeviceHelper()
 	}
 
 }

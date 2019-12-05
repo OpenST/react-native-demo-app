@@ -1,6 +1,7 @@
 import AssignIn from 'lodash/assignIn';
 import qs from 'qs';
 import NetInfo from '@react-native-community/netinfo';
+import FormData from 'form-data';
 
 const LOG_TAG = 'services/BaseApi';
 
@@ -10,6 +11,17 @@ export default class BaseApi {
     this.defaultParams = {};
     this._cleanUrl();
     this._parseParams();
+    this.formData = new FormData();
+  }
+
+  setFormData( data = null ) {
+    if (typeof data === 'object') {
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          this.formData.append(key, data[key])
+        }
+      }
+    }
   }
 
   get(res, q = '') {
@@ -24,10 +36,10 @@ export default class BaseApi {
   }
 
   post(res, body = '') {
-    body = typeof body !== 'string' ? JSON.stringify(body) : body;
+    this.setFormData(body);
     this.parsedParams = AssignIn(this.parsedParams, {
       method: 'POST',
-      body
+      body: this.formData
     });
 		this.cleanedUrl += res;
     return this._perform();
@@ -75,7 +87,13 @@ export default class BaseApi {
         let t1 = Date.now();
         console.log(`Requesting ${this.cleanedUrl} with options:`, this.parsedParams);
 
-        let response = await fetch(this.cleanedUrl, this.parsedParams),
+        let requestOptions = AssignIn(this.parsedParams,{
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }});
+
+        let response = await fetch(this.cleanedUrl, requestOptions),
           responseStatus = parseInt(response.status),
           responseJSON = await response.json();
 

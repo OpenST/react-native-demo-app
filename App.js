@@ -6,25 +6,25 @@
  * @flow
  */
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
-
+import React, {Component} from 'react';
 
 import RootNavigationContainer from './RootNavigationContainer'
+import {OstWalletSdkEvents} from '@ostdotcom/ost-wallet-sdk-react-native';
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <RootNavigationContainer />
-    </>
-  );
-};
+export default class App extends Component {
+  constructor() {
+    super();
+  }
 
-export default App;
+  componentDidMount() {
+    OstWalletSdkEvents.subscribeEvent();
+  }
+
+  componentWillUnmount() {
+    OstWalletSdkEvents.unsubscribeEvent();
+  }
+
+  render() {
+    return <RootNavigationContainer />;
+  }
+}
