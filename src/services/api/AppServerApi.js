@@ -1,5 +1,5 @@
 import BaseApi from "./BaseApi";
-import AppConfig from "../../constants/AppConfig";
+import {API_CONSTANT} from "../../constants/AppConfig";
 
 const LOG_TAG = 'services/AppServerApi';
 
@@ -9,8 +9,8 @@ export default class AppServerApi extends BaseApi{
     this.defaultParams = {
       credentials: 'include',
       headers: {
-        'Content-Type': AppConfig.api_constants.CONTENT_TYPE,
-        'User-Agent': AppConfig.api_constants.USER_AGENT
+        'Content-Type': API_CONSTANT.CONTENT_TYPE,
+        'User-Agent': API_CONSTANT.USER_AGENT
       }
     };
   }
@@ -29,35 +29,34 @@ export default class AppServerApi extends BaseApi{
   }
 
   createAccount(username, password) {
-    let oThis = this;
     let body = {username: username, password: password};
     let res ='/signup';
     return this.post(res, body)
-	  .then(oThis.thenFunction)
-	  .catch(oThis.catchFunction);
+	  .then(this.thenFunction)
+	  .catch(this.catchFunction);
   }
 
   logIn(username, password) {
-  	let oThis = this;
     let body = {username: username, password: password};
     let res ='/login';
     return this.post(res, body)
-      .then(oThis.thenFunction)
-      .catch(oThis.catchFunction);
+      .then(this.thenFunction)
+      .catch(this.catchFunction);
   }
 
   registerDevice(deviceAddress, apiSignerAddress) {
-    let oThis = this;
     let body = {address: deviceAddress, api_signer_address: apiSignerAddress};
     let res ='/devices';
     return this.post(res, body)
-      .then(oThis.thenFunction)
-      .catch(oThis.catchFunction);
+      .then(this.thenFunction)
+      .catch(this.catchFunction);
   }
 
   getLoggedInUserPinSalt() {
     let res ='/users/current-user-salt';
-    return this.get(res);
+    return this.get(res)
+      .then(this.thenFunction)
+      .catch(this.catchFunction);
   }
 
   getLoggedInUser() {
@@ -67,7 +66,9 @@ export default class AppServerApi extends BaseApi{
 
   notifyUserActivate() {
     let res ='/notify/user-activate';
-    return this.post(res);
+    return this.post(res)
+      .then(this.thenFunction)
+      .catch(this.catchFunction);
   }
 
   getCurrentUserTransactions(nextPayload) {

@@ -1,19 +1,28 @@
 import {OstWalletUIWorkflowCallback} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
 import OstWalletSdkHelper from "./OstWalletSdkHelper";
+import {appProvider} from "../AppProvider";
+import deepGet from 'lodash/get';
 
-class WorkflowDelegate extends OstWalletUIWorkflowCallback {
-  constructor(userId, currentUserModel) {
+class UIWorkflowDelegate extends OstWalletUIWorkflowCallback {
+  constructor(userId) {
     super();
     this.userId = userId;
-    this.currentUserModel = currentUserModel;
   }
 
   isUserIdValid() {
-    return this.currentUserModel.getOstUserId() === this.userId;
+    //Todo: Sachin - get user id from Current user model
+    return appProvider.userId === this.userId;
   }
 
   getPassphrase(userId, ostWorkflowContext, passphrasePrefixAccept) {
-    _getPassphrase(this.currentUserModel, this, passphrasePrefixAccept);
+    let ostUserId = appProvider.userId;
+
+    if (this.isUserIdValid && userId === ostUserId) {
+      //Todo: Sachin - get user id from Current user model
+      _getPassphrase(ostUserId, this, passphrasePrefixAccept);
+    }else {
+      passphrasePrefixAccept.cancelFlow()
+    }
   }
 
   flowInterrupt(ostWorkflowContext , ostError)  {
@@ -61,7 +70,55 @@ class WorkflowDelegate extends OstWalletUIWorkflowCallback {
   workflowFailed(ostWorkflowContext , ostError) {
     // Others should override this method and show the error.
   }
-
 };
 
-export default WorkflowDelegate;
+const _getPassphrase = (currentUserOstId, workflowDelegate, passphrasePrefixAccept) => {
+  if (!_ensureValidUserId(currentUserOstId, workflowDelegate, passphrasePrefixAccept)) {
+    passphrasePrefixAccept.cancelFlow();
+    return Promise.resolve();
+  }
+
+  const _canFetchSalt = true;
+
+  const fetchSaltPromise = appProvider.getAppServerClient()
+    .getLoggedInUserPinSalt()
+    .then ((res) => {
+      if (!_ensureValidUserId(currentUserOstId, workflowDelegate, passphrasePrefixAccept)) {
+        return;
+      }
+
+      const resultType = res.result_type
+        , passphrasePrefixString = res[resultType]["recovery_pin_salt"];
+
+
+      if (!passphrasePrefixString) {
+        passphrasePrefixAccept.cancelFlow();
+        workflowDelegate.saltFetchFailed(res);
+        return;
+      }
+
+      passphrasePrefixAccept.setPassphrase(passphrasePrefixString, currentUserOstId, () => {
+        passphrasePrefixAccept.cancelFlow();
+        workflowDelegate.saltFetchFailed(res);
+      });
+    })
+    .catch((err) => {
+      passphrasePrefixAccept.cancelFlow();
+      return Promise.reject(err)
+    });
+
+  return fetchSaltPromise
+};
+
+const _ensureValidUserId = (currentUserOstID, workflowDelegate, passphrasePrefixAccept) => {
+  if (currentUserOstID === workflowDelegate.userId) {
+    return true;
+  }
+
+  // Inconsistent UserId.
+  passphrasePrefixAccept.cancelFlow();
+  workflowDelegate.inconsistentUserId(workflowDelegate.userId, currentUserOstID);
+  return false;
+};
+
+export default UIWorkflowDelegate;

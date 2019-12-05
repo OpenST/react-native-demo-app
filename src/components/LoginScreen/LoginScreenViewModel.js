@@ -1,6 +1,7 @@
 import {appProvider} from "../../helper/AppProvider";
-import {OstWalletSdk} from '@ostdotcom/ost-wallet-sdk-react-native';
+import {OstWalletSdk, OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
+import {DEFAULT_SESSION_KEY_EXPIRY_TIME, DEFAULT_SPENDING_LIMIT} from "../../constants/AppConfig";
 
 class LoginScreenViewModel {
   constructor() {
@@ -28,7 +29,9 @@ class LoginScreenViewModel {
     try {
       let response = await appProvider.getAppServerClient().createAccount(userName, password);
       let entity = await this.setupDevice(response);
-      return Promise.resolve(entity)
+      let user =  await  this.activateUser(response);
+      let notifyRes = await  appProvider.getAppServerClient().notifyUserActivate();
+      return Promise.resolve(user)
     }catch (err) {
       return Promise.reject(err);
     }
@@ -39,6 +42,7 @@ class LoginScreenViewModel {
 
       let currentUser = response[response.result_type];
       let userId = currentUser.user_id;
+      appProvider.userId = userId;
       let tokenId = currentUser.token_id;
 
       let workflowCallback = appProvider.getRegisgerDeviceHelper();
@@ -54,12 +58,37 @@ class LoginScreenViewModel {
     });
   }
 
+  activateUser(response) {
+    return new Promise((resolve , reject)=> {
+      let currentUser = response[response.result_type];
+      let userId = currentUser.user_id;
+      let uiCallback = appProvider.getUICallback();
+      uiCallback.flowComplete = (ostWorkflowContext , ostContextEntity) => {
+        resolve(ostContextEntity)
+      };
+      uiCallback.flowInterrupt = (ostWorkflowContext , ostError) => {
+        reject(ostError)
+      };
+      uiCallback.requestAcknowledged = (ostWorkflowContext , ostContextEntity) => {
+       console.log(ostContextEntity)
+      };
+
+
+      OstWalletSdkUI.activateUser(userId, DEFAULT_SESSION_KEY_EXPIRY_TIME, DEFAULT_SPENDING_LIMIT, uiCallback)
+    });
+  }
+
 
   async loginUser(userName, password) {
 
     try {
       let response = await appProvider.getAppServerClient().logIn(userName, password);
       let entity = await this.setupDevice(response);
+      if (entity["entityType"].toLowerCase() === "device") {
+        if (entity["entity"].status.toLowerCase() === 'registered') {
+          let user = await this.activateUser(response)
+        }
+      }
       return Promise.resolve(entity)
     }catch (err) {
       return Promise.reject(err);
