@@ -32,6 +32,14 @@
 		4BC8FA5F2397CDDC008F3D80 /* OstWorkFlowCallbackImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC8FA4F2397CDDC008F3D80 /* OstWorkFlowCallbackImpl.m */; };
 		4BC8FA602397CDDC008F3D80 /* OstWalletRnSdkApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC8FA512397CDDC008F3D80 /* OstWalletRnSdkApi.m */; };
 		4BC8FA622397CE4C008F3D80 /* OstWalletSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC8FA612397CE4C008F3D80 /* OstWalletSdk.framework */; };
+		4BC8FB44239A9604008F3D80 /* UIImageView+gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC8FB3C239A9603008F3D80 /* UIImageView+gif.swift */; };
+		4BC8FB45239A9604008F3D80 /* OstSdkMessageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC8FB3D239A9604008F3D80 /* OstSdkMessageHelper.swift */; };
+		4BC8FB46239A9604008F3D80 /* OstMockLoaderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC8FB3E239A9604008F3D80 /* OstMockLoaderManager.swift */; };
+		4BC8FB47239A9604008F3D80 /* OstLoaderAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4BC8FB3F239A9604008F3D80 /* OstLoaderAssets.xcassets */; };
+		4BC8FB48239A9604008F3D80 /* OstProgressImage.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4BC8FB40239A9604008F3D80 /* OstProgressImage.gif */; };
+		4BC8FB49239A9604008F3D80 /* OstContentFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC8FB41239A9604008F3D80 /* OstContentFetcher.swift */; };
+		4BC8FB4A239A9604008F3D80 /* OstMockLoaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC8FB42239A9604008F3D80 /* OstMockLoaderViewController.swift */; };
+		4BC8FB4B239A9604008F3D80 /* OstSdkMessages.json in Resources */ = {isa = PBXBuildFile; fileRef = 4BC8FB43239A9604008F3D80 /* OstSdkMessages.json */; };
 		7153A9EAE1E4E68570A3EF44 /* libPods-ostWalletRNApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF28F69FCE908978F5509C58 /* libPods-ostWalletRNApp-tvOSTests.a */; };
 		9FBDC198B43C9301ED68C4D7 /* libPods-ostWalletRNApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F63017DD967F991CC78A6AE /* libPods-ostWalletRNApp.a */; };
 		C55408A230C4692342AD1572 /* libPods-ostWalletRNApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1CD798E583882B327B852B2 /* libPods-ostWalletRNApp-tvOS.a */; };
@@ -105,6 +113,15 @@
 		4BC8FA502397CDDC008F3D80 /* OstMessageBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OstMessageBus.h; sourceTree = "<group>"; };
 		4BC8FA512397CDDC008F3D80 /* OstWalletRnSdkApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OstWalletRnSdkApi.m; sourceTree = "<group>"; };
 		4BC8FA612397CE4C008F3D80 /* OstWalletSdk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OstWalletSdk.framework; path = Carthage/Build/iOS/OstWalletSdk.framework; sourceTree = "<group>"; };
+		4BC8FB3B239A9603008F3D80 /* ostWalletRNApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ostWalletRNApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		4BC8FB3C239A9603008F3D80 /* UIImageView+gif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+gif.swift"; sourceTree = "<group>"; };
+		4BC8FB3D239A9604008F3D80 /* OstSdkMessageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstSdkMessageHelper.swift; sourceTree = "<group>"; };
+		4BC8FB3E239A9604008F3D80 /* OstMockLoaderManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstMockLoaderManager.swift; sourceTree = "<group>"; };
+		4BC8FB3F239A9604008F3D80 /* OstLoaderAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OstLoaderAssets.xcassets; sourceTree = "<group>"; };
+		4BC8FB40239A9604008F3D80 /* OstProgressImage.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = OstProgressImage.gif; sourceTree = "<group>"; };
+		4BC8FB41239A9604008F3D80 /* OstContentFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstContentFetcher.swift; sourceTree = "<group>"; };
+		4BC8FB42239A9604008F3D80 /* OstMockLoaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstMockLoaderViewController.swift; sourceTree = "<group>"; };
+		4BC8FB43239A9604008F3D80 /* OstSdkMessages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OstSdkMessages.json; sourceTree = "<group>"; };
 		5FC2C839D3DB2933CAEBE633 /* libPods-ostWalletRNAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ostWalletRNAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D642DC1EB49DFC96A7FB38 /* Pods-ostWalletRNApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ostWalletRNApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-ostWalletRNApp-tvOSTests/Pods-ostWalletRNApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		78FB43FBED5F615F968323B1 /* Pods-ostWalletRNApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ostWalletRNApp.debug.xcconfig"; path = "Target Support Files/Pods-ostWalletRNApp/Pods-ostWalletRNApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -174,6 +191,7 @@
 		13B07FAE1A68108700A75B9A /* ostWalletRNApp */ = {
 			isa = PBXGroup;
 			children = (
+				4BC8FB38239A93AC008F3D80 /* Loader */,
 				4BC8FA312397CDDC008F3D80 /* ostwalletrnsdk */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -253,6 +271,22 @@
 				4BC8FA4D2397CDDC008F3D80 /* OstUICallbackImpl.m */,
 			);
 			path = sdkWithUI;
+			sourceTree = "<group>";
+		};
+		4BC8FB38239A93AC008F3D80 /* Loader */ = {
+			isa = PBXGroup;
+			children = (
+				4BC8FB41239A9604008F3D80 /* OstContentFetcher.swift */,
+				4BC8FB3F239A9604008F3D80 /* OstLoaderAssets.xcassets */,
+				4BC8FB3E239A9604008F3D80 /* OstMockLoaderManager.swift */,
+				4BC8FB42239A9604008F3D80 /* OstMockLoaderViewController.swift */,
+				4BC8FB40239A9604008F3D80 /* OstProgressImage.gif */,
+				4BC8FB3D239A9604008F3D80 /* OstSdkMessageHelper.swift */,
+				4BC8FB43239A9604008F3D80 /* OstSdkMessages.json */,
+				4BC8FB3C239A9603008F3D80 /* UIImageView+gif.swift */,
+				4BC8FB3B239A9603008F3D80 /* ostWalletRNApp-Bridging-Header.h */,
+			);
+			path = Loader;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -398,6 +432,9 @@
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
+					13B07F861A680F5B00A75B9A = {
+						LastSwiftMigration = 1120;
+					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
@@ -442,8 +479,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BC8FB47239A9604008F3D80 /* OstLoaderAssets.xcassets in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				4BC8FB48239A9604008F3D80 /* OstProgressImage.gif in Resources */,
+				4BC8FB4B239A9604008F3D80 /* OstSdkMessages.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +706,10 @@
 				4BC8FA582397CDDC008F3D80 /* OstRNErrorUtils.m in Sources */,
 				4BC8FA5F2397CDDC008F3D80 /* OstWorkFlowCallbackImpl.m in Sources */,
 				4BC8FA5B2397CDDC008F3D80 /* OstWalletRnSdk.m in Sources */,
+				4BC8FB4A239A9604008F3D80 /* OstMockLoaderViewController.swift in Sources */,
+				4BC8FB45239A9604008F3D80 /* OstSdkMessageHelper.swift in Sources */,
+				4BC8FB49239A9604008F3D80 /* OstContentFetcher.swift in Sources */,
+				4BC8FB46239A9604008F3D80 /* OstMockLoaderManager.swift in Sources */,
 				4BC8FA592397CDDC008F3D80 /* OstRNSdkCallbackManager.m in Sources */,
 				4BC8FA5E2397CDDC008F3D80 /* OstUICallbackImpl.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
@@ -673,6 +717,7 @@
 				4BC8FA562397CDDC008F3D80 /* OstDeviceRegisteredWrap.m in Sources */,
 				4BC8FA542397CDDC008F3D80 /* OstJsonApiCallbackImpl.m in Sources */,
 				4BC8FA5D2397CDDC008F3D80 /* OstWalletRnSdkUI.m in Sources */,
+				4BC8FB44239A9604008F3D80 /* UIImageView+gif.swift in Sources */,
 				4BC8FA5A2397CDDC008F3D80 /* OstMessageBus.m in Sources */,
 				4BC8FA552397CDDC008F3D80 /* OstVerifyDataWrap.m in Sources */,
 				4BC8FA5C2397CDDC008F3D80 /* OstRNSdkUICallbackManager.m in Sources */,
@@ -729,6 +774,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 938A0F5088FC3410B1E83165 /* Pods-ostWalletRNAppTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -752,6 +798,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C81E827A2C1FEE7027500D1 /* Pods-ostWalletRNAppTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = ostWalletRNAppTests/Info.plist;
@@ -774,6 +821,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -790,6 +838,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ostWalletRNApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "Loader/ostWalletRNApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -800,6 +851,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -815,6 +867,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ostWalletRNApp;
+				SWIFT_OBJC_BRIDGING_HEADER = "Loader/ostWalletRNApp-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

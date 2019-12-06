@@ -10,11 +10,17 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "ostWalletRNAPP-Swift.h"
+#import <OstWalletSdk/OstWalletSdk-Swift.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+  OstMockLoaderManager *mockLoader = [[OstMockLoaderManager alloc]init];
+  [OstWalletUI setLoaderManager: mockLoader];
+  
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"ostWalletRNApp"
