@@ -92,22 +92,25 @@ class LoginScreen extends PureComponent {
   onPrimaryActionButtonTapped = () => {
     let oThis = this;
 
-    this.setModalVisible(true);
-    setTimeout(() => {
-      this.setModalVisible(false);
-    }, 2000);
+    this.setModalVisible(true, this.getLoaderLanguage());
 
-    return;
+
     let { current: userNameField } = this.userNamefieldRef;
     let { current: passwordField } = this.passwordfieldRef;
     this.viewModel.setupUser(userNameField.value(), passwordField.value())
       .then( (res) => {
-        console.log("")
+        this.setModalVisible(false);
+        this.props.navigation.dispatch(SwitchActions.jumpTo({routeName:'Wallet'}, {navTitle: "Wallet"}));
       })
       .catch((err) => {
+        this.setModalVisible(false);
         console.log("")
       })
   };
+
+  getLoaderLanguage() {
+    return this.viewModel.isSignupView ? "Signing Up" : "Logging In"
+  }
 
   onSubmit = (textFiled) => {
     let { current: field } = textFiled;
@@ -117,8 +120,9 @@ class LoginScreen extends PureComponent {
     }
   };
 
-  setModalVisible = (val) => {
+  setModalVisible = (val, title) => {
     this.setState({
+      title: title,
       modalVisible: val
     })
   }
@@ -129,7 +133,7 @@ class LoginScreen extends PureComponent {
         <StatusBar barStyle="dark-content" />
         <SafeAreaView style={styles.safeAreaView}>
 
-          <AppLoader modalVisible={this.state.modalVisible}/>
+          <AppLoader modalVisible={this.state.modalVisible} title={this.state.title}/>
 
           <KeyboardAwareScrollView
             showsVerticalScrollIndicator={false}>
@@ -164,6 +168,7 @@ class LoginScreen extends PureComponent {
                                  lineWidth={2}
                                  baseColor={Colors.lightGrey}
                                  ref={this.passwordfieldRef}
+                                 secureTextEntry={true}
                                  onSubmitEditing={() => {
                                    this.onSubmit(this.passwordfieldRef)
                                  }} />
@@ -176,14 +181,12 @@ class LoginScreen extends PureComponent {
               <Text style={styles.primaryActionText}>{this.getPrimaryActionButtonText()}</Text>
             </TouchableOpacity>
 
-            <View style={styles.bottomContainer}>
+            <View style={[styles.bottomContainer,{flex: 1, jsutifyContent: "center", alignItems: "center"}]}>
               <Text style={styles.bottomText}>{this.getBottomText()}</Text>
-              <Button
-                color={Colors.waterBlue}
 
-                title={this.getSecondayActionButtonText()}
-                onPress={this.onSecondayActionButtonTapped}
-              />
+              <Text style={{color:Colors.waterBlue, textAlign:'center', padding: 5}}
+                    onPress={this.onSecondayActionButtonTapped}>{this.getSecondayActionButtonText()}
+              </Text>
             </View>
           </View>
           </KeyboardAwareScrollView>
