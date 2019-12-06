@@ -81,7 +81,7 @@ class AppProvider {
     return new RegisterDeviceHelper()
   }
 
-  getUICallback() {
+  getOstSdkUIDelegate() {
     let ostUserId = CurrentUser.getUserId();
     return new UIWorkflowDelegate(ostUserId, {})
   }

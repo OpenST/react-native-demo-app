@@ -86,6 +86,7 @@ class LoginScreen extends PureComponent {
 
   onSecondayActionButtonTapped = () => {
     this.viewModel.isSignupView = !this.isSignupViewType();
+    this.props.navigation.setParams({'navTitle': this.viewModel.isSignupView ? "Create Account" : "Login to your Account"});
     this.reRenderView()
   };
 

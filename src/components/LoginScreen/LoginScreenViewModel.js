@@ -30,11 +30,11 @@ class LoginScreenViewModel {
   async createAccount(userName, password) {
     try {
       let response = await appProvider.getAppServerClient().createAccount(userName, password);
-			await CurrentUser.initialize();
+      await CurrentUser.initialize();
       let entity = await this.setupDevice(response);
-      let user =  await  this.activateUser(response);
-      let notifyRes = await  appProvider.getAppServerClient().notifyUserActivate();
-      return Promise.resolve(user)
+      await  this.activateUser(response);
+      appProvider.getAppServerClient().notifyUserActivate();
+      return Promise.resolve(entity)
     }catch (err) {
       return Promise.reject(err);
     }
@@ -65,7 +65,7 @@ class LoginScreenViewModel {
     return new Promise((resolve , reject)=> {
       let currentUser = response[response.result_type];
       let userId = currentUser.user_id;
-      let uiCallback = appProvider.getUICallback();
+      let uiCallback = appProvider.getOstSdkUIDelegate();
       uiCallback.flowComplete = (ostWorkflowContext , ostContextEntity) => {
         resolve(ostContextEntity)
       };
@@ -73,7 +73,7 @@ class LoginScreenViewModel {
         reject(ostError)
       };
       uiCallback.requestAcknowledged = (ostWorkflowContext , ostContextEntity) => {
-       console.log(ostContextEntity)
+        console.log(ostContextEntity)
       };
 
 
@@ -83,15 +83,15 @@ class LoginScreenViewModel {
 
 
   async loginUser(userName, password) {
-
     try {
       let response = await appProvider.getAppServerClient().logIn(userName, password);
       await CurrentUser.initialize();
       let entity = await this.setupDevice(response);
-      if (entity["entityType"].toLowerCase() === "device") {
-        if (entity["entity"].status.toLowerCase() === 'registered') {
-          let user = await this.activateUser(response)
-        }
+      let ostDeviceStatus = await CurrentUser.getOstDeviceStatus();
+      let ostUserStatus = await CurrentUser.getOstUserStatus();
+      if (ostDeviceStatus.toLowerCase() === 'registered' && ostUserStatus.toLowerCase() === 'created') {
+        let user = await this.activateUser(response);
+        appProvider.getAppServerClient().notifyUserActivate();
       }
       return Promise.resolve(entity)
     }catch (err) {
