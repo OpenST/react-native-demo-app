@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import IntroScreen from './src/components/IntroScreen'
 import LoginScreen from './src/components/LoginScreen'
+import {Root} from "native-base";
 
 
 const Onboarding = createStackNavigator(
@@ -36,7 +37,9 @@ const AppContainer = createAppContainer(
 );
 
 const RootNavigationContainer = () => (
-    <AppContainer/>
+	<Root>
+		<AppContainer/>
+	</Root>
 );
 
 export default RootNavigationContainer;

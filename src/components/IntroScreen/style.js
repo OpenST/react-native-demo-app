@@ -1,6 +1,6 @@
 import DefaultStyleGenerator from "../../theme/styles/DefaultStyleGenerator";
 import Colors from '../../../src/theme/styles/Colors'
-import {sizeHelper} from "../../helper/SizeHelper";
+import sizeHelper from "../../helper/SizeHelper";
 
 const stylesMap = {
   scrollView: {

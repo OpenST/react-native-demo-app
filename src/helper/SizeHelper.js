@@ -13,5 +13,4 @@ class SizeHelper {
 	}
 }
 
-let sizeHelper = new SizeHelper();
-export {sizeHelper};
+export default new SizeHelper();
