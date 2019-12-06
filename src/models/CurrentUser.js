@@ -1,11 +1,5 @@
-import {logoutUser, updateCurrentUser} from '../actions';
-import {navigateTo} from "../helpers/navigateTo";
-import {ostSdkErrors} from '../services/OstSdkErrors';
 import {appProvider} from "../helper/AppProvider";
 import {Alert} from "react-native";
-
-// Used require to support all platforms
-const RCTNetworking = require('RCTNetworking');
 
 class CurrentUser {
 	constructor() {
@@ -15,7 +9,6 @@ class CurrentUser {
 	initialize() {
 		//Provide user js obj in  a promise.
 		return appProvider.getAppServerClient().getLoggedInUser()
-			.then(res => res.json())
 			.then(responseData => {
 				let userData = responseData.data && responseData.data[responseData.data.result_type];
 				if (!userData) {
@@ -24,8 +17,7 @@ class CurrentUser {
 					return Promise.reject(responseData);
 				}
 				this.userData = userData;
-				return Promise.resolve(responseData);
-
+				return responseData;
 			}).catch(e => {
 				Alert.alert("Something went wrong" + JSON.stringify(e));
 				return Promise.reject(e);
@@ -34,6 +26,30 @@ class CurrentUser {
 
 	getUserData() {
 		return this.userData;
+	}
+
+	getUserId() {
+		return this.getUserData()["user_id"];
+	}
+
+	getTokenId() {
+		return this.getUserData()["token_id"];
+	}
+
+	getAppUserId() {
+		return this.getUserData()["app_user_id"];
+	}
+
+	getUserName() {
+		return this.getUserData()["username"];
+	}
+
+	getTokenHolderAddress() {
+		return this.getUserData()["token_holder_address"];
+	}
+
+	getStatus() {
+		return this.getUserData()["status"];
 	}
 
 }

@@ -2,6 +2,8 @@ import {appProvider} from "../../helper/AppProvider";
 import {OstWalletSdk, OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
 import {DEFAULT_SESSION_KEY_EXPIRY_TIME, DEFAULT_SPENDING_LIMIT} from "../../constants/AppConfig";
+import CurrentUser from "../../models/CurrentUser";
+
 
 class LoginScreenViewModel {
   constructor() {
@@ -28,6 +30,7 @@ class LoginScreenViewModel {
   async createAccount(userName, password) {
     try {
       let response = await appProvider.getAppServerClient().createAccount(userName, password);
+			await CurrentUser.initialize();
       let entity = await this.setupDevice(response);
       let user =  await  this.activateUser(response);
       let notifyRes = await  appProvider.getAppServerClient().notifyUserActivate();
@@ -41,9 +44,9 @@ class LoginScreenViewModel {
     return new Promise((resolve , reject)=> {
 
       let currentUser = response[response.result_type];
-      let userId = currentUser.user_id;
+      let userId = CurrentUser.getUserId();
       appProvider.userId = userId;
-      let tokenId = currentUser.token_id;
+      let tokenId = CurrentUser.getTokenId();
 
       let workflowCallback = appProvider.getRegisgerDeviceHelper();
       workflowCallback.flowInterrupt = (ostWorkflowContext , ostError) => {
@@ -83,6 +86,7 @@ class LoginScreenViewModel {
 
     try {
       let response = await appProvider.getAppServerClient().logIn(userName, password);
+      await CurrentUser.initialize();
       let entity = await this.setupDevice(response);
       if (entity["entityType"].toLowerCase() === "device") {
         if (entity["entity"].status.toLowerCase() === 'registered') {

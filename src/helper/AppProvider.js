@@ -1,6 +1,7 @@
 import AppServerApi from "../services/api/AppServerApi";
 import {RegisterDeviceHelper} from "./OstSdkHelpers/RegisterDeviceHelper"
 import UIWorkflowDelegate from "./OstSdkHelpers/OstWorkflowDelegate";
+import CurrentUser from "../models/CurrentUser";
 
 const LOG_TAG = 'helper/AppProvider';
 
@@ -81,8 +82,7 @@ class AppProvider {
   }
 
   getUICallback() {
-    //Todo: Sachin - get user id from Current user model
-    let ostUserId = this.userId;
+    let ostUserId = CurrentUser.getUserId();
     return new UIWorkflowDelegate(ostUserId, {})
   }
 

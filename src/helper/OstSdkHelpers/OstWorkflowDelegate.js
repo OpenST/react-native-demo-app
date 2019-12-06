@@ -2,6 +2,7 @@ import {OstWalletUIWorkflowCallback} from "@ostdotcom/ost-wallet-sdk-react-nativ
 import OstWalletSdkHelper from "./OstWalletSdkHelper";
 import {appProvider} from "../AppProvider";
 import deepGet from 'lodash/get';
+import CurrentUser from "../../models/CurrentUser";
 
 class UIWorkflowDelegate extends OstWalletUIWorkflowCallback {
   constructor(userId) {
@@ -10,15 +11,13 @@ class UIWorkflowDelegate extends OstWalletUIWorkflowCallback {
   }
 
   isUserIdValid() {
-    //Todo: Sachin - get user id from Current user model
-    return appProvider.userId === this.userId;
+    return CurrentUser.getUserId() === this.userId;
   }
 
   getPassphrase(userId, ostWorkflowContext, passphrasePrefixAccept) {
-    let ostUserId = appProvider.userId;
+    let ostUserId = CurrentUser.getUserId();
 
     if (this.isUserIdValid && userId === ostUserId) {
-      //Todo: Sachin - get user id from Current user model
       _getPassphrase(ostUserId, this, passphrasePrefixAccept);
     }else {
       passphrasePrefixAccept.cancelFlow()
