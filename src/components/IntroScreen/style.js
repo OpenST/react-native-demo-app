@@ -1,5 +1,6 @@
 import DefaultStyleGenerator from "../../theme/styles/DefaultStyleGenerator";
 import Colors from '../../../src/theme/styles/Colors'
+import {sizeHelper} from "../../helper/SizeHelper";
 
 const stylesMap = {
   scrollView: {
@@ -13,17 +14,17 @@ const stylesMap = {
     backgroundColor: Colors.white,
   },
   sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+    marginTop: sizeHelper.layoutPtToPx(32),
+    paddingHorizontal: sizeHelper.layoutPtToPx(24),
   },
   sectionTitle: {
-    fontSize: 24,
+    fontSize: sizeHelper.fontPtToPx(24),
     fontWeight: '600',
     color: Colors.black,
   },
   sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
+    marginTop: sizeHelper.layoutPtToPx(8),
+    fontSize: sizeHelper.fontPtToPx(18),
     fontWeight: '400',
     color: Colors.dark,
   },
@@ -32,21 +33,21 @@ const stylesMap = {
   },
   footer: {
     color: Colors.dark,
-    fontSize: 12,
+    fontSize: sizeHelper.fontPtToPx(12),
     fontWeight: '600',
-    padding: 4,
-    paddingRight: 12,
+    padding: sizeHelper.layoutPtToPx(4),
+    paddingRight: sizeHelper.layoutPtToPx(12),
     textAlign: 'right',
   },
 
   ostLogo: {
-    width: 100,
-    height: 55,
+    width: sizeHelper.layoutPtToPx(100),
+    height: sizeHelper.layoutPtToPx(55),
     alignSelf: 'center'
   },
   versionText: {
     width: '100%',
-    marginTop: 20,
+    marginTop: sizeHelper.layoutPtToPx(20),
     textAlign: 'center'
   }
 };

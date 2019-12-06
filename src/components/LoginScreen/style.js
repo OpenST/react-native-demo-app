@@ -1,41 +1,42 @@
 import DefaultStyleGenerator from "../../theme/styles/DefaultStyleGenerator";
 import Colors from '../../../src/theme/styles/Colors'
+import {sizeHelper} from "../../helper/SizeHelper";
 
 const stylesMap = {
   safeAreaView: {
-    marginHorizontal: 20
+    marginHorizontal: sizeHelper.layoutPtToPx(20)
   },
   safeAreaViewContainer: {
-    marginTop: 20
+    marginTop: sizeHelper.layoutPtToPx(20)
   },
   primaryActionButton: {
-    marginTop: 40,
-    paddingVertical: 10,
+    marginTop: sizeHelper.layoutPtToPx(40),
+    paddingVertical: sizeHelper.layoutPtToPx(10),
     backgroundColor:Colors.waterBlue,
-    borderRadius:10,
-    borderWidth: 1,
+    borderRadius:sizeHelper.layoutPtToPx(10),
+    borderWidth: sizeHelper.layoutPtToPx(1),
     borderColor: Colors.white
   },
-  secondayActionButton: {
-    paddingVertical: 10,
+  secondaryActionButton: {
+    paddingVertical: sizeHelper.layoutPtToPx(10),
     color: Colors.waterBlue,
-    fontSize: 17,
+    fontSize: sizeHelper.fontPtToPx(17),
     fontWeight: "900"
   },
 
   bottomContainer: {
-    marginTop: 80,
-    marginBottom: 20,
+    marginTop: sizeHelper.layoutPtToPx(80),
+    marginBottom: sizeHelper.layoutPtToPx(20)
   },
   primaryActionText: {
     color:Colors.white,
     textAlign:'center',
     fontWeight: "bold",
-    fontSize: 17
+    fontSize: sizeHelper.fontPtToPx(17),
   },
   bottomText: {
     textAlign:'center',
-    fontSize: 14
+    fontSize: sizeHelper.fontPtToPx(14),
   }
 };
 

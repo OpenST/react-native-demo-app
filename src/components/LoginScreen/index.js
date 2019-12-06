@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react'
-import {Button, View, Image, SafeAreaView, StatusBar, Text, Alert, TouchableOpacity, TouchableHighlight, Modal} from 'react-native'
+import {Button, View, Image, SafeAreaView, StatusBar, Text, Alert, TouchableOpacity, TouchableHighlight, Modal, PixelRatio} from 'react-native'
 
 import styles from './style'
 import Colors from '../../../src/theme/styles/Colors'
