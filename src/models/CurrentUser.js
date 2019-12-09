@@ -82,6 +82,12 @@ class CurrentUser {
     let device = await this.getOstCurrentDeivce();
     return device.status
   }
+
+
+  logoutUser() {
+    let apiService = appProvider.getAppServerClient();
+    return apiService.logoutUser()
+  }
 }
 
 

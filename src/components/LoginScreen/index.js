@@ -98,7 +98,8 @@ class LoginScreen extends PureComponent {
 
     let { current: userNameField } = this.userNamefieldRef;
     let { current: passwordField } = this.passwordfieldRef;
-    this.viewModel.setupUser(userNameField.value(), passwordField.value())
+   this.viewModel.setupUser(userNameField.value(), passwordField.value())
+//     this.viewModel.setupUser("A5", "Qweqweqwe")
       .then( (res) => {
         this.setModalVisible(false);
         this.props.navigation.dispatch(SwitchActions.jumpTo({routeName:'Wallet'}, {navTitle: "Wallet"}));
@@ -113,8 +114,8 @@ class LoginScreen extends PureComponent {
     return this.viewModel.isSignupView ? "Signing Up" : "Logging In"
   }
 
-  onSubmit = (textFiled) => {
-    let { current: field } = textFiled;
+  onSubmit = (textField) => {
+    let { current: field } = textField;
 
     if (field === this.userNamefieldRef) {
       this.passwordfieldRef.focus();

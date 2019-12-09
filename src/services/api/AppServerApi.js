@@ -89,4 +89,15 @@ export default class AppServerApi extends BaseApi{
 		return Promise.reject(err)
       });
   }
+
+  logoutUser() {
+    let res = '/users/logout';
+    return this.post(res)
+      .then(function(res) {
+        return Promise.resolve(res)
+      })
+      .catch(function (err) {
+        return Promise.reject(err)
+      });
+  }
 }
