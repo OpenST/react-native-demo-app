@@ -4,14 +4,14 @@ import {FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View} from '
 import inlineStyle from "../UsersScreen/styles";
 import {appProvider} from "../../helper/AppProvider";
 import sizeHelper from "../../helper/SizeHelper";
+import AppLoader from "../CommonComponent/AppLoader";
 
 class UsersScreen extends PureComponent {
-	static navigationOptions = (options) => {
+	static navigationOptions = ({ navigation, navigationOptions }) => {
 		return {
-			headerTitle: 'Users',
-			headerBackTitle: null,
-			headerStyle: {
-				backgroundColor: Colors.white,
+			title: navigation.getParam('navTitle', 'Users'),
+			headerStyle:  {
+				backgroundColor: Colors.brightSky,
 				borderBottomWidth: 0,
 				shadowColor: '#000',
 				shadowOffset: {
@@ -19,24 +19,34 @@ class UsersScreen extends PureComponent {
 					height: 1
 				},
 				shadowOpacity: 0.1,
-				shadowRadius: 3
+				shadowRadius: 3,
+				titleColor: Colors.white
 			},
-			headerTitleStyle: {
-				// fontFamily: 'AvenirNext-Medium'
-			}
+			headerTintColor: '#fff',
 		};
 	};
 
 	constructor(props) {
 		super(props);
-		this.state = {list: null, balances: null, refreshing: false};
+		this.state = {
+			list: null, balances: null, refreshing: false,
+			modalVisible: false,
+			title: ""
+		};
 		this.next_page_payload = null;
 		this.appIdHash = {};
+	}
+
+	componentDidMount() {
 		this.fetchData();
 	}
 
 	fetchData() {
 		const oThis = this;
+		this.setState({
+			modalVisible: true,
+			title: "Fetching Users"
+		});
 		appProvider.getAppServerClient().getUserList()
 			.then((res) => {
 				if (res.result_type) {
@@ -47,8 +57,17 @@ class UsersScreen extends PureComponent {
 					});
 					oThis.next_page_payload= res.meta.next_page_payload
 				}
+				oThis.hideLoader();
 			}).catch((err) => {
+				oThis.hideLoader();
 			console.log(err);
+		});
+	}
+
+	hideLoader() {
+		this.setState({
+			modalVisible: false,
+			title: ""
 		});
 	}
 
@@ -86,7 +105,6 @@ class UsersScreen extends PureComponent {
 				color: '#9b9b9b',
 				fontWeight : 'bold',
 				textAlign: 'center',
-				backgroundColor: 'none',
 				fontSize: sizeHelper.fontPtToPx(20)
 			}}>
 				{centeredText}
@@ -157,17 +175,20 @@ class UsersScreen extends PureComponent {
 
 	render() {
 		return (
-			<FlatList
-				onRefresh={this.onRefresh}
-				data={this.state.list}
-				onEndReached={this.getNext}
-				onEndReachedThreshold={0.5}
-				refreshing={this.state.refreshing}
-				renderItem={this._renderItem}
-				keyExtractor={this._keyExtractor}
-				visible={false}
-				scrollEnabled={true}
-			/>
+			<>
+				<AppLoader modalVisible={this.state.modalVisible} title={this.state.title}/>
+				<FlatList
+					onRefresh={this.onRefresh}
+					data={this.state.list}
+					onEndReached={this.getNext}
+					onEndReachedThreshold={0.5}
+					refreshing={this.state.refreshing}
+					renderItem={this._renderItem}
+					keyExtractor={this._keyExtractor}
+					visible={false}
+					scrollEnabled={true}
+				/>
+			</>
 		);
 	}
 }
