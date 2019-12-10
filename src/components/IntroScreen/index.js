@@ -16,6 +16,8 @@ import ost_sdk_content_config from '../../theme/ostsdk/ost-sdk-content-config';
 import CurrentUser from "../../models/CurrentUser";
 import {SwitchActions} from "react-navigation";
 import AppLoader from "../CommonComponent/AppLoader";
+import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
+import {appProvider} from "../../helper/AppProvider";
 
 class IntroScreen extends PureComponent {
 	static navigationOptions = ({navigation, navigationOptions}) => {
@@ -40,6 +42,8 @@ class IntroScreen extends PureComponent {
 	};
 
 	componentDidMount() {
+		let platformUrl = appProvider.getSaasApiEndpoint();
+		OstWalletSdk.initialize(platformUrl, ost_wallet_sdk_config, (err , success ) => {});
 		if (!CurrentUser.getUserData()) {
 			this.showLoader(true);
 			CurrentUser.initialize()
