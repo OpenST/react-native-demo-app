@@ -1,25 +1,16 @@
 import React from 'react';
-import { createSwitchNavigator, createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
 
 import {Root} from "native-base";
-import { createBottomTabNavigator } from 'react-navigation-tabs';
-
-import {OstWalletSetting} from '@ostdotcom/ost-wallet-sdk-react-native';
-
+import {createBottomTabNavigator} from 'react-navigation-tabs';
 import IntroScreen from './src/components/IntroScreen'
 import LoginScreen from './src/components/LoginScreen'
 import SettingScreen from './src/components/Setting'
 
-import {
-  SafeAreaView,
-  Text,
-  StatusBar,
-  Image,
-  View
-} from 'react-native';
+import UserScreen from "./src/components/UsersScreen";
 
-
+// import {OstWalletSetting} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 const Onboarding = createStackNavigator(
   {
@@ -28,30 +19,10 @@ const Onboarding = createStackNavigator(
   }
 );
 
-class HomeScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Home!</Text>
-      </View>
-    );
-  }
-}
-
-class SettingsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Settings!</Text>
-      </View>
-    );
-  }
-}
 
 const UsersStack = createStackNavigator(
   {
-    IntroScreen: IntroScreen,
-    LoginScreen: LoginScreen
+    UsersScreen: UserScreen
   }
 );
 
@@ -65,7 +36,7 @@ const WalletStack = createStackNavigator(
 const SettingStack = createStackNavigator(
   {
     SettingScreen: SettingScreen,
-    WalletSettingScreen: OstWalletSetting
+    // WalletSettingScreen: OstWalletSetting
   }
 );
 

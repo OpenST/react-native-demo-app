@@ -1,6 +1,6 @@
 import { ifIphoneX  , getBottomSpace} from 'react-native-iphone-x-helper';
 import { Dimensions, StatusBar , NativeModules } from 'react-native';
-import  NotchHelper from "../../helpers/NotchHelper";
+import  NotchHelper from "../../helper/NotchHelper";
 import DefaultStyleGenerator from './DefaultStyleGenerator';
 import Colors from './Colors';
 
@@ -33,7 +33,7 @@ const styles = {
           height:
             NotchHelper.hasNotch()
               ? height + statusBarHeight - btmSpace
-              : height 
+              : height
         }
       )
     },

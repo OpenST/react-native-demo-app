@@ -81,13 +81,8 @@ export default class AppServerApi extends BaseApi{
     let body = {next_page_payload: nextPayload};
     let res ='/users';
     return this.get(res, body)
-	  .then(function(res) {
-	  	// const data =
-        // return Promise.resolve(err)
-	  })
-	  .catch(function (err) {
-		return Promise.reject(err)
-      });
+	  .then(this.thenFunction)
+	  .catch(this.catchFunction)
   }
 
   logoutUser() {
