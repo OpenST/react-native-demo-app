@@ -138,7 +138,7 @@ class UsersScreen extends PureComponent {
 	getNext = () => {
 		if (
 			this.state.refreshing ||
-			!this.state.next_page_payload
+			!this.next_page_payload
 		)
 			return;
 		appProvider.getAppServerClient().getUserList(this.next_page_payload)
@@ -161,6 +161,7 @@ class UsersScreen extends PureComponent {
 				onRefresh={this.onRefresh}
 				data={this.state.list}
 				onEndReached={this.getNext}
+				onEndReachedThreshold={0.5}
 				refreshing={this.state.refreshing}
 				renderItem={this._renderItem}
 				keyExtractor={this._keyExtractor}
