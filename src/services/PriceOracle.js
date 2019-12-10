@@ -20,7 +20,9 @@ export default class PriceOracle {
     ///NOTE: If you are wondering why fall back is 18, Ask Ashutosh.
     this.decimals = token.decimals || 18;
 
-    this.usdPricePoint = pricePoints[token.base_token]['USD'];
+    if (pricePoints.hasOwnProperty(token.base_token)) {
+			this.usdPricePoint = pricePoints[token.base_token]['USD'];
+    }
   }
 
   btToFiat(bt , precession) {

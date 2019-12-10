@@ -54,6 +54,7 @@ export default class SendTokensScreen extends PureComponent {
 
     this.numberFormatter = new NumberFormatter();
     this.priceOracle = null;
+    this.user = props.navigation.getParam('user');
   }
 
   async setPriceOracle(pricePoint) {
@@ -156,7 +157,7 @@ export default class SendTokensScreen extends PureComponent {
         return;
       }
 
-      OstWalletSdk.executeTransaction(CurrentUser.getUserId(), [""], [toWeiValue], "direct transfer", txMeta, executeTxDelegate)
+      OstWalletSdk.executeTransaction(CurrentUser.getUserId(), [this.user.token_holder_address], [toWeiValue], "direct transfer", txMeta, executeTxDelegate)
     });
   };
 
@@ -176,7 +177,15 @@ export default class SendTokensScreen extends PureComponent {
           </View>
 
           <View style={styles.userContainer}>
-
+            <View>
+              <View style={{backgroundColor: Colors.lightGrey, borderRadius: 15, height: 30, width: 30}}>
+                <Text>A</Text>
+              </View>
+              <View >
+                <Text>A25</Text>
+								<Text>0xawe1231231241234dfdfqwa</Text>
+              </View>
+            </View>
           </View>
 
           <View style={styles.amountContainer}>

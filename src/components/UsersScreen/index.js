@@ -35,9 +35,15 @@ class UsersScreen extends PureComponent {
 		};
 		this.next_page_payload = null;
 		this.appIdHash = {};
+		this.priceOracle = null
+	}
+
+	async setPriceOracle() {
+		this.priceOracle = await appProvider.getPriceOracle();
 	}
 
 	componentDidMount() {
+		this.setPriceOracle();
 		this.fetchData();
 	}
 
@@ -117,7 +123,7 @@ class UsersScreen extends PureComponent {
 	}
 
 	getUserBalanceView(balance) {
-		return (<Text style={inlineStyle.subHeading}>Balance: {balance} POP</Text>);
+		return (<Text style={inlineStyle.subHeading}>Balance: {this.priceOracle.fromDecimal(balance)} POP</Text>);
 	}
 
 	getUserDetailsView(item) {
@@ -131,9 +137,13 @@ class UsersScreen extends PureComponent {
 		</View>);
 
 	}
+
+	onSend(item) {
+		this.props.navigation.push("SendTokens", {user:item});
+	}
 	_renderItem = ({item, index}) => {
 		return (
-			<TouchableWithoutFeedback onPress={() => this.onSettingItemTapped(item)}>
+			<TouchableWithoutFeedback>
 				<View style={inlineStyle.userComponent}>
 					{
 						this.getCircularView(item.username && item.username.charAt(0))
@@ -143,7 +153,8 @@ class UsersScreen extends PureComponent {
 					}
 					<TouchableOpacity
 						style={inlineStyle.buttonStyle}
-						activeOpacity={.5}>
+						activeOpacity={.5}
+						onPress={() => this.onSend(item)}>
 						<Text style={inlineStyle.textStyle}> Send </Text>
 					</TouchableOpacity>
 				</View>

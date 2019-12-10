@@ -74,7 +74,7 @@ class CurrentUser {
 
   getOstToken() {
     return new Promise((resolve, reject) => {
-      OstWalletSdk.getToken(this.getTokenId(), (token) => {
+      OstWalletSdk.getToken(this.getTokenId().toString(), (token) => {
         resolve(token)
       });
     });

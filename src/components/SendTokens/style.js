@@ -15,10 +15,10 @@ const styleMap = {
     justifyContent: 'space-between'
   },
   userContainer: {
-    height: 50,
     borderRadius: 5,
     marginVertical: 10,
-    backgroundColor: Colors.iceBlue
+    backgroundColor: Colors.iceBlue,
+		flexDirection: 'row'
   },
   amountContainer:{
     flexDirection: 'row',
