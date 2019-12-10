@@ -10,17 +10,17 @@ import java.text.ParseException;
 
 import javax.annotation.Nonnull;
 
-public class PepoNativeHelper extends ReactContextBaseJavaModule {
-    private static final String TAG = "Ost-PepoNativeHelper";
+public class NativeHelper extends ReactContextBaseJavaModule {
+    private static final String TAG = "Ost-NativeHelper";
 
-    public PepoNativeHelper(@Nonnull ReactApplicationContext reactContext) {
+    public NativeHelper(@Nonnull ReactApplicationContext reactContext) {
         super(reactContext);
     }
 
     @Nonnull
     @Override
     public String getName() {
-        return "PepoNativeHelper";
+        return "NativeHelper";
     }
 
 //    @ReactMethod

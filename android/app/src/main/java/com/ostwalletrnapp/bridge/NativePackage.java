@@ -12,12 +12,12 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-public class PepoNativePackage implements ReactPackage {
+public class NativePackage implements ReactPackage {
     @Nonnull
     @Override
     public List<NativeModule> createNativeModules(@Nonnull ReactApplicationContext reactContext) {
         return Arrays.asList(
-                new PepoNativeHelper(reactContext)
+                new NativeHelper(reactContext)
         );
     }
 
