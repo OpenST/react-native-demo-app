@@ -62,23 +62,23 @@ class OstSdkErrors {
         return errMsg || DEFAULT_ERROR_MSG;
       }
 
-      // if ( OstWalletSdkHelper.isDeviceUnauthorizedError(ostError)) {
-      //   errorCode = USER_UNAUTHORIZED;
-      //
-      //   if ( allErrors[workflowType] ) {
-      //     errMsg = allErrors[workflowType][ errorCode ];
-      //   }
-      //
-      //   if ( !errMsg ) {
-      //     errMsg = allErrors[DEFAULT_CONTEXT][ errorCode ];
-      //   }
-      //
-      //   if ( developerMode ) {
-      //     errMsg = errMsg + "\n\n(" + ostError.getApiInternalId() + ")"
-      //   }
-      //
-      //   return errMsg || DEFAULT_ERROR_MSG;
-      // }
+      if ( OstWalletSdkHelper.isDeviceUnauthorizedError(ostError)) {
+        errorCode = USER_UNAUTHORIZED;
+      
+        if ( allErrors[workflowType] ) {
+          errMsg = allErrors[workflowType][ errorCode ];
+        }
+      
+        if ( !errMsg ) {
+          errMsg = allErrors[DEFAULT_CONTEXT][ errorCode ];
+        }
+      
+        if ( developerMode ) {
+          errMsg = errMsg + "\n\n(" + ostError.getApiInternalId() + ")"
+        }
+      
+        return errMsg || DEFAULT_ERROR_MSG;
+      }
 
       if ( ostError.isApiError() ) {
 

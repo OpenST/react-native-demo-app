@@ -41,7 +41,7 @@ class LoginScreenViewModel {
   }
 
   setupDevice(response) {
-    return new Promise((resolve , reject)=> {
+    return new Promise((resolve , reject) => {
 
       let currentUser = response[response.result_type];
       let userId = CurrentUser.getUserId();
@@ -62,7 +62,7 @@ class LoginScreenViewModel {
   }
 
   activateUser(response) {
-    return new Promise((resolve , reject)=> {
+    return new Promise((resolve , reject) => {
       let currentUser = response[response.result_type];
       let userId = currentUser.user_id;
       let uiCallback = appProvider.getOstSdkUIDelegate();
@@ -94,7 +94,7 @@ class LoginScreenViewModel {
         appProvider.getAppServerClient().notifyUserActivate();
       }
       return Promise.resolve(entity)
-    }catch (err) {
+    } catch (err) {
       return Promise.reject(err);
     }
   }

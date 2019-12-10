@@ -5,6 +5,7 @@ import {createStackNavigator} from 'react-navigation-stack';
 import {Root} from "native-base";
 
 import {createBottomTabNavigator} from 'react-navigation-tabs';
+import {OstWalletSettingsComponent} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 import IntroScreen from './src/components/IntroScreen'
 import LoginScreen from './src/components/LoginScreen'
@@ -38,7 +39,7 @@ const WalletStack = createStackNavigator(
 const SettingStack = createStackNavigator(
   {
     SettingScreen: SettingScreen,
-    // WalletSettingScreen: OstWalletSetting
+    WalletSettingScreen: OstWalletSettingsComponent
   }
 );
 
