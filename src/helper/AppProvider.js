@@ -2,6 +2,7 @@ import AppServerApi from "../services/api/AppServerApi";
 import {RegisterDeviceHelper} from "./OstSdkHelpers/RegisterDeviceHelper"
 import UIWorkflowDelegate from "./OstSdkHelpers/OstWorkflowDelegate";
 import CurrentUser from "../models/CurrentUser";
+import PriceOracle from "../services/PriceOracle";
 
 const LOG_TAG = 'helper/AppProvider';
 
@@ -84,6 +85,11 @@ class AppProvider {
   getOstSdkUIDelegate() {
     let ostUserId = CurrentUser.getUserId();
     return new UIWorkflowDelegate(ostUserId, {})
+  }
+
+  async getPriceOracle(pricePoint) {
+    const token = await CurrentUser.getOstToken();
+    return new PriceOracle( token  , pricePoint);
   }
 
 }

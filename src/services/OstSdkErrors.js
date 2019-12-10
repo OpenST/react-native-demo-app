@@ -1,11 +1,8 @@
-import deepGet from 'lodash/get';
-import {IS_PRODUCTION, IS_SANDBOX} from '../constants';
-import PepoApi from "./PepoApi";
-import OstWalletSdkHelper from "../helpers/OstWalletSdkHelper";
+import OstWalletSdkHelper from "../helper/OstWalletSdkHelper"
 
 //NEVER COMMIT WITH developerMode true.
 const developerMode = false;
-const logErrorMessage = !IS_PRODUCTION;
+const logErrorMessage = false;
 const DEFAULT_ERROR_MSG = "Something went wrong";
 const WORKFLOW_CANCELLED_MSG = "WORKFLOW_CANCELLED";
 const DEFAULT_CONTEXT = "_default";
@@ -26,7 +23,7 @@ class OstSdkErrors {
       if ( logErrorMessage ) {
         if ( WORKFLOW_CANCELLED_MSG !== errMsg ) {
           try {
-            this._postErrorDetails(ostWorkflowContext, ostError, errMsg);
+           // this._postErrorDetails(ostWorkflowContext, ostError, errMsg);
           } catch(e) {
             //ignore.
           }
@@ -136,23 +133,6 @@ class OstSdkErrors {
       }
 
       return errMsg || DEFAULT_ERROR_MSG;
-    }
-
-    _postErrorDetails(ostWorkflowContext, ostError, errorMessage) {
-      const errorType = ostError.isApiError() ? "wallet-sdk-platform-api" : "wallet-sdk-internal";
-      const errorKind = ostWorkflowContext.WORKFLOW_TYPE;
-      const errData = ostError.error || { "_somekey_": "ostError.error missing. Something unexpected happened!"};
-      errData.displayed_error = errorMessage;
-
-      new PepoApi(`/report-issue`)
-        .post({
-          "app_name": errorType,
-          "kind": errorKind,
-          "error_data": errData
-        })
-        .catch((error) => {
-          //I_D_K
-        })
     }
 }
 

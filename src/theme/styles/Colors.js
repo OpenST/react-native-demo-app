@@ -6,4 +6,5 @@ export default {
   whisper: '#ECECEC',
   valhalla: '#2A293B',
   grey: '#888888',
+  iceBlue: '#eff9fa'
 };

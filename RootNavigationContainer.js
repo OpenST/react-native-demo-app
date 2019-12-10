@@ -3,14 +3,15 @@ import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import {Root} from "native-base";
+
 import {createBottomTabNavigator} from 'react-navigation-tabs';
+
 import IntroScreen from './src/components/IntroScreen'
 import LoginScreen from './src/components/LoginScreen'
 import SettingScreen from './src/components/Setting'
+import SendTokens from './src/components/SendTokens'
 
 import UserScreen from "./src/components/UsersScreen";
-
-// import {OstWalletSetting} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 const Onboarding = createStackNavigator(
   {
@@ -22,7 +23,8 @@ const Onboarding = createStackNavigator(
 
 const UsersStack = createStackNavigator(
   {
-    UsersScreen: UserScreen
+    UsersScreen: UserScreen,
+    SendTokens: SendTokens
   }
 );
 
@@ -45,7 +47,6 @@ const Wallet = createBottomTabNavigator({
   Wallet: WalletStack,
   Settings: SettingStack
 });
-
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(

@@ -59,7 +59,6 @@ class CurrentUser {
       OstWalletSdk.getUser(this.getUserId(), (user) => {
         if (user) {
           resolve(user);
-          return;
         }
       })
     })
@@ -69,6 +68,14 @@ class CurrentUser {
     return new Promise((resolve, reject) => {
       OstWalletSdk.getCurrentDeviceForUserId(this.getUserId(), (device) => {
         resolve(device)
+      });
+    });
+  }
+
+  getOstToken() {
+    return new Promise((resolve, reject) => {
+      OstWalletSdk.getToken(this.getTokenId(), (token) => {
+        resolve(token)
       });
     });
   }
