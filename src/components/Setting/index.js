@@ -8,6 +8,9 @@ import AppLoader from '../CommonComponent/AppLoader'
 import CurrentUser from "../../models/CurrentUser";
 import {SwitchActions} from "react-navigation";
 
+import {appProvider} from "../../helper/AppProvider";
+
+
 class Settings extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
     return {
@@ -72,7 +75,7 @@ class Settings extends PureComponent {
 
   onSettingItemTapped = (cellData) => {
     if ( cellData.cellType === 'walletSetting' ) {
-      this.props.navigation.push("WalletSettingScreen");
+      this.props.navigation.push("WalletSettingScreen", {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()});
       return
     }
 
