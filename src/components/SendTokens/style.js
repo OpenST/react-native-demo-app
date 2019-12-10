@@ -7,8 +7,6 @@ const styleMap = {
     marginTop: sizeHelper.layoutPtToPx(20),
     marginHorizontal: sizeHelper.layoutPtToPx(20),
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'stretch',
   },
   balanceView: {
     flexDirection: 'row',
@@ -16,9 +14,11 @@ const styleMap = {
   },
   userContainer: {
     borderRadius: 5,
-    marginVertical: 10,
     backgroundColor: Colors.iceBlue,
-		flexDirection: 'row'
+    flexDirection: 'row',
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    marginVertical: 15
   },
   amountContainer:{
     flexDirection: 'row',
@@ -31,6 +31,17 @@ const styleMap = {
     borderRadius: 10,
     paddingVertical: 15,
     marginTop: 15
+  },
+  subHeading: {
+    color: '#34445b',
+    fontSize: sizeHelper.layoutPtToPx(13),
+    fontWeight: "normal"
+  },
+  heading: {
+    color: '#597a84',
+    fontSize: sizeHelper.layoutPtToPx(16),
+    fontWeight: "bold",
+    alignItems: 'center'
   }
 };
 

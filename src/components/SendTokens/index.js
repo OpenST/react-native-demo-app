@@ -15,6 +15,8 @@ import CurrentUser from '../../models/CurrentUser'
 
 import NumberFormatter from '../../helper/NumberFormatter'
 import {ensureDeivceAndSession} from "../../helper/TransactionHelper";
+import sizeHelper from "../../helper/SizeHelper";
+import inlineStyle from "../UsersScreen/styles";
 
 
 export default class SendTokensScreen extends PureComponent {
@@ -161,6 +163,35 @@ export default class SendTokensScreen extends PureComponent {
     });
   };
 
+  getCircularView(centeredText) {
+    return (<View style={{
+      justifyContent:'center',
+      backgroundColor: '#f4f4f4',
+      borderColor: '#9b9b9b',
+      width: sizeHelper.layoutPtToPx(50),
+      height: sizeHelper.layoutPtToPx(50),
+      borderRadius: sizeHelper.layoutPtToPx(25),
+      borderWidth: sizeHelper.layoutPtToPx(2),
+    }}>
+      <Text style={{
+        color: '#9b9b9b',
+        fontWeight : 'bold',
+        textAlign: 'center',
+        fontSize: sizeHelper.fontPtToPx(20)
+      }}>
+        {centeredText}
+      </Text>
+    </View>);
+  }
+
+  getUserDetailsView(item) {
+    return (
+      <View>
+        <Text style={inlineStyle.heading}>{item.name}</Text>
+      </View>
+    );
+  }
+
   render() {
     let available_balance = this.state.balance.available_balance;
     if (available_balance) {
@@ -177,15 +208,11 @@ export default class SendTokensScreen extends PureComponent {
           </View>
 
           <View style={styles.userContainer}>
-            <View>
-              <View style={{backgroundColor: Colors.lightGrey, borderRadius: 15, height: 30, width: 30}}>
-                <Text>A</Text>
+              {this.getCircularView(this.user.username.charAt(0))}
+              <View style={{marginLeft: 10,flex: 1}}>
+                <Text style={styles.heading}>{this.user.username}</Text>
+                <Text style={styles.subHeading}>{this.user.token_holder_address}</Text>
               </View>
-              <View >
-                <Text>A25</Text>
-								<Text>0xawe1231231241234dfdfqwa</Text>
-              </View>
-            </View>
           </View>
 
           <View style={styles.amountContainer}>
@@ -218,7 +245,6 @@ export default class SendTokensScreen extends PureComponent {
 
           <View style={styles.amountContainer}>
             <View style={{flex:3, marginRight:5}}>
-              <Text> {`${this.state.usdValue}---------------`} </Text>
               <OutlinedTextField label='Amount'
                                  tintColor={Colors.lightGrey}
                                  disabledLineWidth={2}

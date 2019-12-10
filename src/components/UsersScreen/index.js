@@ -49,10 +49,10 @@ class UsersScreen extends PureComponent {
 
 	fetchData() {
 		const oThis = this;
-		this.setState({
-			modalVisible: true,
-			title: "Fetching Users"
-		});
+		// this.setState({
+		// 	modalVisible: true,
+		// 	title: "Fetching Users"
+		// });
 		appProvider.getAppServerClient().getUserList()
 			.then((res) => {
 				if (res.result_type) {
