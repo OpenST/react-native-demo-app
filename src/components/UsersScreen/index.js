@@ -94,7 +94,6 @@ class UsersScreen extends PureComponent {
 
 	getCircularView(centeredText) {
 		return (<View style={{
-			flex:1,
 			alignItems: 'center',
 			justifyContent: 'center',
 			backgroundColor: '#f4f4f4',
