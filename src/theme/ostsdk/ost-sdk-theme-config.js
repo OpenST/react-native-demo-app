@@ -1,12 +1,12 @@
 import colors from '../styles/Colors'
 export default {
 
-  "nav_bar_logo_image": {
-    "asset_name": "header_icon"
-  },
+  // "nav_bar_logo_image": {
+  //   "asset_name": "header_icon"
+  // },
 
   "h1": {"size": 20,
-    "color": colors.paynesGrey,
+    "color": "#3e404b",
     "system_font_weight": "semi_bold",
     "alignment": "center"
   },
@@ -88,15 +88,15 @@ export default {
 
   "icons": {
     "close": {
-      "tint_color": colors.paynesGrey
+      "tint_color": "#3e404b"
     },
     "back":{
-      "tint_color": colors.paynesGrey
+      "tint_color": "#3e404b"
     }
   },
 
   "pin_input": {
     "empty_color": "#c7c7cc",
-    "filled_color": colors.primary
+    "filled_color": "#ef5566"
   }
 }

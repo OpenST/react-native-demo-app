@@ -18,6 +18,7 @@ import {SwitchActions} from "react-navigation";
 import AppLoader from "../CommonComponent/AppLoader";
 import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
 import {appProvider} from "../../helper/AppProvider";
+import {LoginScreenViewModel} from "../LoginScreen/LoginScreenViewModel";
 
 class IntroScreen extends PureComponent {
 	static navigationOptions = ({navigation, navigationOptions}) => {
@@ -30,33 +31,37 @@ class IntroScreen extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {modalVisible: false, title: ""};
+		this.viewModel = new LoginScreenViewModel()
 	}
 
-	init = async () => {
-		OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
+	initSdk() {
+		// OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
 		OstWalletSdkUI.setContentConfig(ost_sdk_content_config);
 	};
 
-	onSdkInitialized = (error, success) => {
-
-	};
 
 	componentDidMount() {
+      	this.initSdk();
+
 		let platformUrl = appProvider.getSaasApiEndpoint();
 		OstWalletSdk.initialize(platformUrl, ost_wallet_sdk_config, (err , success ) => {});
-		if (!CurrentUser.getUserData()) {
-			this.showLoader(true);
-			CurrentUser.initialize()
-				.then((res) => {
-					this.showLoader(false);
-					this.props.navigation.dispatch(SwitchActions.jumpTo({routeName: 'Wallet'}, {navTitle: "Wallet"}));
-				}).catch((err) => {
-				this.showLoader(false);
-				this.props.navigation.push('LoginScreen', {"navTitle": "Login to your Account", "isSingupView": true})
-			});
+
+		if (CurrentUser.getUserData()) {
+          this.showLoader(false);
+          this.props.navigation.dispatch(SwitchActions.jumpTo({routeName: 'Wallet'}, {navTitle: "Wallet"}));
+
 		} else {
-			this.showLoader(false);
-			this.props.navigation.dispatch(SwitchActions.jumpTo({routeName: 'Wallet'}, {navTitle: "Wallet"}));
+          this.showLoader(true);
+          this.viewModel.setupApplicationUser()
+			.then((res) => {
+              this.showLoader(false);
+              this.props.navigation.dispatch(SwitchActions.jumpTo({routeName: 'Wallet'}, {navTitle: "Wallet"}));
+
+			})
+			.catch((err) => {
+              this.showLoader(false);
+              this.props.navigation.push('LoginScreen', {"navTitle": "Login to your Account", "isSingupView": true})
+		  	});
 		}
 	}
 

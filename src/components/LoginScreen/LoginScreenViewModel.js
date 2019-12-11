@@ -24,26 +24,48 @@ class LoginScreenViewModel {
     }else {
       return this.loginUser(userName, password)
     }
-
   }
 
   async createAccount(userName, password) {
     try {
       let response = await appProvider.getAppServerClient().createAccount(userName, password);
-      await CurrentUser.initialize();
-      let entity = await this.setupDevice(response);
-      await  this.activateUser(response);
-      appProvider.getAppServerClient().notifyUserActivate();
-      return Promise.resolve(entity)
+      const device = await this.setupApplicationUser();
+      return Promise.resolve(device);
     }catch (err) {
       return Promise.reject(err);
     }
   }
 
-  setupDevice(response) {
-    return new Promise((resolve , reject) => {
+  async loginUser(userName, password) {
+    try {
+      let response = await appProvider.getAppServerClient().logIn(userName, password);
+      const device = await this.setupApplicationUser();
+      return Promise.resolve(device);
+    } catch (err) {
+      return Promise.reject(err);
+    }
+  }
 
-      let currentUser = response[response.result_type];
+  async setupApplicationUser() {
+    try {
+      await CurrentUser.initialize();
+      let device = await this.setupDevice();
+      let ostDeviceStatus = await CurrentUser.getOstDeviceStatus();
+      let ostUserStatus = await CurrentUser.getOstUserStatus();
+      if (ostDeviceStatus.toLowerCase() === 'registered'
+          && ostUserStatus.toLowerCase() === 'created') {
+
+        await this.activateUser();
+        device = await CurrentUser.getOstCurrentDeivce();
+      }
+      return Promise.resolve(device)
+    }catch (err) {
+      return Promise.reject(err)
+    }
+  }
+
+  setupDevice() {
+    return new Promise((resolve , reject) => {
       let userId = CurrentUser.getUserId();
       appProvider.userId = userId;
       let tokenId = CurrentUser.getTokenId();
@@ -61,10 +83,9 @@ class LoginScreenViewModel {
     });
   }
 
-  activateUser(response) {
+  activateUser() {
     return new Promise((resolve , reject) => {
-      let currentUser = response[response.result_type];
-      let userId = currentUser.user_id;
+      let userId = CurrentUser.getUserId();
       let uiCallback = appProvider.getOstSdkUIDelegate();
       uiCallback.flowComplete = (ostWorkflowContext , ostContextEntity) => {
         resolve(ostContextEntity)
@@ -80,25 +101,6 @@ class LoginScreenViewModel {
       OstWalletSdkUI.activateUser(userId, DEFAULT_SESSION_KEY_EXPIRY_TIME, DEFAULT_SPENDING_LIMIT, uiCallback)
     });
   }
-
-
-  async loginUser(userName, password) {
-    try {
-      let response = await appProvider.getAppServerClient().logIn(userName, password);
-      await CurrentUser.initialize();
-      let entity = await this.setupDevice(response);
-      let ostDeviceStatus = await CurrentUser.getOstDeviceStatus();
-      let ostUserStatus = await CurrentUser.getOstUserStatus();
-      if (ostDeviceStatus.toLowerCase() === 'registered' && ostUserStatus.toLowerCase() === 'created') {
-        let user = await this.activateUser(response);
-        appProvider.getAppServerClient().notifyUserActivate();
-      }
-      return Promise.resolve(entity)
-    } catch (err) {
-      return Promise.reject(err);
-    }
-  }
-
 }
 
 export  {LoginScreenViewModel};
