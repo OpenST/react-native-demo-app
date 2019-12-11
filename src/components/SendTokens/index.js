@@ -51,7 +51,9 @@ export default class SendTokensScreen extends PureComponent {
       tokenError:null,
       usdValue: '0',
       usdError:null,
-      balance: {}
+      balance: {},
+      modalVisible: false,
+      title: 'fetching price point...'
     };
 
     this.numberFormatter = new NumberFormatter();
@@ -59,6 +61,7 @@ export default class SendTokensScreen extends PureComponent {
     this.user = props.navigation.getParam('user');
 
     this._isMounted = false;
+    this.isSendTokenTapped = false;
   }
 
   async setPriceOracle(pricePoint) {
@@ -85,13 +88,13 @@ export default class SendTokensScreen extends PureComponent {
     this.setState({
       balance: res[resultType]
     });
+    this.onSendTokenTapped();
   }
 
   onTokenChange = (tokenVal) => {
     let value = tokenVal;
     if (!this.numberFormatter.isValidInputProvided(value)) {
       this.setState({
-        tokenValue:value,
         tokenError:"Only numbers and upto 2 decimal values are allowed",
         usdValue: '',
         usdError:null
@@ -103,7 +106,6 @@ export default class SendTokensScreen extends PureComponent {
       let fiatVal = this.priceOracle.btToFiat(value);
 
       this.setState({
-        tokenValue:value,
         tokenError: null,
         usdValue: fiatVal,
         usdError:null
@@ -117,7 +119,6 @@ export default class SendTokensScreen extends PureComponent {
       this.setState({
         tokenValue:"",
         tokenError:"",
-        usdValue: value,
         usdError:"Only numbers and upto 2 decimal values are allowed"
       });
       return
@@ -129,13 +130,18 @@ export default class SendTokensScreen extends PureComponent {
       this.setState({
         tokenValue: toBtVal,
         tokenError: null,
-        usdValue: value,
         usdError: null
       })
     }
   };
 
   onSendTokenTapped = () => {
+
+    if (!this.priceOracle && this.isSendTokenTapped) {
+
+      return
+    }
+
 
     let executeTxDelegate = appProvider.getRegisgerDeviceHelper();
     executeTxDelegate.requestAcknowledged = (workflowContext, contextEntity) => {
@@ -206,6 +212,8 @@ export default class SendTokensScreen extends PureComponent {
       available_balance = '0'
     }
     return(
+      <>
+        <AppLoader modalVisible={this.state.modalVisible} title={this.state.title}/>
       <SafeAreaView style={styles.container}>
         <KeyboardAwareScrollView>
           <View style={styles.balanceView}>
@@ -230,7 +238,7 @@ export default class SendTokensScreen extends PureComponent {
                                  baseColor={Colors.lightGrey}
                                  keyboardType={'decimal-pad'}
                                  ref={this.tokenFieldRef}
-                                 value={this.state.tokenValue}
+                                 defaultValue={this.state.tokenValue}
                                  error={this.state.tokenError}
                                  onChangeText={(val) => {
                                    this.onTokenChange(val)
@@ -258,7 +266,7 @@ export default class SendTokensScreen extends PureComponent {
                                  keyboardType={'decimal-pad'}
                                  baseColor={Colors.lightGrey}
                                  ref={this.fiatFieldRef}
-                                 value={String(this.state.usdValue)}
+                                 value={this.state.usdValue}
                                  error={this.state.usdError}
                                  onChangeText={(val) => { this.onUsdChange(val)}}
               />
@@ -276,12 +284,16 @@ export default class SendTokensScreen extends PureComponent {
           </View>
 
           <TouchableOpacity style={styles.actionButton}
-                            onPress={this.onSendTokenTapped}>
+                            onPress={() => {
+                              this.isSendTokenTapped = true;
+                              this.onSendTokenTapped()
+                            }}>
             <Text style={{color: Colors.white}}>Send Tokens</Text>
           </TouchableOpacity>
 
         </KeyboardAwareScrollView>
       </SafeAreaView>
+        </>
     );
   }
 }

@@ -11,6 +11,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 
 import { SwitchActions } from 'react-navigation';
 import AppLoader from '../CommonComponent/AppLoader'
+import {appProvider} from "../../helper/AppProvider";
 
 class LoginScreen extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -147,6 +148,7 @@ class LoginScreen extends PureComponent {
                                  baseColor={Colors.lightGrey}
                                  editable={false}
                                  ref={this.economyfieldRef}
+                                 defaultValue={appProvider.getTokenSymbol()}
               />
             </View>
 

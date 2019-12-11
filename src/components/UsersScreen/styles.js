@@ -6,11 +6,8 @@ import sizeHelper from "../../helper/SizeHelper";
 let stylesMap = {
 
   descriptionText: {
-    marginLeft: 0,
-    marginRight: 0,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    minWidth: '100%'
   },
 
 	heading: {
@@ -22,34 +19,35 @@ let stylesMap = {
   subHeading: {
 		color: '#34445b',
 		fontSize: sizeHelper.layoutPtToPx(13),
-		marginTop: sizeHelper.layoutPtToPx(2),
-		marginBottom: sizeHelper.layoutPtToPx(15),
 		fontWeight: "normal"
 	},
 
 	userComponent: {
 		flex: 9,
 		flexDirection: "row",
+      justifyContent: 'center',
 		marginLeft: sizeHelper.layoutPtToPx(5),
-		marginRight: sizeHelper.layoutPtToPx(5),
 		borderBottomWidth: sizeHelper.layoutPtToPx(1),
-		borderBottomColor: Colors.whisper
+		borderBottomColor: Colors.whisper,
+      paddingVertical: sizeHelper.layoutPtToPx(10),
+      paddingLeft: sizeHelper.layoutPtToPx(10)
 	},
 
 	textStyle: {
-		color:'#fff',
-		fontWeight : 'bold',
-		textAlign:'center',
+		color:'#168DC1',
+        fontWeight : '500',
+		textAlign:'center'
   },
 
 	buttonStyle: {
-		flex: 2,
+		flex: 1,
 		justifyContent: 'center',
-		marginTop:sizeHelper.layoutPtToPx(10),
-    height:sizeHelper.layoutPtToPx(40),
-		backgroundColor:'#168DC1',
+		marginTop:sizeHelper.layoutPtToPx(5),
+      marginRight:sizeHelper.layoutPtToPx(10),
+      height:sizeHelper.layoutPtToPx(40),
+		// backgroundColor:'#168DC1',
 		borderRadius:sizeHelper.layoutPtToPx(10),
-		borderWidth: sizeHelper.layoutPtToPx(2),
+		borderWidth: sizeHelper.layoutPtToPx(1),
 		borderColor: '#168DC1'
   },
 

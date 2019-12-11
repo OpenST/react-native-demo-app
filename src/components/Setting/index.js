@@ -64,7 +64,7 @@ class Settings extends PureComponent {
     return {
       "cellType": "walletSetting",
       "heading": "Wallet Setting",
-      "description": "modify wallet settings"
+      "description": null
     }
   }
 
@@ -123,7 +123,7 @@ class Settings extends PureComponent {
       <TouchableWithoutFeedback onPress={() => this.onSettingItemTapped(item)}>
         <View style={inlineStyle.listComponent}>
           <Text style={inlineStyle.heading}>{item.heading}</Text>
-          <Text style={inlineStyle.description}>{item.description}</Text>
+          {(item.description && (item.description.length > 0)) ? <Text style={inlineStyle.description}>{item.description}</Text> : <View />}
         </View>
       </TouchableWithoutFeedback>
     );

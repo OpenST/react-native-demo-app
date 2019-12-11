@@ -104,8 +104,6 @@ class UsersScreen extends PureComponent {
       justifyContent: 'center',
       backgroundColor: '#f4f4f4',
       borderColor: '#9b9b9b',
-      marginTop: sizeHelper.layoutPtToPx(10),
-      marginLeft: sizeHelper.layoutPtToPx(5),
       marginRight: sizeHelper.layoutPtToPx(5),
       width: sizeHelper.layoutPtToPx(50),
       height: sizeHelper.layoutPtToPx(50),
@@ -128,11 +126,11 @@ class UsersScreen extends PureComponent {
   }
 
   getUserBalanceView(balance) {
-    return (<Text style={inlineStyle.subHeading}>Balance: {this.priceOracle.fromDecimal(balance)} POP</Text>);
+    return (<Text style={inlineStyle.subHeading}>Balance: {this.priceOracle.fromDecimal(balance) || 0} POP</Text>);
   }
 
   getUserDetailsView(item) {
-    return (<View style={{flex: 3, justifyContent: "center", marginTop: sizeHelper.layoutPtToPx(10)}}>
+    return (<View style={{flex: 3, justifyContent: "center"}}>
       {
         this.getUserNameView(item.username)
       }
