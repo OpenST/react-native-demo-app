@@ -57,6 +57,8 @@ export default class SendTokensScreen extends PureComponent {
     this.numberFormatter = new NumberFormatter();
     this.priceOracle = null;
     this.user = props.navigation.getParam('user');
+
+    this._isMounted = false;
   }
 
   async setPriceOracle(pricePoint) {
@@ -64,12 +66,16 @@ export default class SendTokensScreen extends PureComponent {
   }
 
   componentDidMount() {
-
+    this._isMounted = true;
     OstJsonApi.getBalanceWithPricePointForUserId(CurrentUser.getUserId(), (res) => {
-      this.onBalanceResponse(res)
+      this._isMounted && this.onBalanceResponse(res)
     }, (ostError) => {
       console.log(ostError)
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   async onBalanceResponse(res) {

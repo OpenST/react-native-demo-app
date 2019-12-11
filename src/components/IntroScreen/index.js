@@ -35,7 +35,7 @@ class IntroScreen extends PureComponent {
 	}
 
 	initSdk() {
-		// OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
+		OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
 		OstWalletSdkUI.setContentConfig(ost_sdk_content_config);
 	};
 

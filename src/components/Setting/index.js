@@ -30,6 +30,7 @@ class Settings extends PureComponent {
         titleColor: Colors.white
       },
       headerTintColor: '#fff',
+      headerBackTitle: null
     };
   };
 

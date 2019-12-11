@@ -15,19 +15,21 @@ class CurrentUser {
         let userData = responseData.data && responseData.data[responseData.data.result_type];
         if (!userData) {
           this.userData = null;
-          Alert.alert("User not found");
           return Promise.reject(responseData);
         }
         this.userData = userData;
         return responseData;
       }).catch(e => {
-        Alert.alert("Something went wrong" + JSON.stringify(e));
         return Promise.reject(e);
       });
   }
 
   getUserData() {
     return this.userData;
+  }
+
+  resetUserData() {
+    this.userData = null
   }
 
   getUserId() {
@@ -94,6 +96,13 @@ class CurrentUser {
   logoutUser() {
     let apiService = appProvider.getAppServerClient();
     return apiService.logoutUser()
+      .then((res) => {
+        this.resetUserData()
+        return Promise.resolve(res)
+      })
+      .catch((err) => {
+        return Promise.reject(err)
+      })
   }
 }
 

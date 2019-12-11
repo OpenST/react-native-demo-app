@@ -49,7 +49,8 @@ class LoginScreenViewModel {
   async setupApplicationUser() {
     try {
       await CurrentUser.initialize();
-      let device = await this.setupDevice();
+      let res = await this.setupDevice();
+      let device = res.entity;
       let ostDeviceStatus = await CurrentUser.getOstDeviceStatus();
       let ostUserStatus = await CurrentUser.getOstUserStatus();
       if (ostDeviceStatus.toLowerCase() === 'registered'
