@@ -9,6 +9,8 @@ import CurrentUser from "../../models/CurrentUser";
 import {SwitchActions} from "react-navigation";
 
 import {appProvider} from "../../helper/AppProvider";
+import {OstWalletSettings} from "@ostdotcom/ost-wallet-sdk-react-native";
+import {DEFAULT_SESSION_KEY_EXPIRY_TIME, DEFAULT_SPENDING_LIMIT} from "../../constants/AppConfig";
 
 
 class Settings extends PureComponent {
@@ -75,6 +77,18 @@ class Settings extends PureComponent {
 
   onSettingItemTapped = (cellData) => {
     if ( cellData.cellType === 'walletSetting' ) {
+
+      OstWalletSettings.setMasterConfig({
+        "item_configs":{
+          "add_session": {
+            "config": {
+              "spending_limit": DEFAULT_SPENDING_LIMIT,
+              "expiration_time": DEFAULT_SESSION_KEY_EXPIRY_TIME
+            }
+          }
+        }
+        });
+
       this.props.navigation.push("WalletSettingScreen", {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()});
       return
     }
