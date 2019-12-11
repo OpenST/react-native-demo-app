@@ -12,7 +12,7 @@
     "postinstall": "echo \"Copying assets...\" && npm run copy-assets"
   },
   "dependencies": {
-    "@ostdotcom/ost-wallet-sdk-react-native": "git@github.com:ostdotcom/ost-wallet-sdk-react-native.git#ebc46c06d7c9b3ab2383c29f320f13c41459dc79",
+    "@ostdotcom/ost-wallet-sdk-react-native": "git@github.com:ostdotcom/ost-wallet-sdk-react-native.git#b416b2e03f30029a319effed0b1e07ac34c69744",
     "@react-native-community/netinfo": "3.2.1",
     "lodash": "4.17.11",
     "lodash.merge": "^4.6.2",

@@ -11,7 +11,7 @@ import IntroScreen from './src/components/IntroScreen'
 import LoginScreen from './src/components/LoginScreen'
 import SettingScreen from './src/components/Setting'
 import SendTokens from './src/components/SendTokens'
-
+import WalletScreen from './src/components/WalletScreen/index'
 import UserScreen from "./src/components/UsersScreen";
 
 const Onboarding = createStackNavigator(
@@ -31,7 +31,7 @@ const UsersStack = createStackNavigator(
 
 const WalletStack = createStackNavigator(
   {
-    IntroScreen: IntroScreen,
+    WalletScreen: WalletScreen,
     LoginScreen: LoginScreen
   }
 );

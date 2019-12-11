@@ -74,7 +74,9 @@ export default class AppServerApi extends BaseApi{
   getCurrentUserTransactions(nextPayload) {
     let body = {next_page_payload: nextPayload};
     let res ='/users/ledger';
-    return this.get(res, body);
+    return this.get(res, body)
+      .then(this.thenFunction)
+      .catch(this.catchFunction)
   }
 
   getUserList(nextPayload) {
