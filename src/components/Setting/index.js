@@ -80,11 +80,16 @@ class Settings extends PureComponent {
     if ( cellData.cellType === 'walletSetting' ) {
 
       OstWalletSettings.setMasterConfig({
-        "item_configs":{
-          "add_session": {
-            "config": {
+        item_configs:{
+          add_session: {
+            config: {
               "spending_limit": DEFAULT_SPENDING_LIMIT,
               "expiration_time": DEFAULT_SESSION_KEY_EXPIRY_TIME
+            }
+          },
+          wallet_details:{
+            config: {
+              ost_view_endpoint: appProvider.getViewApiEndpoint()
             }
           }
         }

@@ -13,6 +13,8 @@ import BackArrow from '../CommonComponent/BackArrow'
 import {appProvider} from "../../helper/AppProvider";
 import CurrentUser from '../../models/CurrentUser'
 
+import AppLoader from '../CommonComponent/AppLoader'
+
 import NumberFormatter from '../../helper/NumberFormatter'
 import {ensureDeivceAndSession} from "../../helper/TransactionHelper";
 import sizeHelper from "../../helper/SizeHelper";
@@ -88,7 +90,6 @@ export default class SendTokensScreen extends PureComponent {
     this.setState({
       balance: res[resultType]
     });
-    this.onSendTokenTapped();
   }
 
   onTokenChange = (tokenVal) => {

@@ -97,8 +97,7 @@ class LoginScreenViewModel {
 
         appServerClient.registerDevice(deviceAddress, apiSignerAddress)
           .then((res) => {
-            setupDeviceHelper.onDeviceRegisteredFailed();
-            // setupDeviceHelper.onDeviceRegistred(res)
+            setupDeviceHelper.onDeviceRegistred(res)
           })
           .catch((err) => {
             setupDeviceHelper.onDeviceRegisteredFailed();
