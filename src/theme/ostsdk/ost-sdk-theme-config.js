@@ -97,10 +97,5 @@ export default {
 
   "cell_separator": {
     "color": "#DBDBDB"
-  },
-
-  "pin_input": {
-    "empty_color": "#c7c7cc",
-    "filled_color": "#ef5566"
   }
 }

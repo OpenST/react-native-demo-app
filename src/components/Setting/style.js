@@ -14,7 +14,7 @@ const stylesMap = {
     marginLeft: sizeHelper.layoutPtToPx(20),
     borderBottomWidth: sizeHelper.layoutPtToPx(1),
     borderBottomColor: Colors.whisper,
-    paddingVertical: sizeHelper.layoutPtToPx(15)
+    paddingVertical: sizeHelper.layoutPtToPx(10)
   },
 
   heading: {
