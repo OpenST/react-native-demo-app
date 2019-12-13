@@ -114,7 +114,6 @@ class Settings extends PureComponent {
     CurrentUser.logoutUser()
       .then( () => {
         this.props.navigation.dispatch(SwitchActions.jumpTo({routeName:'Onboarding'}, {navTitle: "Wallet"}));
-
       })
       .catch( () => {
 

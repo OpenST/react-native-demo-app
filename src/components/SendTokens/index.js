@@ -6,7 +6,7 @@ import styles from './style'
 import {OutlinedTextField} from 'react-native-material-textfield';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import {OstWalletSdk, OstWalletSdkUI, OstJsonApi} from '@ostdotcom/ost-wallet-sdk-react-native';
+import {OstTransactionHelper, OstJsonApi, OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 import Colors from "../../theme/styles/Colors";
 import BackArrow from '../CommonComponent/BackArrow'
@@ -143,7 +143,6 @@ export default class SendTokensScreen extends PureComponent {
       return
     }
 
-
     let executeTxDelegate = appProvider.getRegisgerDeviceHelper();
     executeTxDelegate.requestAcknowledged = (workflowContext, contextEntity) => {
       console.log(contextEntity)
@@ -157,22 +156,22 @@ export default class SendTokensScreen extends PureComponent {
       console.log(contextEntity)
     };
 
-    const tokenValue = this.state.tokenValue;
-    if (!this.numberFormatter.isValidInputProvided(tokenValue)) {
+    let { current: tokenField } = this.tokenFieldRef;
+    if (!this.numberFormatter.isValidInputProvided(tokenField.value())) {
       return
     }
-    const toWeiValue = this.priceOracle.toDecimal(tokenValue);
+    const toWeiValue = this.priceOracle.toDecimal(tokenField.value());
     let txMeta = {"type": "user_to_user", "name": "Tokens sent from iOS", "details": "Send tokens from iOS"};
 
-    ensureDeivceAndSession(CurrentUser.getUserId(),toWeiValue,(res) => {
-      //device is unauthorized.
-    },(error, isSuccess) => {
-      if (error) {
-
-        return;
-      }
-
-      OstWalletSdk.executeTransaction(CurrentUser.getUserId(), [this.user.token_holder_address], [toWeiValue], "direct transfer", txMeta, executeTxDelegate)
+    let uuid = OstTransactionHelper.executeDirectTransfer(CurrentUser.getUserId(), [toWeiValue], [this.user.token_holder_address], txMeta)
+    OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.flowComplete, (workflowContext, contextEntity) => {
+      console.log(contextEntity);
+    });
+    OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.flowInterrupt, (workflowContext, ostError) => {
+      console.log(ostError);
+    });
+    OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.requestAcknowledged, (workflowContext, contextEntity) => {
+      console.log(contextEntity);
     });
   };
 

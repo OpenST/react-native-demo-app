@@ -97,5 +97,19 @@ export default {
 
   "cell_separator": {
     "color": "#DBDBDB"
+  },
+
+  "cl1": {
+    "size": 14,
+    "color": "#007aff",
+    "system_font_weight": "medium",
+    "alignment": "left",
+  },
+
+  "st": {
+    "size": 14,
+    "color": "#0F9D58",
+    "system_font_weight": "regular",
+    "alignment": "left",
   }
 }
