@@ -49,6 +49,46 @@ let stylesMap = {
 	},
 	flatListStyle: {
 		marginTop: sizeHelper.layoutPtToPx(10),
+	},
+
+	txnComponent: {
+		flex: 9,
+		flexDirection: "row",
+		justifyContent: 'center',
+		marginLeft: sizeHelper.layoutPtToPx(5),
+		borderBottomWidth: sizeHelper.layoutPtToPx(1),
+		borderBottomColor: Colors.whisper,
+		paddingVertical: sizeHelper.layoutPtToPx(10),
+	},
+
+	imageStyle: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#f4f4f4',
+		borderColor: '#9b9b9b',
+		marginRight: sizeHelper.layoutPtToPx(5),
+		width: sizeHelper.layoutPtToPx(50),
+		height: sizeHelper.layoutPtToPx(50),
+		borderRadius: sizeHelper.layoutPtToPx(25),
+		borderWidth: sizeHelper.layoutPtToPx(2),
+	},
+
+	txnHeading: {
+		color: '#597a84',
+		fontSize: sizeHelper.layoutPtToPx(16),
+		fontWeight: "bold"
+	},
+
+	subHeading: {
+		color: '#34445b',
+		fontSize: sizeHelper.layoutPtToPx(13),
+		fontWeight: "normal"
+	},
+
+	valueStyle: {
+		flex: 2,
+		fontSize: sizeHelper.layoutPtToPx(15),
+		marginTop:sizeHelper.layoutPtToPx(5),
 	}
 };
 
