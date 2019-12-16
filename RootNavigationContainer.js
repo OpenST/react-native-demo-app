@@ -1,12 +1,16 @@
 import React from 'react';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-
+import {Image} from "react-native";
+import settingsIcon from './src/assets/settings_icon.png';
+import walletIcon from './src/assets/wallet_icon.png';
+import usersIcon from './src/assets/users_icon.png';
+import sizeHelper from "./src/helper/SizeHelper";
+import Colors from "./src/theme/styles/Colors";
 import {Root} from "native-base";
 
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {OstWalletSettingsComponent} from '@ostdotcom/ost-wallet-sdk-react-native';
-
 import IntroScreen from './src/components/IntroScreen'
 import LoginScreen from './src/components/LoginScreen'
 import SettingScreen from './src/components/Setting'
@@ -44,9 +48,39 @@ const SettingStack = createStackNavigator(
 );
 
 const Wallet = createBottomTabNavigator({
-  Users: UsersStack,
-  Wallet: WalletStack,
-  Settings: SettingStack
+	Users: UsersStack,
+	Wallet: WalletStack,
+	Settings: SettingStack
+}, {
+	defaultNavigationOptions: ({navigation}) => ({
+		tabBarIcon: ({focused, horizontal, tintColor}) => {
+			const {routeName} = navigation.state;
+			if (routeName === 'Settings') {
+				iconPath = settingsIcon;
+				height = sizeHelper.layoutPtToPx(27);
+				width = sizeHelper.layoutPtToPx(28);
+			} else if (routeName === 'Users') {
+				iconPath = usersIcon;
+				height = sizeHelper.layoutPtToPx(20);
+				width = sizeHelper.layoutPtToPx(28);
+			} else {
+				iconPath = walletIcon;
+				height = sizeHelper.layoutPtToPx(24);
+				width = sizeHelper.layoutPtToPx(19);
+			}
+
+			// You can return any component that you like here!
+			return <Image source={iconPath} style={{
+				width: width,
+				height: height,
+				tintColor: tintColor
+			}}/>;
+		},
+	}),
+	tabBarOptions: {
+		activeTintColor: Colors.brightSky,
+		inactiveTintColor: Colors.grey,
+	},
 });
 
 const AppContainer = createAppContainer(
