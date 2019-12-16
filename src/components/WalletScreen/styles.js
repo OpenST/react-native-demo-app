@@ -55,7 +55,6 @@ let stylesMap = {
 		flex: 9,
 		flexDirection: "row",
 		justifyContent: 'center',
-		marginLeft: sizeHelper.layoutPtToPx(5),
 		borderBottomWidth: sizeHelper.layoutPtToPx(1),
 		borderBottomColor: Colors.whisper,
 		paddingVertical: sizeHelper.layoutPtToPx(10),
@@ -87,6 +86,7 @@ let stylesMap = {
 
 	valueStyle: {
 		flex: 2,
+		textAlign: 'right',
 		fontSize: sizeHelper.layoutPtToPx(15),
 		marginTop:sizeHelper.layoutPtToPx(5),
 	}
