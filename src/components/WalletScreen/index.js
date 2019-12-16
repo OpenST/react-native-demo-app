@@ -116,12 +116,41 @@ class WalletScreen extends PureComponent {
 	}
 
 	cleanList(list) {
+		let preList = this.state.list ? this.state.list.slice(0) : [];
 		for (let ind=0; ind<list.length; ind++) {
 			let txn = list[ind];
-			this.state.list = this.state.list.concat(this.getTransactionTransferList(txn, this.transactionUsers));
+			preList = preList.concat(this.getTransactionTransferList(txn, this.transactionUsers));
 		}
-		return this.state.list;
+		return preList;
 	}
+
+	getNext = () => {
+		if (
+			this.state.refreshing ||
+			!this.next_page_payload.page
+		)
+			return;
+		appProvider.getAppServerClient().getCurrentUserTransactions(this.next_page_payload.page)
+			.then((res) => {
+				if (res.result_type) {
+					let cleanList = this.cleanList(res[res.result_type]);
+					this.setState({
+						list: cleanList,
+						refreshing: false
+					});
+					this.next_page_payload = res.meta.next_page_payload
+				} else {
+					this.setState({
+						refreshing: false
+					})
+				}
+			}).catch((err) => {
+			this.setState({
+				refreshing: false
+			});
+			console.log(err);
+		});
+	};
 
 	render() {
 		return (
@@ -139,6 +168,8 @@ class WalletScreen extends PureComponent {
 					style={inlineStyle.flatListStyle}
 					onRefresh={this.onRefresh}
 					data={this.state.list}
+					onEndReached={this.getNext}
+					onEndReachedThreshold={0.5}
 					refreshing={this.state.refreshing}
 					renderItem={this._renderItem}
 					keyExtractor={this._keyExtractor}

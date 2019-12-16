@@ -52,9 +52,11 @@ class UsersScreen extends PureComponent {
   }
 
   fetchData() {
+		this.appIdHash = {};
     const oThis = this;
     this.setState({
-      refreshing: true
+      refreshing: true,
+      list:null
 	});
     appProvider.getAppServerClient().getUserList()
       .then((res) => {
@@ -84,18 +86,18 @@ class UsersScreen extends PureComponent {
   }
 
   cleanList(list) {
+    const preList = this.state.list ? this.state.list.slice(0) : [];
     for (let ind=0; ind<list.length; ind++) {
       let obj = list[ind];
       if (obj.app_user_id && !this.appIdHash[obj.app_user_id]) {
-        if (!this.state.list) this.state.list = [];
-        this.state.list.push(obj);
+				preList.push(obj);
         this.appIdHash[obj.app_user_id] = 1;
       }
     }
-    return this.state.list;
+    return preList;
   }
   onRefresh = () => {
-
+		this.fetchData();
   };
 
   getCircularView(centeredText) {
@@ -170,10 +172,10 @@ class UsersScreen extends PureComponent {
   getNext = () => {
     if (
       this.state.refreshing ||
-      !this.next_page_payload
+      !this.next_page_payload.page
     )
       return;
-    appProvider.getAppServerClient().getUserList(this.next_page_payload)
+    appProvider.getAppServerClient().getUserList(this.next_page_payload.page)
       .then((res) => {
         if (res.result_type) {
           let cleanList = this.cleanList(res[res.result_type]);

@@ -72,7 +72,7 @@ export default class AppServerApi extends BaseApi{
   }
 
   getCurrentUserTransactions(nextPayload) {
-    let body = {next_page_payload: nextPayload};
+    let body = {page: nextPayload};
     let res ='/users/ledger';
     return this.get(res, body)
       .then(this.thenFunction)
@@ -80,7 +80,7 @@ export default class AppServerApi extends BaseApi{
   }
 
   getUserList(nextPayload) {
-    let body = {next_page_payload: nextPayload};
+    let body = {page: nextPayload};
     let res ='/users';
     return this.get(res, body)
 	  .then(this.thenFunction)
