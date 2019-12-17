@@ -8,5 +8,6 @@ export default {
   grey: '#888888',
   iceBlue: '#eff9fa',
 	darkerBlue: "#438bad",
-  lighterGrey: "#9b9b9b"
+  lighterGrey: "#9b9b9b",
+  rainySky: '#597A84'
 };

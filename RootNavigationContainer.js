@@ -18,6 +18,35 @@ import SendTokens from './src/components/SendTokens'
 import WalletScreen from './src/components/WalletScreen/index'
 import UserScreen from "./src/components/UsersScreen";
 
+
+const customTabHiddenRoutes = [
+  'SendTokens',
+  'WalletSettingScreen'
+];
+
+let recursiveMaxCount = 0;
+
+getLastChildRoutename = (state) => {
+  if (!state) return null;
+  let index = state.index,
+    routes = state.routes;
+  if (!routes || recursiveMaxCount > 50) {
+    recursiveMaxCount = 0;
+    return state.routeName;
+  }
+  recursiveMaxCount++;
+  return getLastChildRoutename(routes[index]);
+};
+
+const modalStackConfig = {
+  navigationOptions: ({ navigation }) => {
+    const routeName = getLastChildRoutename(navigation.state);
+    return {
+      tabBarVisible: !customTabHiddenRoutes.includes(routeName)
+    };
+  }
+};
+
 const Onboarding = createStackNavigator(
   {
     IntroScreen: IntroScreen,
@@ -30,6 +59,9 @@ const UsersStack = createStackNavigator(
   {
     UsersScreen: UserScreen,
     SendTokens: SendTokens
+  },
+  {
+    ...modalStackConfig
   }
 );
 
@@ -44,6 +76,9 @@ const SettingStack = createStackNavigator(
   {
     SettingScreen: SettingScreen,
     WalletSettingScreen: OstWalletSettingsComponent
+  },
+  {
+    ...modalStackConfig
   }
 );
 

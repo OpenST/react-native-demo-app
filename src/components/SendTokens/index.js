@@ -238,8 +238,8 @@ export default class SendTokensScreen extends PureComponent {
       <SafeAreaView style={styles.container}>
         <KeyboardAwareScrollView>
           <View style={styles.balanceView}>
-            <Text>Send Tokens To</Text>
-            <Text>Balance: {available_balance} {appProvider.getTokenSymbol()}</Text>
+            <Text style={{color: Colors.lighterGrey, fontWeight: '700'}}>Send Tokens To</Text>
+            <Text style={{color: Colors.rainySky}}>Balance: {available_balance} {appProvider.getTokenSymbol()}</Text>
           </View>
 
           <View style={styles.userContainer}>
