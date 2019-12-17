@@ -13,331 +13,347 @@ import PriceOracle from "../../services/PriceOracle";
 import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 class WalletScreen extends PureComponent {
-	static navigationOptions = ({navigation, navigationOptions}) => {
-		return {
-			title: navigation.getParam('navTitle', 'Wallet'),
-			headerStyle: {
-				backgroundColor: Colors.brightSky,
-				borderBottomWidth: 0,
-				shadowColor: '#000',
-				shadowOffset: {
-					width: 0,
-					height: 1
-				},
-				shadowOpacity: 0.1,
-				shadowRadius: 3,
-				titleColor: Colors.white
-			},
-			headerTintColor: '#fff',
-			headerBackTitle: null
+  static navigationOptions = ({navigation, navigationOptions}) => {
+    return {
+      title: navigation.getParam('navTitle', 'Wallet'),
+      headerStyle: {
+        backgroundColor: Colors.brightSky,
+        borderBottomWidth: 0,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 1
+        },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        titleColor: Colors.white
+      },
+      headerTintColor: '#fff',
+      headerBackTitle: null
 
-		};
-	};
+    };
+  };
 
-	constructor(props) {
-		super(props);
-		this.state = {list:[], refreshing: false, balance: {available_balance:"0"}};
-		this.transactionUsers = {};
-		this.priceOracle = new PriceOracle();
-		this.activateUserWorkflowId = this.props.navigation.getParam('activateUserWorkflowId');
+  constructor(props) {
+    super(props);
+    this.state = {list:[], refreshing: false, balance: {available_balance:"0"}};
+    this.transactionUsers = {};
+    this.priceOracle = new PriceOracle();
+    this.activateUserWorkflowId = this.props.navigation.getParam('activateUserWorkflowId');
+  }
+
+  componentDidMount() {
+    this.subscribeToEvents();
+    this.onComponentDidMount()
+  }
+
+  subscribeToEvents() {
+    const { navigation } = this.props;
+    this.focusListener = navigation.addListener('didFocus', () => {
+      this.onfocus();
+    });
+  }
+
+  onfocus() {
+    let shouldFetchTx = this.props.navigation.getParam('fetchTransaction');
+    if (shouldFetchTx) {
+      this.props.navigation.setParams({fetchTransaction: false});
+      this.onRefresh();
 	}
+  }
 
-	componentDidMount() {
-      this.onComponentDidMount()
-	}
+  async onComponentDidMount() {
+    let status = await CurrentUser.getOstUserStatus();
+    if (status == 'ACTIVATED') {
+      this.fetchData()
+    }else if (this.activateUserWorkflowId){
+      OstWalletSdkUI.subscribe(this.activateUserWorkflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext, contextEntity) => {
+        setTimeout(() => {
+          this.fetchData();
+        }, 1000*24)
+      })
+    }
+  }
 
-	async onComponentDidMount() {
-		let status = await CurrentUser.getOstUserStatus();
-      if (status == 'ACTIVATED') {
-        this.fetchData()
-      }else if (this.activateUserWorkflowId){
-        OstWalletSdkUI.subscribe(this.activateUserWorkflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext, contextEntity) => {
-          setTimeout(() => {
-            this.fetchData();
-          }, 1000*24)
+  fetchData() {
+    this.fetchBalance().then(()=>{
+      this.onRefresh();
+    }).catch(()=>{
+      console.log("Error while fetching balance");
+    });
+  }
+
+  onRefresh = () => {
+    this.fetchTransactions();
+  };
+
+  async fetchBalance() {
+    const oThis = this;
+    return new Promise(function(resolve, reject){
+      OstJsonApi.getBalanceWithPricePointForUserId(CurrentUser.getUserId(), (res) => {
+        oThis.onBalanceResponse(res)
+          .then(()=>{
+            return resolve();
+          }).catch(()=>{
+          return reject();
         })
-      }
-	}
-
-	fetchData() {
-      this.fetchBalance().then(()=>{
-        this.onRefresh();
-      }).catch(()=>{
-        console.log("Error while fetching balance");
+      }, (ostError) => {
+        console.log(ostError);
+        return reject();
       });
-	}
+    });
+  }
 
-	onRefresh = () => {
-		this.fetchTransactions();
-	};
+  async onBalanceResponse(res) {
+    let pricepoint = res["price_point"];
+    let resultType = res.result_type;
+    console.log(res[resultType]);
+    await this.setPriceOracle(pricepoint);
+    this.setState({
+      balance: res[resultType]
+    });
+  }
 
-	async fetchBalance() {
-		const oThis = this;
-		return new Promise(function(resolve, reject){
-			OstJsonApi.getBalanceWithPricePointForUserId(CurrentUser.getUserId(), (res) => {
-				oThis.onBalanceResponse(res)
-					.then(()=>{
-						return resolve();
-					}).catch(()=>{
-						return reject();
-					})
-			}, (ostError) => {
-				console.log(ostError);
-				return reject();
-			});
-		});
-	}
+  async setPriceOracle(pricePoint) {
+    this.priceOracle = await appProvider.getPriceOracle(pricePoint)
+  }
 
-	async onBalanceResponse(res) {
-		let pricepoint = res["price_point"];
-		let resultType = res.result_type;
-		console.log(res[resultType]);
-		await this.setPriceOracle(pricepoint);
-		this.setState({
-			balance: res[resultType]
-		});
-	}
+  fetchTransactions() {
+    if (this.state.refreshing) {
+      return
+    }
+    this.setState({
+      refreshing: true,
+      list:[]
+    });
+    appProvider.getAppServerClient().getCurrentUserTransactions()
+      .then((res) => {
+        console.log(res);
+        if (res.result_type) {
+          this.transactionUsers = res["transaction_users"];
+          let cleanList = this.cleanList(res[res.result_type]);
+          this.setState({
+            list: cleanList,
+            refreshing: false
+          });
+          this.next_page_payload = res.meta.next_page_payload
+        }else {
+          this.setState({
+            refreshing: false
+          })
+        }
+      }).catch((err) => {
+      this.setState({
+        refreshing: false
+      });
+      console.log(err);
+    });
+  }
 
-	async setPriceOracle(pricePoint) {
-		this.priceOracle = await appProvider.getPriceOracle(pricePoint)
-	}
+  cleanList(list) {
+    let preList = this.state.list ? this.state.list.slice(0) : [];
+    for (let ind=0; ind<list.length; ind++) {
+      let txn = list[ind];
+      preList = preList.concat(this.getTransactionTransferList(txn, this.transactionUsers));
+    }
+    return preList;
+  }
 
-	fetchTransactions() {
-		if (this.state.refreshing) {
-			return
-		}
-		this.setState({
-			refreshing: true,
-			list:[]
-		});
-		appProvider.getAppServerClient().getCurrentUserTransactions()
-			.then((res) => {
-				console.log(res);
-				if (res.result_type) {
-					this.transactionUsers = res["transaction_users"];
-					let cleanList = this.cleanList(res[res.result_type]);
-					this.setState({
-						list: cleanList,
-						refreshing: false
-					});
-					this.next_page_payload = res.meta.next_page_payload
-				}else {
-					this.setState({
-						refreshing: false
-					})
-				}
-			}).catch((err) => {
-				this.setState({
-					refreshing: false
-				});
-			console.log(err);
-		});
-	}
+  getNext = () => {
+    if (
+      this.state.refreshing ||
+      !this.next_page_payload.page
+    )
+      return;
+    appProvider.getAppServerClient().getCurrentUserTransactions(this.next_page_payload.page)
+      .then((res) => {
+        if (res.result_type) {
+          let cleanList = this.cleanList(res[res.result_type]);
+          this.setState({
+            list: cleanList,
+            refreshing: false
+          });
+          this.next_page_payload = res.meta.next_page_payload
+        } else {
+          this.setState({
+            refreshing: false
+          })
+        }
+      }).catch((err) => {
+      this.setState({
+        refreshing: false
+      });
+      console.log(err);
+    });
+  };
 
-	cleanList(list) {
-		let preList = this.state.list ? this.state.list.slice(0) : [];
-		for (let ind=0; ind<list.length; ind++) {
-			let txn = list[ind];
-			preList = preList.concat(this.getTransactionTransferList(txn, this.transactionUsers));
-		}
-		return preList;
-	}
+  render() {
+    return (
+      <View style={inlineStyle.walletComponent}>
+        <View style={inlineStyle.walletWrapStyle}>
+          <Image style={inlineStyle.walletScreenStyle} source={walletBgCurve}/>
+          <View style={inlineStyle.walletBalanceStyle}>
+            <Text style={inlineStyle.tokenTextStyle}>{this.getTokenBalance()}</Text>
+            <Text style={inlineStyle.fiatTextStyle}>{this.getTokenFiatBalance()}</Text>
+          </View>
+        </View>
 
-	getNext = () => {
-		if (
-			this.state.refreshing ||
-			!this.next_page_payload.page
-		)
-			return;
-		appProvider.getAppServerClient().getCurrentUserTransactions(this.next_page_payload.page)
-			.then((res) => {
-				if (res.result_type) {
-					let cleanList = this.cleanList(res[res.result_type]);
-					this.setState({
-						list: cleanList,
-						refreshing: false
-					});
-					this.next_page_payload = res.meta.next_page_payload
-				} else {
-					this.setState({
-						refreshing: false
-					})
-				}
-			}).catch((err) => {
-			this.setState({
-				refreshing: false
-			});
-			console.log(err);
-		});
-	};
+        <Text style={inlineStyle.heading}>TRANSACTION HISTORY</Text>
+        <FlatList
+          style={inlineStyle.flatListStyle}
+          onRefresh={this.onRefresh}
+          data={this.state.list}
+          onEndReached={this.getNext}
+          onEndReachedThreshold={0.5}
+          refreshing={this.state.refreshing}
+          renderItem={this._renderItem}
+          keyExtractor={this._keyExtractor}
+          visible={false}
+          scrollEnabled={true}
+        />
+      </View>
+    );
+  }
 
-	render() {
-		return (
-			<View style={inlineStyle.walletComponent}>
-				<View style={inlineStyle.walletWrapStyle}>
-					<Image style={inlineStyle.walletScreenStyle} source={walletBgCurve}/>
-					<View style={inlineStyle.walletBalanceStyle}>
-						<Text style={inlineStyle.tokenTextStyle}>{this.getTokenBalance()}</Text>
-						<Text style={inlineStyle.fiatTextStyle}>{this.getTokenFiatBalance()}</Text>
-					</View>
-				</View>
+  getTokenBalance() {
+    let balanceInDecimal = "0";
+    if (this.priceOracle) balanceInDecimal = this.priceOracle.fromDecimal(this.state.balance.available_balance);
+    return `${balanceInDecimal} ${appProvider.getTokenSymbol()}`;
+  }
 
-				<Text style={inlineStyle.heading}>TRANSACTION HISTORY</Text>
-				<FlatList
-					style={inlineStyle.flatListStyle}
-					onRefresh={this.onRefresh}
-					data={this.state.list}
-					onEndReached={this.getNext}
-					onEndReachedThreshold={0.5}
-					refreshing={this.state.refreshing}
-					renderItem={this._renderItem}
-					keyExtractor={this._keyExtractor}
-					visible={false}
-					scrollEnabled={true}
-				/>
-			</View>
-		);
-	}
+  getTokenFiatBalance() {
+    let balanceInFiat = "0";
+    if (this.priceOracle) {
+      let btValue = this.priceOracle.fromDecimal(this.state.balance.available_balance);
+      balanceInFiat = this.priceOracle.btToFiat(btValue) || '0';
+    }
+    return `$ ${balanceInFiat}`;
+  }
 
-	getTokenBalance() {
-		let balanceInDecimal = "0";
-		if (this.priceOracle) balanceInDecimal = this.priceOracle.fromDecimal(this.state.balance.available_balance);
-		return `${balanceInDecimal} ${appProvider.getTokenSymbol()}`;
-	}
+  _renderItem = ({item, index}) => {
+    let image = airDropLogo;
+    if (item.in) {
+      image = airDropLogo;
+      if ('company_to_user' != item.metaType) {
+        image = tokenReceiveIcon;
+      }
+    } else {
+      image = tokenSentIcon;
+    }
+    return (
+      <View style={inlineStyle.txnComponent}>
+        <Image source={image} style={inlineStyle.imageStyle} />
+        {
+          this.getTxnDetailsView(item)
+        }
+        {
+          this.getValueTransferView(item)
+        }
+      </View>
+    );
+  };
 
-	getTokenFiatBalance() {
-		let balanceInFiat = "0";
-		if (this.priceOracle) {
-			let btValue = this.priceOracle.fromDecimal(this.state.balance.available_balance);
-			balanceInFiat = this.priceOracle.btToFiat(btValue) || '0';
-		}
-		return `$ ${balanceInFiat}`;
-	}
+  _keyExtractor = (item, index) => `id_${index}_${item.cellType}`;
 
-	_renderItem = ({item, index}) => {
-		let image = airDropLogo;
-		if (item.in) {
-			image = airDropLogo;
-			if ('company_to_user' != item.metaType) {
-				image = tokenReceiveIcon;
-			}
-		} else {
-			image = tokenSentIcon;
-		}
-		return (
-			<View style={inlineStyle.txnComponent}>
-				<Image source={image} style={inlineStyle.imageStyle} />
-				{
-					this.getTxnDetailsView(item)
-				}
-				{
-					this.getValueTransferView(item)
-				}
-			</View>
-		);
-	};
+  getTxnText(item) {
+    let txnType = null;
+    if (item.in){
+      if ('company_to_user' == item.metaType) {
+        txnType = item.metaName;
+      } else if (!item.fromUserName || item.fromUserName == ""){
+        txnType = "Received Tokens";
+      } else {
+        txnType = `Received from ${item.fromUserName}`;
+      }
+    } else {
+      if (!item.toUserName || item.toUserName == ""){
+        txnType = "Sent Tokens";
+      } else {
+        txnType = `Sent to ${item.toUserName}`;
+      }
+    }
+    return (<Text style={inlineStyle.txnHeading}>{txnType}</Text>);
+  }
 
-	_keyExtractor = (item, index) => `id_${index}_${item.cellType}`;
+  getDateTimeStamp(timestamp) {
+    let dateString = this.getDateString(new Date(timestamp));
+    return (<Text style={inlineStyle.subHeading}>{dateString}</Text>);
+  }
 
-	getTxnText(item) {
-		let txnType = null;
-		if (item.in){
-			if ('company_to_user' == item.metaType) {
-				txnType = item.metaName;
-			} else if (!item.fromUserName || item.fromUserName == ""){
-				txnType = "Received Tokens";
-			} else {
-				txnType = `Received from ${item.fromUserName}`;
-			}
-		} else {
-			if (!item.toUserName || item.toUserName == ""){
-				txnType = "Sent Tokens";
-			} else {
-				txnType = `Sent to ${item.toUserName}`;
-			}
-		}
-		return (<Text style={inlineStyle.txnHeading}>{txnType}</Text>);
-	}
+  getTxnDetailsView(item) {
+    return (<View style={{flex: 8, justifyContent: "center"}}>
+      {
+        this.getTxnText(item)
+      }
+      {
+        this.getDateTimeStamp(item.timestamp * 1000)
+      }
+    </View>);
 
-	getDateTimeStamp(timestamp) {
-		let dateString = this.getDateString(new Date(timestamp));
-		return (<Text style={inlineStyle.subHeading}>{dateString}</Text>);
-	}
+  }
 
-	getTxnDetailsView(item) {
-		return (<View style={{flex: 8, justifyContent: "center"}}>
-			{
-				this.getTxnText(item)
-			}
-			{
-				this.getDateTimeStamp(item.timestamp * 1000)
-			}
-		</View>);
+  getDateString(date){
+    return ('0' + date.getUTCDate()).slice(-2) +
+      '/' + ('0' + date.getUTCMonth()).slice(-2) +
+      '/' + date.getUTCFullYear() +
+      ' ' + ('0' + date.getUTCHours()).slice(-2) +
+      ':' + ('0' + date.getUTCMinutes()).slice(-2) +
+      ':' + ('0' + date.getUTCSeconds()).slice(-2);
 
-	}
+  }
 
-	getDateString(date){
-		return ('0' + date.getUTCDate()).slice(-2) +
-			'/' + ('0' + date.getUTCMonth()).slice(-2) +
-			'/' + date.getUTCFullYear() +
-			' ' + ('0' + date.getUTCHours()).slice(-2) +
-			':' + ('0' + date.getUTCMinutes()).slice(-2) +
-			':' + ('0' + date.getUTCSeconds()).slice(-2);
+  getValueTransferView(item) {
+    let textColor;
+    let valueString = parseFloat(this.priceOracle.fromDecimal(item.amount)).toFixed(2).toString();
+    if (item.in) {
+      textColor = Colors.darkerBlue;
+      valueString = `+${valueString}`;
+    } else {
+      textColor = Colors.lighterGrey;
+      valueString = `-${valueString}`;
+    }
 
-	}
+    return (<Text style={[inlineStyle.valueStyle, {color:textColor}]}>{valueString}</Text>);
+  }
 
-	getValueTransferView(item) {
-		let textColor;
-		let valueString = parseFloat(this.priceOracle.fromDecimal(item.amount)).toFixed(2).toString();
-		if (item.in) {
-			textColor = Colors.darkerBlue;
-			valueString = `+${valueString}`;
-		} else {
-			textColor = Colors.lighterGrey;
-			valueString = `-${valueString}`;
-		}
+  getTransactionTransferList(txnObject, txnUsers) {
+    let list = [];
+    let txnPojo = {};
+    txnPojo["id"] = txnObject.id;
+    txnPojo["txnHash"] = txnObject.transaction_hash;
+    txnPojo["timestamp"] = txnObject.block_timestamp;
+    txnPojo["metaName"] = txnObject.meta_property.name;
+    txnPojo["metaType"] = txnObject.meta_property.type;
+    txnPojo["metaDetails"] = txnObject.meta_property.details;
+    let transferArray = txnObject.transfers;
 
-		return (<Text style={[inlineStyle.valueStyle, {color:textColor}]}>{valueString}</Text>);
-	}
+    let currentUserId = CurrentUser.getUserId();
+    for (let i = 0;i<transferArray.length;i++) {
+      let transferObj = Object.assign({}, txnPojo);
+      let transfer = transferArray[i];
+      let fromUserId = transfer.from_user_id;
+      let toUserId = transfer.to_user_id;
 
-	getTransactionTransferList(txnObject, txnUsers) {
-		let list = [];
-		let txnPojo = {};
-		txnPojo["id"] = txnObject.id;
-		txnPojo["txnHash"] = txnObject.transaction_hash;
-		txnPojo["timestamp"] = txnObject.block_timestamp;
-		txnPojo["metaName"] = txnObject.meta_property.name;
-		txnPojo["metaType"] = txnObject.meta_property.type;
-		txnPojo["metaDetails"] = txnObject.meta_property.details;
-		let transferArray = txnObject.transfers;
+      transferObj["amount"] = transfer.amount;
+      if (txnUsers[fromUserId]) {
+        transferObj["fromUserName"] = txnUsers[fromUserId].username || appProvider.getTokenName();
+      } else {
+        transferObj["fromUserName"] = "";
+      }
 
-		let currentUserId = CurrentUser.getUserId();
-		for (let i = 0;i<transferArray.length;i++) {
-			let transferObj = Object.assign({}, txnPojo);
-			let transfer = transferArray[i];
-			let fromUserId = transfer.from_user_id;
-			let toUserId = transfer.to_user_id;
+      if (txnUsers[toUserId]) {
+        transferObj["toUserName"] = txnUsers[toUserId].username || appProvider.getTokenName();
+      } else {
+        transferObj["toUserName"] = "";
+      }
+      if ( ( fromUserId == currentUserId ) || (toUserId == currentUserId)) {
+        transferObj["in"] = toUserId == currentUserId;
+        list.push(transferObj);
+      }
+    }
+    return list;
 
-			transferObj["amount"] = transfer.amount;
-			if (txnUsers[fromUserId]) {
-				transferObj["fromUserName"] = txnUsers[fromUserId].username || appProvider.getTokenName();
-			} else {
-				transferObj["fromUserName"] = "";
-			}
-
-			if (txnUsers[toUserId]) {
-				transferObj["toUserName"] = txnUsers[toUserId].username || appProvider.getTokenName();
-			} else {
-				transferObj["toUserName"] = "";
-			}
-			if ( ( fromUserId == currentUserId ) || (toUserId == currentUserId)) {
-				transferObj["in"] = toUserId == currentUserId;
-				list.push(transferObj);
-			}
-		}
-		return list;
-
-	}
+  }
 }
 
 export default WalletScreen;

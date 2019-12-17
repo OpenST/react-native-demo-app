@@ -90,6 +90,7 @@ export default class SendTokensScreen extends PureComponent {
     this.setState({
       balance: res[resultType]
     });
+    this.onSendTokenTapped()
   }
 
   onTokenChange = (tokenVal) => {
@@ -138,10 +139,20 @@ export default class SendTokensScreen extends PureComponent {
 
   onSendTokenTapped = () => {
 
-    if (!this.priceOracle && this.isSendTokenTapped) {
-
-      return
+    if (!this.isSendTokenTapped) {
+      return;
     }
+    if (!this.priceOracle) {
+      this.setState({
+        modalVisible: true
+      });
+      return;
+    }
+
+    this.setState({
+      modalVisible: true,
+      title: 'Executing transaction...'
+    });
 
     let executeTxDelegate = appProvider.getRegisgerDeviceHelper();
     executeTxDelegate.requestAcknowledged = (workflowContext, contextEntity) => {
@@ -160,10 +171,9 @@ export default class SendTokensScreen extends PureComponent {
     if (!this.numberFormatter.isValidInputProvided(tokenField.value())) {
       return
     }
-    const toWeiValue = this.priceOracle.toDecimal(tokenField.value());
     let txMeta = {"type": "user_to_user", "name": "Tokens sent from iOS", "details": "Send tokens from iOS"};
 
-    let uuid = OstTransactionHelper.executeDirectTransfer(CurrentUser.getUserId(), [toWeiValue], [this.user.token_holder_address], txMeta)
+    let uuid = OstTransactionHelper.executeDirectTransfer(CurrentUser.getUserId(), [tokenField.value()], [this.user.token_holder_address], txMeta)
     OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.flowComplete, (workflowContext, contextEntity) => {
       console.log(contextEntity);
     });
@@ -172,8 +182,19 @@ export default class SendTokensScreen extends PureComponent {
     });
     OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.requestAcknowledged, (workflowContext, contextEntity) => {
       console.log(contextEntity);
+      this.onTxReqestAcknowledged();
     });
   };
+
+  onTxReqestAcknowledged() {
+    this.setState({
+      modalVisible: false,
+      title: ''
+    });
+
+    this.props.navigation.goBack();
+    this.props.navigation.navigate('WalletScreen', {fetchTransaction: true});
+  }
 
   getCircularView(centeredText) {
     return (<View style={{

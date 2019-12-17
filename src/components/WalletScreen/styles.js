@@ -27,7 +27,6 @@ let stylesMap = {
 		marginTop: sizeHelper.layoutPtToPx(20),
 		height: sizeHelper.layoutPtToPx(120),
 		borderRadius: sizeHelper.layoutPtToPx(10),
-		borderWidth: sizeHelper.layoutPtToPx(2),
 	},
 
 	heading: {
