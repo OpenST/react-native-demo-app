@@ -33,7 +33,7 @@ class CurrentUser {
   }
 
   getUserId() {
-    let userId = this.getUserData()["user_id"]
+    let userId = this.getUserData()["user_id"];
     return userId.toString();
   }
 

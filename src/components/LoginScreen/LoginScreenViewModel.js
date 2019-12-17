@@ -67,26 +67,6 @@ class LoginScreenViewModel {
     }
   }
 
-  // setupDevice() {
-  //   return new Promise((resolve , reject) => {
-  //     let userId = CurrentUser.getUserId();
-  //     appProvider.userId = userId;
-  //     let tokenId = CurrentUser.getTokenId();
-  //
-  //     let workflowCallback = appProvider.getRegisgerDeviceHelper();
-  //     workflowCallback.flowInterrupt = (ostWorkflowContext , ostError) => {
-  //       reject(ostError)
-  //     };
-  //     workflowCallback.flowComplete = (ostWorkflowContext , ostContextEntity) => {
-  //       resolve(ostContextEntity)
-  //     };
-  //
-  //     OstWalletSdk.setupDevice(userId, tokenId, workflowCallback);
-  //
-  //   });
-  // }
-
-
   setupDevice() {
     return new Promise((resolve , reject) => {
       let setupDeviceHelper = null;
@@ -122,16 +102,6 @@ class LoginScreenViewModel {
     return new Promise((resolve , reject) => {
       let userId = CurrentUser.getUserId();
       let uiCallback = appProvider.getOstSdkUIDelegate();
-
-      // uiCallback.flowComplete = (ostWorkflowContext , ostContextEntity) => {
-      //   resolve(ostContextEntity)
-      // };
-      // uiCallback.flowInterrupt = (ostWorkflowContext , ostError) => {
-      //   reject(ostError)
-      // };
-      // uiCallback.requestAcknowledged = (ostWorkflowContext , ostContextEntity) => {
-      //   console.log(ostContextEntity)
-      // };
 
       let workflowId = OstWalletSdkUI.activateUser(userId, DEFAULT_SESSION_KEY_EXPIRY_TIME, DEFAULT_SPENDING_LIMIT, uiCallback);
       this.activateUserWorkflowId = workflowId;

@@ -7,7 +7,6 @@ import {
   TouchableWithoutFeedback,
   TouchableOpacity,
   View
-
 } from 'react-native';
 
 import {OstWalletSdk, OstWalletSdkUI, OstTransactionHelper} from '@ostdotcom/ost-wallet-sdk-react-native';
@@ -19,13 +18,11 @@ import ostIntroImage from '../../assets/ostIntroImage.png'
 import ost_sdk_theme_config from '../../theme/ostsdk/ost-sdk-theme-config';
 import ost_sdk_content_config from '../../theme/ostsdk/ost-sdk-content-config';
 import CurrentUser from "../../models/CurrentUser";
-import {SwitchActions} from "react-navigation";
 import AppLoader from "../CommonComponent/AppLoader";
 import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
 import {appProvider} from "../../helper/AppProvider";
 import {LoginScreenViewModel} from "../LoginScreen/LoginScreenViewModel";
 import WalletScreen from "../WalletScreen";
-import Colors from "../../theme/styles/Colors";
 
 import sizeHelper from "../../helper/SizeHelper";
 
