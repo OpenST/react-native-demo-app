@@ -9,5 +9,6 @@ export default {
   iceBlue: '#eff9fa',
 	darkerBlue: "#438bad",
   lighterGrey: "#9b9b9b",
-  rainySky: '#597A84'
+  rainySky: '#597A84',
+  punchPink: '#FF859B'
 };

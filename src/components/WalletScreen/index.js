@@ -64,9 +64,8 @@ class WalletScreen extends PureComponent {
   }
 
   async onComponentDidMount() {
-
     let status = await CurrentUser.getOstUserStatus();
-    if (status == 'ACTIVATED') {
+    if (status === 'ACTIVATED') {
       this.fetchData()
     }else if (this.activateUserWorkflowId){
       OstWalletSdkUI.subscribe(this.activateUserWorkflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext, contextEntity) => {
