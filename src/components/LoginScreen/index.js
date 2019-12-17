@@ -99,10 +99,9 @@ class LoginScreen extends PureComponent {
     let { current: userNameField } = this.userNamefieldRef;
     let { current: passwordField } = this.passwordfieldRef;
    this.viewModel.setupUser(userNameField.value(), passwordField.value())
-    // this.viewModel.setupUser("A10", "qweqweqwe")
       .then( (res) => {
         this.setModalVisible(false);
-        this.props.navigation.dispatch(SwitchActions.jumpTo({routeName:'Wallet'}, {navTitle: "Wallet"}));
+        this.props.navigation.navigate('WalletScreen', {'activateUserWorkflowId': this.viewModel.activateUserWorkflowId});
       })
       .catch((err) => {
         this.setModalVisible(false);

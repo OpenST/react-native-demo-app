@@ -10,6 +10,7 @@ import airDropLogo from '../../assets/ost_logo_small.png'
 import tokenReceiveIcon from '../../assets/token_receive_icon.png'
 import tokenSentIcon from '../../assets/token_sent_icon.png'
 import PriceOracle from "../../services/PriceOracle";
+import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 class WalletScreen extends PureComponent {
 	static navigationOptions = ({navigation, navigationOptions}) => {
@@ -38,14 +39,32 @@ class WalletScreen extends PureComponent {
 		this.state = {list:[], refreshing: false, balance: {available_balance:"0"}};
 		this.transactionUsers = {};
 		this.priceOracle = new PriceOracle();
+		this.activateUserWorkflowId = this.props.navigation.getParam('activateUserWorkflowId');
 	}
 
 	componentDidMount() {
-		this.fetchBalance().then(()=>{
-			this.onRefresh();
-		}).catch(()=>{
-			console.log("Error while fetching balance");
-		});
+      this.onComponentDidMount()
+	}
+
+	async onComponentDidMount() {
+		let status = await CurrentUser.getOstUserStatus();
+      if (status == 'ACTIVATED') {
+        this.fetchData()
+      }else if (this.activateUserWorkflowId){
+        OstWalletSdkUI.subscribe(this.activateUserWorkflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext, contextEntity) => {
+          setTimeout(() => {
+            this.fetchData();
+          }, 1000*24)
+        })
+      }
+	}
+
+	fetchData() {
+      this.fetchBalance().then(()=>{
+        this.onRefresh();
+      }).catch(()=>{
+        console.log("Error while fetching balance");
+      });
 	}
 
 	onRefresh = () => {
@@ -190,7 +209,7 @@ class WalletScreen extends PureComponent {
 		let balanceInFiat = "0";
 		if (this.priceOracle) {
 			let btValue = this.priceOracle.fromDecimal(this.state.balance.available_balance);
-			balanceInFiat = this.priceOracle.btToFiat(btValue);
+			balanceInFiat = this.priceOracle.btToFiat(btValue) || '0';
 		}
 		return `$ ${balanceInFiat}`;
 	}

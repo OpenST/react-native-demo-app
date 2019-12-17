@@ -6,7 +6,7 @@ import {
 	Image
 } from 'react-native';
 
-import {OstWalletSdk, OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
+import {OstWalletSdk, OstWalletSdkUI, OstTransactionHelper} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 import styles from './style'
 import ostLog from '../../assets/ostLogoBlue.png'
@@ -19,6 +19,9 @@ import AppLoader from "../CommonComponent/AppLoader";
 import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
 import {appProvider} from "../../helper/AppProvider";
 import {LoginScreenViewModel} from "../LoginScreen/LoginScreenViewModel";
+import WalletScreen from "../WalletScreen";
+
+
 
 class IntroScreen extends PureComponent {
 	static navigationOptions = ({navigation, navigationOptions}) => {
@@ -48,14 +51,14 @@ class IntroScreen extends PureComponent {
 
 		if (CurrentUser.getUserData()) {
           this.showLoader(false);
-          this.props.navigation.dispatch(SwitchActions.jumpTo({routeName: 'Wallet'}, {navTitle: "Wallet"}));
+          this.props.navigation.navigate('WalletScreen');
 
 		} else {
           this.showLoader(true);
           this.viewModel.setupApplicationUser()
 			.then((res) => {
               this.showLoader(false);
-              this.props.navigation.dispatch(SwitchActions.jumpTo({routeName: 'Wallet'}, {navTitle: "Wallet"}));
+              this.props.navigation.navigate('WalletScreen');
 
 			})
 			.catch((err) => {

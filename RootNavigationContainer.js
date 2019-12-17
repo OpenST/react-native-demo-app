@@ -48,40 +48,41 @@ const SettingStack = createStackNavigator(
 );
 
 const Wallet = createBottomTabNavigator({
-	Users: UsersStack,
-	Wallet: WalletStack,
-	Settings: SettingStack
-}, {
-	defaultNavigationOptions: ({navigation}) => ({
-		tabBarIcon: ({focused, horizontal, tintColor}) => {
-			const {routeName} = navigation.state;
-			if (routeName === 'Settings') {
-				iconPath = settingsIcon;
-				height = sizeHelper.layoutPtToPx(27);
-				width = sizeHelper.layoutPtToPx(28);
-			} else if (routeName === 'Users') {
-				iconPath = usersIcon;
-				height = sizeHelper.layoutPtToPx(20);
-				width = sizeHelper.layoutPtToPx(28);
-			} else {
-				iconPath = walletIcon;
-				height = sizeHelper.layoutPtToPx(24);
-				width = sizeHelper.layoutPtToPx(19);
-			}
+    Users: UsersStack,
+    Wallet: WalletStack,
+    Settings: SettingStack
+  },
+  {
+    defaultNavigationOptions: ({navigation}) => ({
+      tabBarIcon: ({focused, horizontal, tintColor}) => {
+        const {routeName} = navigation.state;
+        if (routeName === 'Settings') {
+          iconPath = settingsIcon;
+          height = sizeHelper.layoutPtToPx(27);
+          width = sizeHelper.layoutPtToPx(28);
+        } else if (routeName === 'Users') {
+          iconPath = usersIcon;
+          height = sizeHelper.layoutPtToPx(20);
+          width = sizeHelper.layoutPtToPx(28);
+        } else {
+          iconPath = walletIcon;
+          height = sizeHelper.layoutPtToPx(24);
+          width = sizeHelper.layoutPtToPx(19);
+        }
 
-			// You can return any component that you like here!
-			return <Image source={iconPath} style={{
-				width: width,
-				height: height,
-				tintColor: tintColor
-			}}/>;
-		},
-	}),
-	tabBarOptions: {
-		activeTintColor: Colors.brightSky,
-		inactiveTintColor: Colors.grey,
-	},
-});
+        // You can return any component that you like here!
+        return <Image source={iconPath} style={{
+          width: width,
+          height: height,
+          tintColor: tintColor
+        }}/>;
+      },
+    }),
+    tabBarOptions: {
+      activeTintColor: Colors.brightSky,
+      inactiveTintColor: Colors.grey,
+    },
+  });
 
 const AppContainer = createAppContainer(
   createSwitchNavigator(
@@ -100,9 +101,9 @@ const AppContainer = createAppContainer(
 );
 
 const RootNavigationContainer = () => (
-	<Root>
-		<AppContainer/>
-	</Root>
+  <Root>
+    <AppContainer/>
+  </Root>
 );
 
 export default RootNavigationContainer;

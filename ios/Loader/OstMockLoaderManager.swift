@@ -22,7 +22,8 @@ public class OstMockLoaderManager: NSObject, OstLoaderDelegate {
     
 	@objc
   public func waitForFinalization(workflowType: OstWorkflowType) -> Bool {
-        if OstWorkflowType.executeTransaction == workflowType {
+        if OstWorkflowType.executeTransaction == workflowType
+          || OstWorkflowType.activateUser == workflowType {
             return false
         }
         

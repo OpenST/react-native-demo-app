@@ -21,16 +21,16 @@ export default class PriceOracle {
     this.decimals = token.decimals || 18;
 
     if (pricePoints.hasOwnProperty(token.base_token)) {
-			this.usdPricePoint = pricePoints[token.base_token]['USD'];
+			this.pricePoint = pricePoints[token.base_token]['USD'];
     }
   }
 
   btToFiat(bt , precession) {
-    if (!bt || !this.usdPricePoint || isNaN(bt)) {
+    if (!bt || !this.pricePoint || isNaN(bt)) {
       return '';
     }
     bt = BigNumber(bt);
-    let fiatBN = BigNumber(this.usdPricePoint);
+    let fiatBN = BigNumber(this.pricePoint);
     let oneBtToFiat = fiatBN.dividedBy(this.conversionFactor);
     let result = oneBtToFiat.multipliedBy(bt);
     return this.toFiat(result , precession );
@@ -47,11 +47,11 @@ export default class PriceOracle {
   }
 
   fiatToBt(fiat) {
-    if (!fiat || !this.usdPricePoint || isNaN(fiat)) {
+    if (!fiat || !this.pricePoint || isNaN(fiat)) {
       return '';
     }
     fiat = BigNumber(fiat);
-    let fiatBN = BigNumber(this.usdPricePoint);
+    let fiatBN = BigNumber(this.pricePoint);
     let totalSc = fiat.dividedBy(fiatBN);
     let totalBt = totalSc.multipliedBy(this.conversionFactor);
     return this.toBt(totalBt);

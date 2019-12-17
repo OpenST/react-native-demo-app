@@ -10,6 +10,7 @@ class LoginScreenViewModel {
   constructor() {
     this.isSignupView = false;
     this.uiDelegate = null;
+    this.activateUserWorkflowId = null;
   }
 
   setUIDelegate(obj) {
@@ -133,13 +134,14 @@ class LoginScreenViewModel {
       // };
 
       let workflowId = OstWalletSdkUI.activateUser(userId, DEFAULT_SESSION_KEY_EXPIRY_TIME, DEFAULT_SPENDING_LIMIT, uiCallback);
+      this.activateUserWorkflowId = workflowId;
 
       OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.requestAcknowledged, (workflowContext, contextEntity) => {
-        console.log(contextEntity);
+        resolve(contextEntity);
       });
 
       OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowComplete, (workflowContext, contextEntity) => {
-        resolve(contextEntity);
+        //resolve(contextEntity);
       });
 
       OstWalletSdkUI.subscribe(workflowId, OstWalletSdkUI.EVENTS.flowInterrupt, (workflowContext, ostError) => {
