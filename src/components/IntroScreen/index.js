@@ -81,11 +81,11 @@ class IntroScreen extends PureComponent {
   }
 
   onLoginPress = () => {
-    this.props.navigation.push('LoginScreen', {"navTitle": "Login to your Account", "isSingupView": false})
+    this.props.navigation.push('LoginScreen', {"navTitle": "Login to your Account", "isSignupView": false})
   };
 
   onCreateAccountPress = () => {
-    this.props.navigation.push('LoginScreen', {"navTitle": "Create Account", "isSingupView": true})
+    this.props.navigation.push('LoginScreen', {"navTitle": "Create Account", "isSignupView": true})
   };
   render() {
     return (
@@ -99,7 +99,7 @@ class IntroScreen extends PureComponent {
 			</React.Fragment>
 
             <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-              <Image style={{height: '90%', width: '90%'}} resizeMode="contain" source={ostIntroImage}/>
+              <Image style={{height: '80%', width: '80%'}} resizeMode="contain" source={ostIntroImage}/>
 			</View>
 
 		  <View style={{marginBottom: sizeHelper.layoutPtToPx(20)}}>

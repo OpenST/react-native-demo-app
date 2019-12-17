@@ -58,7 +58,7 @@ class WalletScreen extends PureComponent {
     let shouldFetchTx = this.props.navigation.getParam('fetchTransaction');
     if (shouldFetchTx) {
       this.props.navigation.setParams({fetchTransaction: false});
-      this.onRefresh();
+      this.fetchData();
 	}
   }
 
@@ -189,6 +189,7 @@ class WalletScreen extends PureComponent {
 
   render() {
     return (
+      <React.Fragment>
       <View style={inlineStyle.walletComponent}>
         <View style={inlineStyle.walletWrapStyle}>
           <Image style={inlineStyle.walletScreenStyle} source={walletBgCurve}/>
@@ -197,8 +198,8 @@ class WalletScreen extends PureComponent {
             <Text style={inlineStyle.fiatTextStyle}>{this.getTokenFiatBalance()}</Text>
           </View>
         </View>
-
         <Text style={inlineStyle.heading}>TRANSACTION HISTORY</Text>
+      </View>
         <FlatList
           style={inlineStyle.flatListStyle}
           onRefresh={this.onRefresh}
@@ -211,7 +212,7 @@ class WalletScreen extends PureComponent {
           visible={false}
           scrollEnabled={true}
         />
-      </View>
+      </React.Fragment>
     );
   }
 

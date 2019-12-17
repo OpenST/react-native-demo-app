@@ -34,7 +34,7 @@ let stylesMap = {
 	},
 
 	textStyle: {
-		color:'#168DC1',
+		color:'#fff',
         fontWeight : '500',
 		textAlign:'center'
   },
@@ -45,10 +45,8 @@ let stylesMap = {
 		marginTop:sizeHelper.layoutPtToPx(5),
       marginRight:sizeHelper.layoutPtToPx(10),
       height:sizeHelper.layoutPtToPx(40),
-		// backgroundColor:'#168DC1',
+		backgroundColor:'#168DC1',
 		borderRadius:sizeHelper.layoutPtToPx(10),
-		borderWidth: sizeHelper.layoutPtToPx(1),
-		borderColor: '#168DC1'
   },
 
   txtWrapper: {

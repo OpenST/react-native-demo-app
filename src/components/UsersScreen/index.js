@@ -5,6 +5,7 @@ import inlineStyle from "../UsersScreen/styles";
 import {appProvider} from "../../helper/AppProvider";
 import sizeHelper from "../../helper/SizeHelper";
 import AppLoader from "../CommonComponent/AppLoader";
+import CurrentUser from "../../models/CurrentUser";
 
 class UsersScreen extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -79,18 +80,23 @@ class UsersScreen extends PureComponent {
     this.setState({
       refreshing: false
     });
-    // this.setState({
-    //   modalVisible: false,
-    //   title: ""
-    // });
   }
 
   cleanList(list) {
     const preList = this.state.list ? this.state.list.slice(0) : [];
     for (let ind=0; ind<list.length; ind++) {
       let obj = list[ind];
-      if (obj.app_user_id && !this.appIdHash[obj.app_user_id]) {
-				preList.push(obj);
+      let isObejctPresent =  this.appIdHash[obj.app_user_id];
+      if (isObejctPresent) {
+        continue;
+      }
+      if (CurrentUser.getUserId() === obj.user_id.toString()) {
+        preList.push(obj);
+        this.appIdHash[obj.app_user_id] = 1;
+        continue;
+      }
+      if (obj.app_user_id && obj.token_holder_address) {
+        preList.push(obj);
         this.appIdHash[obj.app_user_id] = 1;
       }
     }
@@ -127,41 +133,62 @@ class UsersScreen extends PureComponent {
     return (<Text style={inlineStyle.heading}>{userName}</Text>);
   }
 
-  getUserBalanceView(balance) {
+  getUserBalanceView(item) {
+
+    if (CurrentUser.getUserId() === item.user_id.toString()) {
+      if (CurrentUser.getStatus() !== 'ACTIVATED') {
+        return (<Text style={{
+          color: 'red',
+          fontSize: sizeHelper.layoutPtToPx(13),
+          fontWeight: "normal"
+        }}>Initializing...</Text>);
+      }
+    }
+
+    let balance = this.state.balances[item.app_user_id] ? this.state.balances[item.app_user_id].available_balance : 0;
     return (<Text style={inlineStyle.subHeading}>Balance: {this.priceOracle.fromDecimal(balance) || 0} POP</Text>);
   }
 
   getUserDetailsView(item) {
     return (<View style={{flex: 3, justifyContent: "center"}}>
-      {
-        this.getUserNameView(item.username)
-      }
-      {
-        this.getUserBalanceView(this.state.balances[item.app_user_id] ? this.state.balances[item.app_user_id].available_balance : 0)
-      }
+      {this.getUserNameView(item.username)}
+      {this.getUserBalanceView(item)}
     </View>);
+  }
 
+  getSendButton(item) {
+    if (CurrentUser.getUserId().toString() === item.user_id.toString()) {
+      return(<View/>)
+    }
+
+    return(
+      <TouchableOpacity
+        onPress={() => {
+          this.onSend(item);
+        }}
+        style={inlineStyle.buttonStyle}
+        activeOpacity={0.5}>
+        <Text style={inlineStyle.textStyle}> Send </Text>
+      </TouchableOpacity>
+    )
   }
 
   onSend(item) {
+    if (CurrentUser.getUserId().toString() === item.user_id.toString()) {
+      this.props.navigation.navigate('WalletScreen');
+      return
+    }
     this.props.navigation.push("SendTokens", {user:item});
   }
   _renderItem = ({item, index}) => {
     return (
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={() => {
+        this.onSend(item);
+      }}>
         <View style={inlineStyle.userComponent}>
-          {
-            this.getCircularView(item.username && item.username.charAt(0))
-          }
-          {
-            this.getUserDetailsView(item)
-          }
-          <TouchableOpacity
-            style={inlineStyle.buttonStyle}
-            activeOpacity={.5}
-            onPress={() => this.onSend(item)}>
-            <Text style={inlineStyle.textStyle}> Send </Text>
-          </TouchableOpacity>
+          {this.getCircularView(item.username && item.username.charAt(0))}
+          {this.getUserDetailsView(item)}
+          {this.getSendButton(item)}
         </View>
       </TouchableWithoutFeedback>
     );

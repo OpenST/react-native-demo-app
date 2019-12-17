@@ -5,7 +5,7 @@ import sizeHelper from "../../helper/SizeHelper";
 let stylesMap = {
 
 	walletComponent: {
-		marginHorizontal: sizeHelper.layoutPtToPx(10),
+		marginHorizontal: sizeHelper.layoutPtToPx(10)
 	},
 
 	walletWrapStyle: {
@@ -48,6 +48,7 @@ let stylesMap = {
 	},
 	flatListStyle: {
 		marginTop: sizeHelper.layoutPtToPx(10),
+	  marginHorizontal: sizeHelper.layoutPtToPx(10)
 	},
 
 	txnComponent: {
