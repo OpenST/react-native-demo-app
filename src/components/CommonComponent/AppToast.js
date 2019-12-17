@@ -4,6 +4,14 @@ import SizeHelper from "../../helper/SizeHelper";
 
 class AppToast {
 
+	showSuccessToast(msg) {
+		this.showToast(msg, true);
+	}
+
+  showFailureToast(msg) {
+    this.showToast(msg, false);
+  }
+
 	showToast(toastMsg, success) {
 		Toast.show({
 			text: toastMsg,
@@ -18,24 +26,18 @@ export default new AppToast();
 
 const toastStyle = StyleSheet.create({
 	toastSuccessStyle: {
-		marginRight: SizeHelper.layoutPtToPx(30),
-		marginLeft: SizeHelper.layoutPtToPx(30),
 		backgroundColor: "#168DC1",
-		width: "85%",
 		borderRadius: SizeHelper.layoutPtToPx(5),
 		justifyContent: 'center',
 		alignItems: 'center',
-		padding: SizeHelper.layoutPtToPx(10),
+		padding: SizeHelper.layoutPtToPx(20),
 	},
 	toastFailureStyle: {
-		marginRight: SizeHelper.layoutPtToPx(30),
-		marginLeft: SizeHelper.layoutPtToPx(30),
-		backgroundColor: "#ff8485",
-		width: "85%",
-		borderRadius: SizeHelper.layoutPtToPx(5),
-		justifyContent: 'center',
-		alignItems: 'center',
-		padding: SizeHelper.layoutPtToPx(10),
+      backgroundColor: "#168DC1",
+      borderRadius: SizeHelper.layoutPtToPx(5),
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: SizeHelper.layoutPtToPx(20)
 	},
 	toastTextStyle: {color: "#ffffff"}
 });

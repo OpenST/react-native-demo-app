@@ -11,6 +11,7 @@ import tokenReceiveIcon from '../../assets/token_receive_icon.png'
 import tokenSentIcon from '../../assets/token_sent_icon.png'
 import PriceOracle from "../../services/PriceOracle";
 import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
+import AppToast from "../CommonComponent/AppToast";
 
 class WalletScreen extends PureComponent {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -63,12 +64,14 @@ class WalletScreen extends PureComponent {
   }
 
   async onComponentDidMount() {
+
     let status = await CurrentUser.getOstUserStatus();
     if (status == 'ACTIVATED') {
       this.fetchData()
     }else if (this.activateUserWorkflowId){
       OstWalletSdkUI.subscribe(this.activateUserWorkflowId, OstWalletSdkUI.EVENTS.flowComplete, (ostWorkflowContext, contextEntity) => {
         setTimeout(() => {
+          AppToast.showSuccessToast("Congratulations! Your wallet is now ready.");
           this.fetchData();
         }, 1000*24)
       })
