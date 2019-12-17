@@ -41,14 +41,48 @@ const stylesMap = {
   },
 
   ostLogo: {
-    width: sizeHelper.layoutPtToPx(100),
-    height: sizeHelper.layoutPtToPx(55),
-    alignSelf: 'center'
+    width: sizeHelper.layoutPtToPx(110),
+    height: sizeHelper.layoutPtToPx(60),
+    alignSelf: 'center',
+    marginTop: sizeHelper.layoutPtToPx(20)
   },
   versionText: {
-    width: '100%',
     marginTop: sizeHelper.layoutPtToPx(20),
     textAlign: 'center'
+  },
+
+  descriptionText: {
+    color: Colors.grey,
+    textAlign: 'center',
+    fontSize: sizeHelper.fontPtToPx(14),
+  },
+
+  primaryActionButton: {
+    marginTop: sizeHelper.layoutPtToPx(20),
+    paddingVertical: sizeHelper.layoutPtToPx(15),
+    backgroundColor:Colors.waterBlue,
+    borderRadius:sizeHelper.layoutPtToPx(10),
+    borderWidth: sizeHelper.layoutPtToPx(1),
+    borderColor: Colors.white
+  },
+  primaryActionText: {
+    color:Colors.white,
+    textAlign:'center',
+    fontWeight: "bold",
+    fontSize: sizeHelper.fontPtToPx(17),
+  },
+
+  secondaryActionButton: {
+    marginTop: sizeHelper.layoutPtToPx(20),
+    paddingVertical: sizeHelper.layoutPtToPx(15),
+    borderRadius:sizeHelper.layoutPtToPx(10),
+    borderWidth: sizeHelper.layoutPtToPx(1),
+    borderColor: Colors.waterBlue
+  },
+  secondayActionText: {
+    color:Colors.waterBlue,
+    textAlign:'center',
+    fontSize: sizeHelper.fontPtToPx(17),
   }
 };
 

@@ -3,20 +3,26 @@ import Colors from '../../../src/theme/styles/Colors'
 import sizeHelper from "../../helper/SizeHelper";
 
 const stylesMap = {
-  safeAreaView: {
-    marginHorizontal: sizeHelper.layoutPtToPx(20)
-  },
   safeAreaViewContainer: {
+    marginHorizontal: sizeHelper.layoutPtToPx(20),
     marginTop: sizeHelper.layoutPtToPx(20)
   },
+
   primaryActionButton: {
-    marginTop: sizeHelper.layoutPtToPx(40),
+    marginTop: sizeHelper.layoutPtToPx(30),
     paddingVertical: sizeHelper.layoutPtToPx(10),
     backgroundColor:Colors.waterBlue,
     borderRadius:sizeHelper.layoutPtToPx(10),
     borderWidth: sizeHelper.layoutPtToPx(1),
     borderColor: Colors.white
   },
+  primaryActionText: {
+    color:Colors.white,
+    textAlign:'center',
+    fontWeight: "bold",
+    fontSize: sizeHelper.fontPtToPx(17),
+  },
+
   secondaryActionButton: {
     paddingVertical: sizeHelper.layoutPtToPx(10),
     color: Colors.waterBlue,
@@ -25,15 +31,9 @@ const stylesMap = {
   },
 
   bottomContainer: {
-    marginTop: sizeHelper.layoutPtToPx(80),
     marginBottom: sizeHelper.layoutPtToPx(20)
   },
-  primaryActionText: {
-    color:Colors.white,
-    textAlign:'center',
-    fontWeight: "bold",
-    fontSize: sizeHelper.fontPtToPx(17),
-  },
+
   bottomText: {
     textAlign:'center',
     fontSize: sizeHelper.fontPtToPx(14),

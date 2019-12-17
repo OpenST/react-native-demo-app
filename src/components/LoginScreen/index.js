@@ -12,6 +12,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { SwitchActions } from 'react-navigation';
 import AppLoader from '../CommonComponent/AppLoader'
 import {appProvider} from "../../helper/AppProvider";
+import sizeHelper from "../../helper/SizeHelper";
 
 class LoginScreen extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -46,7 +47,13 @@ class LoginScreen extends PureComponent {
     this.economyfieldRef = React.createRef();
     this.state = {
       reRender: false,
-      modalVisible: false
+      modalVisible: false,
+      isKeyboardShown: false
+    }
+
+
+    this.containerFlex = {
+      flex: 1
     }
   }
 
@@ -98,7 +105,7 @@ class LoginScreen extends PureComponent {
 
     let { current: userNameField } = this.userNamefieldRef;
     let { current: passwordField } = this.passwordfieldRef;
-   this.viewModel.setupUser(userNameField.value(), passwordField.value())
+    this.viewModel.setupUser(userNameField.value(), passwordField.value())
       .then( (res) => {
         this.setModalVisible(false);
         this.props.navigation.navigate('WalletScreen', {'activateUserWorkflowId': this.viewModel.activateUserWorkflowId});
@@ -126,31 +133,34 @@ class LoginScreen extends PureComponent {
       title: title,
       modalVisible: val
     })
-  }
+  };
+
+  onKeyboardWillShow = () => {
+    this.setState({
+      isKeyboardShown: true
+    })
+  };
+
+  onKeyboardWillHide = () => {
+    this.setState({
+      isKeyboardShown: false
+    })
+  };
 
   render() {
     return(
       <>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={styles.safeAreaView}>
 
-          <AppLoader modalVisible={this.state.modalVisible} title={this.state.title}/>
+        <AppLoader modalVisible={this.state.modalVisible} title={this.state.title}/>
 
-          <KeyboardAwareScrollView
-            showsVerticalScrollIndicator={false}>
-          <View style={styles.safeAreaViewContainer}>
-            <View style={{marginTop: 15}}>
-              <OutlinedTextField label='Test Economy'
-                                 tintColor={Colors.lightGrey}
-                                 disabledLineWidth={2}
-                                 lineWidth={2}
-                                 baseColor={Colors.lightGrey}
-                                 editable={false}
-                                 ref={this.economyfieldRef}
-                                 defaultValue={appProvider.getTokenSymbol()}
-              />
-            </View>
-
+        <KeyboardAwareScrollView
+          contentContainerStyle={[styles.safeAreaViewContainer, {justifyContent: 'space-between'}, this.state.isKeyboardShown ? {} : this.containerFlex]}
+          showsVerticalScrollIndicator={false}
+          onKeyboardWillShow={this.onKeyboardWillShow}
+          onKeyboardWillHide={this.onKeyboardWillHide}
+        >
+          <React.Fragment>
             <View style={{marginTop: 15}}>
               <OutlinedTextField label='Username'
                                  tintColor={Colors.lightGrey}
@@ -182,17 +192,16 @@ class LoginScreen extends PureComponent {
               underlayColor='#fff'>
               <Text style={styles.primaryActionText}>{this.getPrimaryActionButtonText()}</Text>
             </TouchableOpacity>
+          </React.Fragment>
 
-            <View style={[styles.bottomContainer,{flex: 1, jsutifyContent: "center", alignItems: "center"}]}>
-              <Text style={styles.bottomText}>{this.getBottomText()}</Text>
+          <View style={[styles.bottomContainer,{flex: 1, justifyContent: "flex-end", alignItems: "center"}, this.state.isKeyboardShown ? {marginTop: sizeHelper.layoutPtToPx(20)} : {}]}>
+            <Text style={styles.bottomText}>{this.getBottomText()}</Text>
 
-              <Text style={{color:Colors.waterBlue, textAlign:'center', padding: 5}}
-                    onPress={this.onSecondayActionButtonTapped}>{this.getSecondayActionButtonText()}
-              </Text>
-            </View>
+            <Text style={{color:Colors.waterBlue, textAlign:'center', padding: 5}}
+                  onPress={this.onSecondayActionButtonTapped}>{this.getSecondayActionButtonText()}
+            </Text>
           </View>
-          </KeyboardAwareScrollView>
-        </SafeAreaView>
+        </KeyboardAwareScrollView>
       </>
     )
   }
