@@ -53,12 +53,12 @@ class UsersScreen extends PureComponent {
   }
 
   fetchData() {
-		this.appIdHash = {};
+    this.appIdHash = {};
     const oThis = this;
     this.setState({
       refreshing: true,
       list:null
-	});
+    });
     appProvider.getAppServerClient().getUserList()
       .then((res) => {
         if (res.result_type) {
@@ -103,7 +103,7 @@ class UsersScreen extends PureComponent {
     return preList;
   }
   onRefresh = () => {
-		this.fetchData();
+    this.fetchData();
   };
 
   getCircularView(centeredText) {
@@ -183,34 +183,38 @@ class UsersScreen extends PureComponent {
     Promise.all(checkStatus)
       .then((res)=> {
         if (res[0] && res[1]) {
-					console.log("UserScreen:", "Device not authorized to do transaction");
+          console.log("UserScreen:", "Device not authorized to do transaction");
           this.showRegisteredDeviceDialog();
         } else {
-					console.log("UserScreen:", "Opening send tokens screen");
-					this.props.navigation.push("SendTokens", {user:item});
+          console.log("UserScreen:", "Opening send tokens screen");
+          this.props.navigation.push("SendTokens", {user:item});
         }
       }).catch((err)=> {
-        console.log("UserScreen:", "Error while fetching status", err);
-			this.props.navigation.navigate('WalletScreen');
+      console.log("UserScreen:", "Error while fetching status", err);
+      this.props.navigation.navigate('WalletScreen');
     });
   }
 
   showRegisteredDeviceDialog() {
-		Alert.alert("Registered Device",
-			"Your device is in registered state. Please authorized your device",
-			[
-				{
-					text: 'Go to settings',
-					onPress: () => console.log('Got to settings')
-				},
-				{
-					text: 'Cancel',
-					onPress: () => console.log('Cancel '),
-					style: 'cancel',
-				}
-			],
-			{cancelable: false}
-		);
+    Alert.alert("Registered Device",
+      "Your device is in registered state. Please authorized your device",
+      [
+        {
+          text: 'Go to settings',
+          onPress: () => {
+            let navigationScreen =  'WalletSettingScreen';
+            let navigationParams = {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()};
+            this.props.navigation.navigate(navigationScreen, navigationParams);
+          },
+          style: 'cancel'
+        },
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel ')
+        }
+      ],
+      {cancelable: false}
+    );
   }
 
   _renderItem = ({item, index}) => {
@@ -251,20 +255,20 @@ class UsersScreen extends PureComponent {
 
   render() {
     return (
-		<>
-          <AppLoader modalVisible={this.state.modalVisible} title={this.state.title}/>
-          <FlatList
-            onRefresh={this.onRefresh}
-            data={this.state.list}
-            onEndReached={this.getNext}
-            onEndReachedThreshold={0.5}
-            refreshing={this.state.refreshing}
-            renderItem={this._renderItem}
-            keyExtractor={this._keyExtractor}
-            visible={false}
-            scrollEnabled={true}
-          />
-		</>
+      <>
+        <AppLoader modalVisible={this.state.modalVisible} title={this.state.title}/>
+        <FlatList
+          onRefresh={this.onRefresh}
+          data={this.state.list}
+          onEndReached={this.getNext}
+          onEndReachedThreshold={0.5}
+          refreshing={this.state.refreshing}
+          renderItem={this._renderItem}
+          keyExtractor={this._keyExtractor}
+          visible={false}
+          scrollEnabled={true}
+        />
+      </>
     );
   }
 }

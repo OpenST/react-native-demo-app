@@ -118,13 +118,20 @@ class LoginScreen extends PureComponent {
 
   async onSetupDeviceSuccess(res) {
 
-    const userStatus = await CurrentUser.getOstUserStatus();
-    const deviceStatus = await CurrentUser.getOstDeviceStatus();
-    
+    const isDeviceRegistered = await CurrentUser.isDeviceStatusRegistered();
+    const isUserActivated = await CurrentUser.isUserStatusActivated();
+
+    let navigationScreen = 'WalletScreen';
+    let navigationParams = {'activateUserWorkflowId': this.viewModel.activateUserWorkflowId};
+
+    if (isDeviceRegistered && isUserActivated) {
+      navigationScreen =  'WalletSettingScreen';
+      navigationParams = {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()};
+    }
 
     setTimeout(() => {
       this.setModalVisible(false);
-      this.props.navigation.navigate('WalletScreen', {'activateUserWorkflowId': this.viewModel.activateUserWorkflowId});
+      this.props.navigation.navigate(navigationScreen, navigationParams);
     }, 500);
   }
 

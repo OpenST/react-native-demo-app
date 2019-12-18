@@ -78,23 +78,6 @@ class Settings extends PureComponent {
 
   onSettingItemTapped = (cellData) => {
     if ( cellData.cellType === 'walletSetting' ) {
-
-      OstWalletSettings.setMasterConfig({
-        item_configs:{
-          add_session: {
-            config: {
-              "spending_limit": DEFAULT_SPENDING_LIMIT,
-              "expiration_time": DEFAULT_SESSION_KEY_EXPIRY_TIME
-            }
-          },
-          wallet_details:{
-            config: {
-              ost_view_endpoint: appProvider.getViewApiEndpoint()
-            }
-          }
-        }
-        });
-
       this.props.navigation.push("WalletSettingScreen", {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()});
       return
     }

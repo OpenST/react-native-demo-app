@@ -9,22 +9,27 @@ import {
   View
 } from 'react-native';
 
-import {OstWalletSdk, OstWalletSdkUI, OstTransactionHelper} from '@ostdotcom/ost-wallet-sdk-react-native';
+import {OstWalletSdk, OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 
 import styles from './style'
 import ostLog from '../../assets/ostLogoBlue.png'
 import ostIntroImage from '../../assets/ostIntroImage.png'
 
 import ost_sdk_theme_config from '../../theme/ostsdk/ost-sdk-theme-config';
-import ost_sdk_content_config from '../../theme/ostsdk/ost-sdk-content-config';
-import CurrentUser from "../../models/CurrentUser";
-import AppLoader from "../CommonComponent/AppLoader";
 import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
+import ost_sdk_content_config from '../../theme/ostsdk/ost-sdk-content-config';
+import ost_sdk_settings_config from '../../theme/ostsdk/ost-sdk-settings-config';
+
+import CurrentUser from "../../models/CurrentUser";
+
+import AppLoader from "../CommonComponent/AppLoader";
 import {appProvider} from "../../helper/AppProvider";
+
 import {LoginScreenViewModel} from "../LoginScreen/LoginScreenViewModel";
 import WalletScreen from "../WalletScreen";
 
 import sizeHelper from "../../helper/SizeHelper";
+import {OstWalletSettings} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
 
 
 
@@ -45,8 +50,8 @@ class IntroScreen extends PureComponent {
   initSdk() {
     OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
     OstWalletSdkUI.setContentConfig(ost_sdk_content_config);
+    OstWalletSettings.setMasterConfig(ost_sdk_settings_config);
   };
-
 
   componentDidMount() {
     this.initSdk();
@@ -55,19 +60,36 @@ class IntroScreen extends PureComponent {
     OstWalletSdk.initialize(platformUrl, ost_wallet_sdk_config, (err , success ) => {});
 
     if (CurrentUser.getUserData()) {
-     this.showLoader(false);
-     this.props.navigation.navigate('WalletScreen');
+     this.onSetupDeviceSuccess();
     } else {
      this.showLoader(true);
      this.viewModel.setupApplicationUser()
     	.then((res) => {
-         this.showLoader(false);
-         this.props.navigation.navigate('WalletScreen');
+          this.onSetupDeviceSuccess(res);
     	})
     	.catch((err) => {
          this.showLoader(false);
       	});
     }
+  }
+
+  async onSetupDeviceSuccess(res) {
+    this.showLoader(false);
+
+    const isDeviceRegistered = await CurrentUser.isDeviceStatusRegistered();
+    const isUserActivated = await CurrentUser.isUserStatusActivated();
+
+    let navigationScreen = 'WalletScreen';
+    let navigationParams = {};
+
+    if (isDeviceRegistered && isUserActivated) {
+      navigationScreen =  'WalletSettingScreen';
+      navigationParams = {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()};
+    }
+
+    setTimeout(() => {
+      this.props.navigation.navigate(navigationScreen, navigationParams);
+    }, 500);
   }
 
   showLoader(show) {
