@@ -13,6 +13,7 @@ import { SwitchActions } from 'react-navigation';
 import AppLoader from '../CommonComponent/AppLoader'
 import {appProvider} from "../../helper/AppProvider";
 import sizeHelper from "../../helper/SizeHelper";
+import AppToast from "../CommonComponent/AppToast";
 
 class LoginScreen extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -113,10 +114,17 @@ class LoginScreen extends PureComponent {
         }, 500);
       })
       .catch((err) => {
-        this.setModalVisible(false);
-        console.log("")
+        this.onFailure(err);
       })
   };
+
+  onFailure(err) {
+    this.setModalVisible(false);
+    setTimeout(() => {
+      let msg = err.msg || 'Something went wrong';
+      AppToast.showFailureToast(msg);
+    }, 100);
+  }
 
   getLoaderLanguage() {
     return this.viewModel.isSignupView ? "Signing Up" : "Logging In"

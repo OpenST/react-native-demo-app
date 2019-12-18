@@ -24,8 +24,6 @@ class AppToast {
   }
 }
 
-export default new AppToast();
-
 const toastStyle = StyleSheet.create({
   toastSuccessStyle: {
     backgroundColor: Colors.waterBlue,
@@ -41,3 +39,5 @@ const toastStyle = StyleSheet.create({
   },
   toastTextStyle: {color: "#ffffff"}
 });
+
+export default new AppToast();
