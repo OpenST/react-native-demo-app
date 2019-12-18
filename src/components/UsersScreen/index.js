@@ -1,6 +1,6 @@
 import React, {PureComponent} from 'react';
 import Colors from '../../theme/styles/Colors';
-import {FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View} from 'react-native';
+import {FlatList, Text, TouchableOpacity, TouchableWithoutFeedback, View, Alert} from 'react-native';
 import inlineStyle from "../UsersScreen/styles";
 import {appProvider} from "../../helper/AppProvider";
 import sizeHelper from "../../helper/SizeHelper";
@@ -178,8 +178,41 @@ class UsersScreen extends PureComponent {
       this.props.navigation.navigate('WalletScreen');
       return
     }
-    this.props.navigation.push("SendTokens", {user:item});
+
+    const checkStatus = [CurrentUser.isDeviceStatusRegistered(), CurrentUser.isUserStatusActivated()];
+    Promise.all(checkStatus)
+      .then((res)=> {
+        if (res[0] && res[1]) {
+					console.log("UserScreen:", "Device not authorized to do transaction");
+          this.showRegisteredDeviceDialog();
+        } else {
+					console.log("UserScreen:", "Opening send tokens screen");
+					this.props.navigation.push("SendTokens", {user:item});
+        }
+      }).catch((err)=> {
+        console.log("UserScreen:", "Error while fetching status", err);
+			this.props.navigation.navigate('WalletScreen');
+    });
   }
+
+  showRegisteredDeviceDialog() {
+		Alert.alert("Registered Device",
+			"Your device is in registered state. Please authorized your device",
+			[
+				{
+					text: 'Go to settings',
+					onPress: () => console.log('Got to settings')
+				},
+				{
+					text: 'Cancel',
+					onPress: () => console.log('Cancel '),
+					style: 'cancel',
+				}
+			],
+			{cancelable: false}
+		);
+  }
+
   _renderItem = ({item, index}) => {
     return (
       <TouchableWithoutFeedback onPress={() => {
