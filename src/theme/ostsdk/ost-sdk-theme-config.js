@@ -1,4 +1,5 @@
 import colors from '../styles/Colors'
+
 export default {
 
   // "nav_bar_logo_image": {
@@ -83,7 +84,11 @@ export default {
   },
 
   "navigation_bar": {
-    "tint_color": "#ffffff"
+    "tint_color": colors.brightSky
+  },
+
+  "navigation_bar_header": {
+    "tint_color": '#ffffff'
   },
 
   "icons": {
@@ -99,14 +104,14 @@ export default {
     "color": "#DBDBDB"
   },
 
-  "cl1": {
+  "link": {
     "size": 14,
     "color": "#007aff",
     "system_font_weight": "medium",
     "alignment": "left",
   },
 
-  "st": {
+  "status": {
     "size": 14,
     "color": "#0F9D58",
     "system_font_weight": "regular",
