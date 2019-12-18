@@ -51,12 +51,7 @@ class LoginScreen extends PureComponent {
       reRender: false,
       modalVisible: false,
       isKeyboardShown: false
-    }
-
-
-    this.containerFlex = {
-      flex: 1
-    }
+    };
   }
 
   componentDidMount() {
@@ -182,7 +177,7 @@ class LoginScreen extends PureComponent {
         <AppLoader modalVisible={this.state.modalVisible} title={this.state.title}/>
 
         <KeyboardAwareScrollView
-          contentContainerStyle={[styles.safeAreaViewContainer, {justifyContent: 'space-between'}, this.state.isKeyboardShown ? {} : this.containerFlex]}
+          contentContainerStyle={[styles.safeAreaViewContainer, {justifyContent: 'space-between'}, this.state.isKeyboardShown ? {} : {flex: 1}]}
           showsVerticalScrollIndicator={false}
           onKeyboardWillShow={this.onKeyboardWillShow}
           onKeyboardWillHide={this.onKeyboardWillHide}
