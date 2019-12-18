@@ -5,8 +5,14 @@ export default {
   item_configs:{
     add_session: {
       config: {
-        "spending_limit": DEFAULT_SPENDING_LIMIT,
-          "expiration_time": DEFAULT_SESSION_KEY_EXPIRY_TIME
+        spending_limit: DEFAULT_SPENDING_LIMIT,
+        expiration_time: DEFAULT_SESSION_KEY_EXPIRY_TIME
+      }
+    },
+    activate_user: {
+      config: {
+        spending_limit: DEFAULT_SPENDING_LIMIT,
+        expiration_time: DEFAULT_SESSION_KEY_EXPIRY_TIME
       }
     },
     wallet_details:{
