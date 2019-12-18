@@ -121,7 +121,7 @@
 		4BC8FB3F239A9604008F3D80 /* OstLoaderAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = OstLoaderAssets.xcassets; sourceTree = "<group>"; };
 		4BC8FB40239A9604008F3D80 /* OstProgressImage.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = OstProgressImage.gif; sourceTree = "<group>"; };
 		4BC8FB41239A9604008F3D80 /* OstContentFetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstContentFetcher.swift; sourceTree = "<group>"; };
-		4BC8FB42239A9604008F3D80 /* OstMockLoaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstMockLoaderViewController.swift; sourceTree = "<group>"; };
+		4BC8FB42239A9604008F3D80 /* OstMockLoaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OstMockLoaderViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		4BC8FB43239A9604008F3D80 /* OstSdkMessages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OstSdkMessages.json; sourceTree = "<group>"; };
 		4BCEAA48239E86E200292E40 /* NativeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeHelper.h; path = ostWalletRNApp/NativeHelper.h; sourceTree = "<group>"; };
 		4BCEAA49239E86E200292E40 /* NativeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NativeHelper.m; path = ostWalletRNApp/NativeHelper.m; sourceTree = "<group>"; };
