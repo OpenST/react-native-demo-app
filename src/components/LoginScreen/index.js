@@ -14,6 +14,7 @@ import AppLoader from '../CommonComponent/AppLoader'
 import {appProvider} from "../../helper/AppProvider";
 import sizeHelper from "../../helper/SizeHelper";
 import AppToast from "../CommonComponent/AppToast";
+import CurrentUser from "../../models/CurrentUser";
 
 class LoginScreen extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -108,15 +109,24 @@ class LoginScreen extends PureComponent {
     let { current: passwordField } = this.passwordfieldRef;
     this.viewModel.setupUser(userNameField.value(), passwordField.value())
       .then( (res) => {
-        setTimeout(() => {
-          this.setModalVisible(false);
-          this.props.navigation.navigate('WalletScreen', {'activateUserWorkflowId': this.viewModel.activateUserWorkflowId});
-        }, 500);
+        this.onSetupDeviceSuccess(res)
       })
       .catch((err) => {
         this.onFailure(err);
       })
   };
+
+  async onSetupDeviceSuccess(res) {
+
+    const userStatus = await CurrentUser.getOstUserStatus();
+    const deviceStatus = await CurrentUser.getOstDeviceStatus();
+    
+
+    setTimeout(() => {
+      this.setModalVisible(false);
+      this.props.navigation.navigate('WalletScreen', {'activateUserWorkflowId': this.viewModel.activateUserWorkflowId});
+    }, 500);
+  }
 
   onFailure(err) {
     this.setModalVisible(false);

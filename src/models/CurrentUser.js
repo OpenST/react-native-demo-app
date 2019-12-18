@@ -105,6 +105,27 @@ class CurrentUser {
         return Promise.reject(err)
       })
   }
+
+
+  async isUserStatusActivated() {
+    let userStatus = await this.getOstUserStatus();
+    return userStatus.toUpperCase() === 'CREATED';
+  }
+
+  async isUserStatusActivated() {
+    let userStatus = await this.getOstUserStatus();
+    return userStatus.toUpperCase() === 'ACTIVATED';
+  }
+
+  async isDeviceStatusAuthorized() {
+    let deviceStatus = await this.getOstDeviceStatus();
+    return deviceStatus.toUpperCase() === 'AUTHORIZED'
+  }
+
+  async isDeviceStatusRegistered() {
+    let deviceStatus = await this.getOstDeviceStatus();
+    return deviceStatus.toUpperCase() === 'REGISTERED'
+  }
 }
 
 
