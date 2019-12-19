@@ -173,7 +173,7 @@ export default class SendTokensScreen extends PureComponent {
     }
     let txMeta = {"type": "user_to_user", "name": "Tokens sent from iOS", "details": "Send tokens from iOS"};
 
-    let uuid = OstTransactionHelper.executeDirectTransfer(CurrentUser.getUserId(), [tokenField.value()], [this.user.token_holder_address], txMeta)
+    let uuid = OstTransactionHelper.executeDirectTransfer(CurrentUser.getUserId(), [tokenField.value()], [this.user.token_holder_address], txMeta, appProvider.getOstSdkUIDelegate());
     OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.flowComplete, (workflowContext, contextEntity) => {
       console.log(contextEntity);
     });
