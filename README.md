@@ -1,6 +1,13 @@
 # react-native-demo-app
 
 
+# Setup
+
+## Install npm modules
+```
+npm install
+```
+
 # iOS Setup
 
 ## Go to ios folder
@@ -21,7 +28,7 @@ carthage update --platform ios
 pod update
 ```
 
-## Run the application
+## Open and run the application using xcode.
 - Open the `ostWalletRNApp.xcworkspace` in xcode.
 
 ```
