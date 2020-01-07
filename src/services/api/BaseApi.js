@@ -15,6 +15,11 @@ export default class BaseApi {
   }
 
   setFormData( data = null ) {
+    if (data == '') {
+      this.formData = {};
+      return;
+    }
+
     if (typeof data === 'object') {
       for (var key in data) {
         if (data.hasOwnProperty(key)) {

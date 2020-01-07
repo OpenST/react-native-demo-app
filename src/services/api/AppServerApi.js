@@ -1,5 +1,7 @@
 import BaseApi from "./BaseApi";
 import {API_CONSTANT} from "../../constants/AppConfig";
+// Used require to support all platforms
+const RCTNetworking = require('react-native/Libraries/Network/RCTNetworking');
 
 const LOG_TAG = 'services/AppServerApi';
 
@@ -89,12 +91,21 @@ export default class AppServerApi extends BaseApi{
 
   logoutUser() {
     let res = '/users/logout';
+    const oThis = this;
     return this.post(res)
       .then(function(res) {
-        return Promise.resolve(res)
+				return oThis.clearCookies();
       })
       .catch(function (err) {
-        return Promise.reject(err)
+				return oThis.clearCookies();
       });
+  }
+
+  clearCookies() {
+    return new Promise(function (resolve) {
+			RCTNetworking.clearCookies(() => {
+				return resolve();
+			});
+    });
   }
 }
