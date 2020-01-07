@@ -146,7 +146,7 @@ class UsersScreen extends PureComponent {
     }
 
     let balance = this.state.balances[item.app_user_id] ? this.state.balances[item.app_user_id].available_balance : 0;
-    return (<Text style={inlineStyle.subHeading}>Balance: {this.priceOracle.fromDecimal(balance) || 0} POP</Text>);
+    return (<Text style={inlineStyle.subHeading}>Balance: {this.priceOracle.fromDecimal(balance) || 0} {appProvider.getTokenSymbol()}</Text>);
   }
 
   getUserDetailsView(item) {
