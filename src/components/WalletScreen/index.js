@@ -93,11 +93,15 @@ class WalletScreen extends PureComponent {
   }
 
   fetchData() {
-    this.fetchBalance().then(()=>{
-      this.onRefresh();
-    }).catch(()=>{
-      console.log("Error while fetching balance");
-    });
+    this.fetchBalance();
+    const oThis = this;
+		CurrentUser.getOstToken().then(function(token) {
+		  oThis.tokenDecimal = token.decimals || 18;
+			oThis.onRefresh();
+    }).catch(function() {
+			oThis.tokenDecimal = 18;
+			oThis.onRefresh();
+    })
   }
 
   onRefresh = () => {
@@ -332,7 +336,7 @@ class WalletScreen extends PureComponent {
 
   getValueTransferView(item) {
     let textColor;
-    let valueString = parseFloat(this.priceOracle.fromDecimal(item.amount)).toFixed(2).toString();
+    let valueString = parseFloat(this.priceOracle.fromDecimal(item.amount, this.tokenDecimal)).toFixed(2).toString();
     if (item.in) {
       textColor = Colors.darkerBlue;
       valueString = `+${valueString}`;
