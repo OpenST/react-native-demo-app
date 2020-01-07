@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import Colors from "../../theme/styles/Colors";
 import inlineStyle from "../WalletScreen/styles";
-import {FlatList, Image, Text, View} from "react-native";
+import {FlatList, Image, Text, View, Linking, TouchableOpacity} from "react-native";
 import walletBgCurve from '../../assets/wallet_bg_curve.png'
 import {appProvider} from "../../helper/AppProvider";
 import CurrentUser from "../../models/CurrentUser";
@@ -75,6 +75,16 @@ class WalletScreen extends PureComponent {
         }, 1000*24)
       })
     }
+
+		await this.preFetchChainId();
+  }
+
+  async preFetchChainId() {
+		this.chainId = 0;
+		const token = await CurrentUser.getOstToken();
+		if (token && token.auxiliary_chains && token.auxiliary_chains[0] && token.auxiliary_chains[0].chain_id) {
+			this.chainId = token.auxiliary_chains[0].chain_id;
+		}
   }
 
   fetchData() {
@@ -284,15 +294,24 @@ class WalletScreen extends PureComponent {
   }
 
   getTxnDetailsView(item) {
-    return (<View style={{flex: 8, justifyContent: "center"}}>
+    return (<TouchableOpacity
+			onPress={ () => { this.onTxnTap(item) } }>
+      <View style={{flex: 8, justifyContent: "center"}}>
       {
         this.getTxnText(item)
       }
       {
         this.getDateTimeStamp(item.timestamp * 1000)
       }
-    </View>);
+    </View>
+    </TouchableOpacity>);
 
+  }
+
+	onTxnTap(item) {
+		const viewEndPoint = appProvider.getViewApiEndpoint();
+		const url = viewEndPoint + "transaction/tx-" + this.chainId + "-" + item.txnHash;
+		Linking.openURL(url);
   }
 
   getDateString(date){
