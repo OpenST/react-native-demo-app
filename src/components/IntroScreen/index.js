@@ -6,7 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
   TouchableOpacity,
-  View
+  View, Alert
 } from 'react-native';
 
 import {OstWalletSdk, OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
@@ -79,13 +79,47 @@ class IntroScreen extends PureComponent {
     const isDeviceRegistered = await CurrentUser.isDeviceStatusRegistered();
     const isUserActivated = await CurrentUser.isUserStatusActivated();
 
-    let navigationScreen = 'WalletScreen';
-    let navigationParams = {};
-
     if (isDeviceRegistered && isUserActivated) {
-      navigationScreen =  'WalletSettingScreen';
-      navigationParams = {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()};
+      this.showAlertToAuthorizeDevice()
+    }else {
+      this.jumpToWalletScreen()
     }
+  }
+
+  showAlertToAuthorizeDevice() {
+    Alert.alert("Registered Device",
+      "Your device is in registered state. Please authorized your device",
+      [
+        {
+          text: 'Go to settings',
+          onPress: () => {
+            this.jumpToWalletSettingsScreen()
+          },
+          style: 'cancel'
+        },
+        {
+          text: 'Cancel',
+          onPress: () => {
+            this.jumpToWalletScreen()
+          }
+        }
+      ],
+      {cancelable: false}
+    );
+  }
+
+  jumpToWalletScreen() {
+    let navigationScreen = 'WalletScreen';
+    let navigationParams = {'activateUserWorkflowId': this.viewModel.activateUserWorkflowId};
+
+    setTimeout(() => {
+      this.props.navigation.navigate(navigationScreen, navigationParams);
+    }, 500);
+  }
+
+  jumpToWalletSettingsScreen() {
+    const navigationScreen =  'WalletSettingScreen';
+    const navigationParams = {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()};
 
     setTimeout(() => {
       this.props.navigation.navigate(navigationScreen, navigationParams);
