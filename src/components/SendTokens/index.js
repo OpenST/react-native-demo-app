@@ -20,6 +20,8 @@ import {ensureDeivceAndSession} from "../../helper/TransactionHelper";
 import sizeHelper from "../../helper/SizeHelper";
 import inlineStyle from "../UsersScreen/styles";
 
+const DEFAULT_FIAT_VALUE = "0";
+const DEFAULT_TOKEN_VALUE = "0";
 
 export default class SendTokensScreen extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -48,10 +50,10 @@ export default class SendTokensScreen extends PureComponent {
     this.tokenFieldRef = React.createRef();
     this.fiatFieldRef = React.createRef();
 
+
+
     this.state = {
-      tokenValue:'0',
       tokenError:null,
-      usdValue: '0',
       usdError:null,
       balance: {},
       modalVisible: false,
@@ -93,24 +95,36 @@ export default class SendTokensScreen extends PureComponent {
     this.onSendTokenTapped()
   }
 
-  onTokenChange = (tokenVal) => {
+  onTokenChange = (...args) => {
+    let tokenVal = args[0];
     let value = tokenVal;
     if (!this.numberFormatter.isValidInputProvided(value)) {
+      console.log("-- RACHIN || onTokenChange || Invalid input");
       this.setState({
         tokenError:"Only numbers and upto 2 decimal values are allowed",
-        usdValue: '',
-        usdError:null
+        usdError: null
       });
+
+      // Set fiat value to empty string.
+      this.setFiatDisplayValue( "" );
+      // Set token value to empty string.
+      this.setTokenDisplayValue( "" );
+
       return
     }
 
     if (this.priceOracle) {
       let fiatVal = this.priceOracle.btToFiat(value);
+      console.log("-- RACHIN || onTokenChange || fiatVal", fiatVal);
+      
+      // Set fiat value to fiatVal.
+      this.setFiatDisplayValue(fiatVal);
 
       this.setState({
         tokenError: null,
-        usdValue: fiatVal,
         usdError:null
+      }, () => {
+        console.log("-- RACHIN || onTokenChange || setState done...");
       })
     }
   };
@@ -118,22 +132,45 @@ export default class SendTokensScreen extends PureComponent {
   onUsdChange = (usdVal) => {
     let value = usdVal;
     if (!this.numberFormatter.isValidInputProvided(value)) {
+      console.log("-- RACHIN || onUsdChange || Invalid input");
       this.setState({
-        tokenValue:"",
         tokenError:"",
         usdError:"Only numbers and upto 2 decimal values are allowed"
       });
+
+      // r-todo: set fiat value to empty string.
+      this.setFiatDisplayValue( "" );
+      // Set token value to empty string.
+      this.setTokenDisplayValue( "" );
+
       return
     }
 
     if (this.priceOracle) {
       const toBtVal = this.priceOracle.fiatToBt(value);
-
+      console.log("-- RACHIN || onUsdChange || toBtVal", toBtVal);
+      
+      // Set token value to toBtVal.
+      this.setTokenDisplayValue( toBtVal );
+      
       this.setState({
-        tokenValue: toBtVal,
         tokenError: null,
         usdError: null
       })
+    }
+  };
+
+  setFiatDisplayValue = (fiatVal) => {
+    let { current: fiatField } = this.fiatFieldRef;
+    if( fiatField && fiatField.setValue ) {
+      fiatField.setValue(fiatVal);
+    }
+  }
+
+  setTokenDisplayValue = ( tokenVal ) => {
+    let { current: tokenField } = this.tokenFieldRef;
+    if( tokenField && tokenField.setValue ) {
+      tokenField.setValue(tokenVal);
     }
   };
 
@@ -226,6 +263,7 @@ export default class SendTokensScreen extends PureComponent {
   }
 
   render() {
+    console.log("-- RACHIN || render || method called");
     let available_balance = this.state.balance.available_balance;
     if (available_balance) {
       available_balance = this.priceOracle.fromDecimal(available_balance)
@@ -259,7 +297,7 @@ export default class SendTokensScreen extends PureComponent {
                                  baseColor={Colors.lightGrey}
                                  keyboardType={'decimal-pad'}
                                  ref={this.tokenFieldRef}
-                                 defaultValue={this.state.tokenValue}
+                                 defaultValue={DEFAULT_TOKEN_VALUE}
                                  error={this.state.tokenError}
                                  onChangeText={(val) => {
                                    this.onTokenChange(val)
@@ -287,9 +325,9 @@ export default class SendTokensScreen extends PureComponent {
                                  keyboardType={'decimal-pad'}
                                  baseColor={Colors.lightGrey}
                                  ref={this.fiatFieldRef}
-                                 value={this.state.usdValue}
+                                 value={DEFAULT_FIAT_VALUE}
                                  error={this.state.usdError}
-                                 onChangeText={(val) => { this.onUsdChange(val)}}
+                                 onChangeText={this.onUsdChange}
               />
             </View>
             <View style={{flex:1}}>
