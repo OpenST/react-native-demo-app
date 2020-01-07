@@ -185,6 +185,12 @@ android {
 
         }
     }
+
+    sourceSets {
+        main.java.srcDirs += 'src/customloader/src'
+        main.assets.srcDirs += 'src/customloader/assets'
+        main.res.srcDirs += 'src/customloader/res'
+    }
 }
 
 dependencies {
