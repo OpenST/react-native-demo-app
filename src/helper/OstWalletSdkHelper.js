@@ -32,6 +32,11 @@ class OstWalletSdkHelper {
   }
 
   static isUserCancelled (ostError) {
+
+    if (!this.isInstanceOfOstRNError(ostError)) {
+      return false
+    }
+
     if ( "WORKFLOW_CANCELLED" === ostError.getErrorCode() ) {
       return true
     }
@@ -41,6 +46,10 @@ class OstWalletSdkHelper {
     }
 
     return false
+  }
+
+  static isInstanceOfOstRNError(err) {
+    return (err instanceof OstWalletError)
   }
 
   static canDeviceMakeApiCall(device) {

@@ -15,6 +15,7 @@ import {appProvider} from "../../helper/AppProvider";
 import sizeHelper from "../../helper/SizeHelper";
 import AppToast from "../CommonComponent/AppToast";
 import CurrentUser from "../../models/CurrentUser";
+import OstWalletSdkHelper from '../../helper/OstWalletSdkHelper';
 
 class LoginScreen extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -131,6 +132,12 @@ class LoginScreen extends PureComponent {
   }
 
   onFailure(err) {
+
+    if (OstWalletSdkHelper.isUserCancelled(err)) {
+      this.setModalVisible(false, '');
+      return;
+    }
+
     this.setModalVisible(false);
     setTimeout(() => {
       let msg = err.msg || 'Something went wrong';
