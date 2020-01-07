@@ -6,6 +6,7 @@ import {OstWalletSdk} from '@ostdotcom/ost-wallet-sdk-react-native';
 class CurrentUser {
   constructor() {
     this.userData = null;
+    this.userBalance = null;
   }
 
   initialize() {
@@ -83,6 +84,16 @@ class CurrentUser {
     });
   }
 
+  getUserBalance() {
+    return this.userBalance || {};
+  }
+
+  setUserBalance(userBalance) {
+    let resultType = userBalance.result_type;
+    this.userBalance = userBalance[resultType];
+  }
+
+
   async getOstUserStatus() {
     let user = await this.getOstUser();
 	return user.status
@@ -95,6 +106,7 @@ class CurrentUser {
 
 
   logoutUser() {
+    this.resetUserData();
     let apiService = appProvider.getAppServerClient();
     return apiService.logoutUser()
       .then((res) => {

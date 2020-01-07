@@ -45,7 +45,7 @@ class WalletScreen extends PureComponent {
 
   componentDidMount() {
     this.subscribeToEvents();
-    this.onComponentDidMount()
+    this.onComponentDidMount();
   }
 
   subscribeToEvents() {
@@ -56,6 +56,11 @@ class WalletScreen extends PureComponent {
   }
 
   onfocus() {
+
+    this.setState({
+      balance: CurrentUser.getUserBalance()
+    });
+
     let shouldFetchTx = this.props.navigation.getParam('fetchTransaction');
     if (shouldFetchTx) {
       this.props.navigation.setParams({fetchTransaction: false});
@@ -124,6 +129,7 @@ class WalletScreen extends PureComponent {
     this.setState({
       balance: res[resultType]
     });
+    CurrentUser.setUserBalance(res)
   }
 
   async setPriceOracle(pricePoint) {
@@ -231,7 +237,7 @@ class WalletScreen extends PureComponent {
   getTokenBalance() {
     let balanceInDecimal = "0";
     if (this.priceOracle) balanceInDecimal = this.priceOracle.fromDecimal(this.state.balance.available_balance);
-    return `${balanceInDecimal} ${appProvider.getTokenSymbol()}`;
+    return `${balanceInDecimal || '0'} ${appProvider.getTokenSymbol()}`;
   }
 
   getTokenFiatBalance() {
