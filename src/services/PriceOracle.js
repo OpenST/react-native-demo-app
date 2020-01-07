@@ -14,10 +14,8 @@ export default class PriceOracle {
       pricePoints = {};
     }
 
-    ///NOTE: If you are wondering why fall back is 1, Ask Ashutosh.
     this.conversionFactor = token.conversion_factor || 1;
 
-    ///NOTE: If you are wondering why fall back is 18, Ask Ashutosh.
     this.decimals = token.decimals || 18;
 
     if (pricePoints.hasOwnProperty(token.base_token)) {

@@ -130,14 +130,14 @@ class LoginScreen extends PureComponent {
       "Your device is in registered state. Please authorized your device",
       [
         {
-          text: 'Go to settings',
+          text: 'Open Settings',
           onPress: () => {
             this.jumpToWalletSettingsScreen()
           },
           style: 'cancel'
         },
         {
-          text: 'Cancel',
+          text: 'Not Now',
           onPress: () => {
             this.jumpToWalletScreen()
           }
