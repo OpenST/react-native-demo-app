@@ -2,9 +2,9 @@ import colors from '../styles/Colors'
 
 export default {
 
-  // "nav_bar_logo_image": {
-  //   "asset_name": "header_icon"
-  // },
+  "nav_bar_logo_image": {
+    "asset_name": "header_icon"
+  },
 
   "navigation_bar": {
     "tint_color": colors.brightSky
