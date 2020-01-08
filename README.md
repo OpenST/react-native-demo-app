@@ -18,6 +18,11 @@ Popcorn economy is hosted by OST platform on Sandbox environment.
 {"token_id":1400,"token_name":"Popcorn","token_symbol":"POP","url_id":"55c0c94b98ef6362e7d2d10fe60572819d7d31e54f8017aaba95eb225cc1bff7","mappy_api_endpoint":"https://demo-mappy.ost.com/demo/","saas_api_endpoint":"https://api.ost.com/testnet/v2/","view_api_endpoint":"https://view.ost.com/testnet/"}
 ```
 
+To avoid pushing config into github use the below command:
+```
+git update-index --skip-worktree ./src/constants/demo-server-config.json
+```
+
 ## Install npm modules
 ```
 npm install
