@@ -10,4 +10,5 @@
 
 <resources>
     <color name="trans_gray">#33000000</color>
+    <color name="darker_blue">#438BAD</color>
 </resources>

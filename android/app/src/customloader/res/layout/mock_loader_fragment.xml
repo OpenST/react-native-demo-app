@@ -11,8 +11,8 @@
         android:orientation="vertical"
         android:layout_marginTop="@dimen/dp_20"
         android:layout_marginBottom="@dimen/dp_20"
-        android:layout_marginStart="70dp"
-        android:layout_marginEnd="70dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_centerInParent="true">
 
         <ImageView
@@ -36,8 +36,9 @@
             android:layout_marginTop="15dp"
             android:textColor="@android:color/black"
             android:textAlignment="center"
+            android:gravity="center"
             android:textStyle="normal"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="Loading..."/>
 
         <Button
@@ -45,9 +46,10 @@
             android:layout_marginTop="25dp"
             android:layout_gravity="center_horizontal"
             android:text="Success"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textAlignment="center"
-            android:background="@android:color/holo_red_light"
+            android:background="@color/darker_blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
