@@ -207,13 +207,27 @@ export default class SendTokensScreen extends PureComponent {
       console.log(contextEntity)
     };
 
-    let { current: tokenField } = this.tokenFieldRef;
-    if (!this.numberFormatter.isValidInputProvided(tokenField.value())) {
+    const { current: tokenField } = this.tokenFieldRef;
+    const tokenValue = tokenField.value();
+    if (!this.numberFormatter.isValidInputProvided(tokenValue)) {
+      this.hideLoader();
       return
     }
+
+    const bigTokenVal = parseFloat(tokenValue);
+    const bigAvailableBal = parseFloat(this.priceOracle.fromDecimal(this.state.balance.available_balance));
+    if (bigTokenVal <= 0.01 || bigTokenVal > bigAvailableBal) {
+      this.setState({
+        tokenError:"Token value should be greater than 0.01 and less than balance.",
+        usdError:""
+      });
+      this.hideLoader();
+      return
+    }
+
     let txMeta = {"type": "user_to_user", "name": "Tokens sent from iOS", "details": "Send tokens from iOS"};
 
-    let uuid = OstTransactionHelper.executeDirectTransfer(CurrentUser.getUserId(), [tokenField.value()], [this.user.token_holder_address], txMeta, appProvider.getOstSdkUIDelegate());
+    let uuid = OstTransactionHelper.executeDirectTransfer(CurrentUser.getUserId(), [tokenValue], [this.user.token_holder_address], txMeta, appProvider.getOstSdkUIDelegate());
     OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.flowComplete, (workflowContext, contextEntity) => {
       console.log(contextEntity);
     });
@@ -227,12 +241,15 @@ export default class SendTokensScreen extends PureComponent {
     });
   };
 
+  hideLoader() {
+    this.setState({
+      modalVisible: false,
+      title: ''
+    });
+  }
 
   onTxnFail(workflowContext, ostError) {
-		this.setState({
-			modalVisible: false,
-			title: ''
-		});
+    this.hideLoader();
 
 		if (OstWalletSdkHelper.isUserCancelled(ostError)) return;
 
@@ -240,10 +257,7 @@ export default class SendTokensScreen extends PureComponent {
   }
 
   onTxReqestAcknowledged() {
-    this.setState({
-      modalVisible: false,
-      title: ''
-    });
+    this.hideLoader();
 
     this.props.navigation.goBack();
     this.props.navigation.navigate('WalletScreen', {fetchTransaction: true});

@@ -77,8 +77,7 @@ class OstMockLoaderViewController: UIViewController, OstWorkflowLoader {
   
   let dismissButton: UIButton = {
     let button = UIButton()
-    
-    button.backgroundColor = UIColor(red: (255/255),green: (116/255), blue: (153/255), alpha: 1)
+    button.backgroundColor = UIColor(red: (67/255),green: (139/255), blue: (173/255), alpha: 1)
     button.layer.cornerRadius = 5
     button.setTitleColor(.white, for: .normal)
     button.clipsToBounds = true
