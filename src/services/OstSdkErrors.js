@@ -66,19 +66,19 @@ class OstSdkErrors {
 
       if ( OstWalletSdkHelper.isDeviceUnauthorizedError(ostError)) {
         errorCode = USER_UNAUTHORIZED;
-      
+
         if ( sdkErrorMessages[workflowType] ) {
           errMsg = sdkErrorMessages[workflowType][ errorCode ];
         }
-      
+
         if ( !errMsg ) {
           errMsg = sdkErrorMessages[DEFAULT_CONTEXT][ errorCode ];
         }
-      
+
         if ( developerMode ) {
           errMsg = errMsg + "\n\n(" + ostError.getApiInternalId() + ")"
         }
-      
+
         return errMsg || DEFAULT_ERROR_MSG;
       }
 
@@ -104,7 +104,7 @@ class OstSdkErrors {
         return DEFAULT_ERROR_MSG;
       }
 
-      if ( allErrors[workflowType] ) {
+      if ( sdkErrorMessages[workflowType] ) {
         errMsg = sdkErrorMessages[workflowType][ errorCode ];
       }
 

@@ -19,6 +19,9 @@ import NumberFormatter from '../../helper/NumberFormatter'
 import {ensureDeivceAndSession} from "../../helper/TransactionHelper";
 import sizeHelper from "../../helper/SizeHelper";
 import inlineStyle from "../UsersScreen/styles";
+import AppToast from "../CommonComponent/AppToast";
+import {ostSdkErrors} from "../../services/OstSdkErrors";
+import OstWalletSdkHelper from "../../helper/OstSdkHelpers/OstWalletSdkHelper";
 
 const DEFAULT_FIAT_VALUE = "0";
 const DEFAULT_TOKEN_VALUE = "0";
@@ -116,7 +119,7 @@ export default class SendTokensScreen extends PureComponent {
     if (this.priceOracle) {
       let fiatVal = this.priceOracle.btToFiat(value);
       console.log("-- RACHIN || onTokenChange || fiatVal", fiatVal);
-      
+
       // Set fiat value to fiatVal.
       this.setFiatDisplayValue(fiatVal);
 
@@ -149,10 +152,10 @@ export default class SendTokensScreen extends PureComponent {
     if (this.priceOracle) {
       const toBtVal = this.priceOracle.fiatToBt(value);
       console.log("-- RACHIN || onUsdChange || toBtVal", toBtVal);
-      
+
       // Set token value to toBtVal.
       this.setTokenDisplayValue( toBtVal );
-      
+
       this.setState({
         tokenError: null,
         usdError: null
@@ -216,12 +219,25 @@ export default class SendTokensScreen extends PureComponent {
     });
     OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.flowInterrupt, (workflowContext, ostError) => {
       console.log(ostError);
+			this.onTxnFail(workflowContext, ostError);
     });
     OstWalletSdkUI.subscribe(uuid,  OstWalletSdkUI.EVENTS.requestAcknowledged, (workflowContext, contextEntity) => {
       console.log(contextEntity);
       this.onTxReqestAcknowledged();
     });
   };
+
+
+  onTxnFail(workflowContext, ostError) {
+		this.setState({
+			modalVisible: false,
+			title: ''
+		});
+
+		if (OstWalletSdkHelper.isUserCancelled(ostError)) return;
+
+		AppToast.showFailureToast(ostSdkErrors.getErrorMessage(workflowContext, ostError));
+  }
 
   onTxReqestAcknowledged() {
     this.setState({
