@@ -132,22 +132,10 @@ class CurrentUser {
   on401Callback() {
     clearTimeout(this.on401Timer);
     this.on401Timer = setTimeout(async () => {
-      Alert.alert("You have been logged out",
-        "Please login again to continue using app.",
-        [
-          {
-            text: 'Logout',
-            onPress: async () => {
-              this.resetUserData();
-              await BaseApi.clearCookies();
-            console.log("Cookies should be cleared. Going to Onboarding");
-            NavigationService.navigate("Onboarding");
-          },
-          style: 'cancel'
-        }
-      ],
-      {cancelable: false}
-    );
+
+       this.resetUserData();
+            await BaseApi.clearCookies();
+            NavigationService.navigate("IntroScreen", {"isAutoLogout": true});
     }, 500);
   }
 

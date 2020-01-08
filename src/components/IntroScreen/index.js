@@ -56,13 +56,20 @@ class IntroScreen extends PureComponent {
   componentDidMount() {
     this.initSdk();
 
+
     let platformUrl = appProvider.getSaasApiEndpoint();
     OstWalletSdk.initialize(platformUrl, ost_wallet_sdk_config, (err , success ) => {});
+
+    if ( this.props.navigation.getParam('isAutoLogout') ) {
+      this.showAlertForLoggedOut()
+      return;
+    } 
 
     if (CurrentUser.getUserData()) {
      this.onSetupDeviceSuccess();
     } else {
      this.showLoader(true);
+
      this.viewModel.setupApplicationUser()
     	.then((res) => {
           this.onSetupDeviceSuccess(res);
@@ -71,6 +78,22 @@ class IntroScreen extends PureComponent {
          this.showLoader(false);
       	});
     }
+  }
+
+  showAlertForLoggedOut() {
+     Alert.alert("You have been logged out",
+        "Please login again to continue using app.",
+        [
+          {
+            text: 'OK',
+            onPress: async () => {
+             this.props.navigation.setParams({ 'isAutoLogout': false });
+          },
+          style: 'cancel'
+        }
+      ],
+      {cancelable: false}
+    );
   }
 
   async onSetupDeviceSuccess(res) {

@@ -13,6 +13,7 @@ function getTopLevelNavigator(){
 
 
 function navigate(routeName, params) {
+  params = params || {};
   _navigator.dispatch(
     NavigationActions.navigate({
       routeName,
