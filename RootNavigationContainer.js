@@ -45,7 +45,8 @@ const modalStackConfig = {
     return {
       tabBarVisible: !customTabHiddenRoutes.includes(routeName)
     };
-  }
+  },
+  headerLayoutPreset: 'center'
 };
 
 const Onboarding = createStackNavigator(
@@ -70,6 +71,9 @@ const WalletStack = createStackNavigator(
   {
     WalletScreen: WalletScreen,
     LoginScreen: LoginScreen
+  },
+  {
+    headerLayoutPreset: 'center'
   }
 );
 
