@@ -30,7 +30,7 @@ const stylesMap = {
 
   heading: {
     color: Colors.valhalla,
-    fontSize: 18
+    fontSize: 16
   },
 
   userNameHeading: {

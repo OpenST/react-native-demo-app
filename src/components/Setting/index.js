@@ -64,7 +64,7 @@ class Settings extends PureComponent {
     return {
       "cellType": "walletSetting",
       "heading": "Wallet Setting",
-      "description": null
+      "description": "View your wallet details and perform wallet operations."
     }
   }
 
@@ -72,7 +72,7 @@ class Settings extends PureComponent {
     return {
       "cellType": "logout",
       "heading": "Logout",
-      "description": null
+      "description": "Logout from application."
     }
   }
 
