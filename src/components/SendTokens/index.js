@@ -216,7 +216,7 @@ export default class SendTokensScreen extends PureComponent {
 
     const bigTokenVal = parseFloat(tokenValue);
     const bigAvailableBal = parseFloat(this.priceOracle.fromDecimal(this.state.balance.available_balance));
-    if (bigTokenVal <= 0.01 || bigTokenVal > bigAvailableBal) {
+    if (bigTokenVal < 0.01 || bigTokenVal > bigAvailableBal) {
       this.setState({
         tokenError:"Token value should be greater than 0.01 and less than balance.",
         usdError:""
