@@ -114,9 +114,9 @@ export default class BaseApi {
 
         switch (responseStatus) {
           case 200:
-            this.logoutOn401();
-            throw "Dummy Error";
-            break;
+            // this.logoutOn401();
+            // throw "Dummy Error";
+            // break;
           case 301:
           case 302:
           case 304:
