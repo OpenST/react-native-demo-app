@@ -87,7 +87,7 @@ class IntroScreen extends PureComponent {
   }
 
   showAlertToAuthorizeDevice() {
-    Alert.alert("Registered Device",
+    Alert.alert("Authorize your Device",
       "Your device is in registered state. Please authorized your device",
       [
         {

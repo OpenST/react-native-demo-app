@@ -2,6 +2,8 @@ import AssignIn from 'lodash/assignIn';
 import qs from 'qs';
 import NetInfo from '@react-native-community/netinfo';
 import FormData from 'form-data';
+import {Alert} from 'react-native'
+import NavigationService from "../NavigationService";
 
 const LOG_TAG = 'services/BaseApi';
 
@@ -118,7 +120,6 @@ export default class BaseApi {
           case 409:
             break;
           case 401:
-            console.warn(LOG_TAG, "User is not authorized");
             break;
           default:
             //Todo: show toast error

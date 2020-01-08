@@ -30,7 +30,8 @@ class CurrentUser {
   }
 
   resetUserData() {
-    this.userData = null
+    this.userData = null;
+    this.userBalance = null;
   }
 
   getUserId() {
@@ -110,7 +111,7 @@ class CurrentUser {
     let apiService = appProvider.getAppServerClient();
     return apiService.logoutUser()
       .then((res) => {
-        this.resetUserData()
+        this.resetUserData();
         return Promise.resolve(res)
       })
       .catch((err) => {

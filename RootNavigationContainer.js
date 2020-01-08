@@ -17,6 +17,7 @@ import SettingScreen from './src/components/Setting'
 import SendTokens from './src/components/SendTokens'
 import WalletScreen from './src/components/WalletScreen/index'
 import UserScreen from "./src/components/UsersScreen";
+import NavigationService from "./src/services/NavigationService";
 
 
 const customTabHiddenRoutes = [
@@ -137,7 +138,11 @@ const AppContainer = createAppContainer(
 
 const RootNavigationContainer = () => (
   <Root>
-    <AppContainer/>
+    <AppContainer
+      ref={(navigatorRef) => {
+        NavigationService.setTopLevelNavigator(navigatorRef);
+      }}
+    />
   </Root>
 );
 
