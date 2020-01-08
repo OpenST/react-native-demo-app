@@ -100,12 +100,4 @@ export default class AppServerApi extends BaseApi{
 				return oThis.clearCookies();
       });
   }
-
-  clearCookies() {
-    return new Promise(function (resolve) {
-			RCTNetworking.clearCookies(() => {
-				return resolve();
-			});
-    });
-  }
 }
