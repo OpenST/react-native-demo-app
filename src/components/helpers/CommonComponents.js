@@ -5,7 +5,6 @@ import sizeHelper from "../../helper/SizeHelper";
 
 class CommonComponents {
   getCircularView(centeredText) {
-    console.log("getCircularView called. centeredText is ", centeredText)
     return (<View style={{
       alignItems: 'center',
       justifyContent: 'center',
