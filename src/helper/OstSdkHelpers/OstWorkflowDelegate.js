@@ -103,7 +103,7 @@ const _getPassphrase = (currentUserOstId, workflowDelegate, passphrasePrefixAcce
     })
     .catch((err) => {
       passphrasePrefixAccept.cancelFlow();
-      return Promise.reject(err)
+      workflowDelegate.saltFetchFailed(err);
     });
 
   return fetchSaltPromise

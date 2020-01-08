@@ -3,10 +3,10 @@ import qs from 'qs';
 import NetInfo from '@react-native-community/netinfo';
 import FormData from 'form-data';
 import {Alert} from 'react-native'
-import NavigationService from "../NavigationService";
 const RCTNetworking = require('react-native/Libraries/Network/RCTNetworking');
 
 const LOG_TAG = 'services/BaseApi';
+let on401Callback = null;
 
 export default class BaseApi {
   constructor(url) {
@@ -15,6 +15,10 @@ export default class BaseApi {
     this._cleanUrl();
     this._parseParams();
     this.formData = new FormData();
+  }
+
+  static set401Callback( callback ) {
+    on401Callback = callback;
   }
 
   setFormData( data = null ) {
@@ -114,9 +118,6 @@ export default class BaseApi {
 
         switch (responseStatus) {
           case 200:
-            // this.logoutOn401();
-            // throw "Dummy Error";
-            // break;
           case 301:
           case 302:
           case 304:
@@ -125,7 +126,7 @@ export default class BaseApi {
           case 409:
             break;
           case 401:
-            this.logoutOn401();
+            on401Callback && on401Callback(responseJSON);
             break;
           default:
             //Todo: show toast error
@@ -140,7 +141,7 @@ export default class BaseApi {
     });
   }
 
-  clearCookies() {
+  static clearCookies() {
     return new Promise(function (resolve) {
       console.log("Clearing cookies");
       RCTNetworking.clearCookies((...args) => {
@@ -150,10 +151,7 @@ export default class BaseApi {
     });
   }
 
-  async logoutOn401() {
-    // Clear the cookies.
-    await this.clearCookies();
-    console.log("Cookies should be cleared. Going to Onboarding");
-    NavigationService.navigate("Onboarding");
+  clearCookies() {
+    return BaseApi.clearCookies();
   }
 }

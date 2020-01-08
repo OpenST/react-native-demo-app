@@ -93,7 +93,9 @@ class WalletScreen extends PureComponent {
   }
 
   fetchData() {
-    this.fetchBalance();
+    this.fetchBalance().catch((err) => {
+      ///TODO: Show error in toast.
+    });
     const oThis = this;
 		CurrentUser.getOstToken().then(function(token) {
 		  oThis.tokenDecimal = token.decimals || 18;
@@ -116,11 +118,11 @@ class WalletScreen extends PureComponent {
           .then(()=>{
             return resolve();
           }).catch(()=>{
-          return reject();
-        })
+            return reject(res);
+          })
       }, (ostError) => {
         console.log(ostError);
-        return reject();
+        return reject(ostError);
       });
     });
   }

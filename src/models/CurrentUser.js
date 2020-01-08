@@ -1,12 +1,17 @@
 import {appProvider} from "../helper/AppProvider";
 import {Alert} from "react-native";
-
+import NavigationService from "../services/NavigationService";
 import {OstWalletSdk} from '@ostdotcom/ost-wallet-sdk-react-native';
+import BaseApi from "../services/api/BaseApi";
 
 class CurrentUser {
   constructor() {
     this.userData = null;
     this.userBalance = null;
+    BaseApi.set401Callback( (reponse) => {
+      this.on401Callback();
+    });
+    this.on401Timer = null;
   }
 
   initialize() {
@@ -115,10 +120,36 @@ class CurrentUser {
         return Promise.resolve(res)
       })
       .catch((err) => {
-        return Promise.reject(err)
+        // Ignore the error.
+        
+      })
+      .then(() => {
+        // Always clear cookie.
+        return BaseApi.clearCookies();
       })
   }
 
+  on401Callback() {
+    clearTimeout(this.on401Timer);
+    this.on401Timer = setTimeout(async () => {
+      Alert.alert("You have been logged out",
+        "Please login again to continue using app.",
+        [
+          {
+            text: 'Logout',
+            onPress: async () => {
+              this.resetUserData();
+              await BaseApi.clearCookies();
+            console.log("Cookies should be cleared. Going to Onboarding");
+            NavigationService.navigate("Onboarding");
+          },
+          style: 'cancel'
+        }
+      ],
+      {cancelable: false}
+    );
+    }, 500);
+  }
 
   async isUserStatusActivated() {
     let userStatus = await this.getOstUserStatus();
