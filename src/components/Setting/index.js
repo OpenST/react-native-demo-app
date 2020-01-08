@@ -63,7 +63,7 @@ class Settings extends PureComponent {
   _buildOstWalletSettingsData() {
     return {
       "cellType": "walletSetting",
-      "heading": "Wallet Setting",
+      "heading": "Wallet Settings",
       "description": "View your wallet details and perform wallet operations."
     }
   }
