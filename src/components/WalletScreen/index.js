@@ -337,6 +337,9 @@ class WalletScreen extends PureComponent {
   getValueTransferView(item) {
     let textColor;
     let valueString = parseFloat(PriceOracle.fromDecimal(item.amount, this.tokenDecimal)).toFixed(2).toString();
+    if (isNaN(valueString)) {
+			valueString = "0.00";
+    }
     if (item.in) {
       textColor = Colors.darkerBlue;
       valueString = `+${valueString}`;
