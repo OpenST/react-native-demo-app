@@ -3,10 +3,10 @@ import {RegisterDeviceHelper} from "./OstSdkHelpers/RegisterDeviceHelper"
 import UIWorkflowDelegate from "./OstSdkHelpers/OstWorkflowDelegate";
 import CurrentUser from "../models/CurrentUser";
 import PriceOracle from "../services/PriceOracle";
+import ECONOMY_DATA from "../constants/demo-server-config.json";
 
 const LOG_TAG = 'helper/AppProvider';
 
-const ECONOMY_DATA = {token_id: 1129, token_name:"STC1",token_symbol:"SC1",url_id:"3213e2cfeed268d4ff0e067aa9f5f528d85bdf577e30e3a266f22556865db23a",mappy_api_endpoint:"https://demo-mappy.stagingost.com/demo/",saas_api_endpoint:"https://api.stagingost.com/testnet/v2/",view_api_endpoint:"https://view.stagingost.com/testnet/"};
 class AppProvider {
   constructor(economyData) {
     this.economyData = economyData || ECONOMY_DATA;

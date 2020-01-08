@@ -3,6 +3,15 @@
 
 # Setup
 
+## Add demo server configuration
+By default the application is connected to Popcorn economy hosted on sandbox environment.
+Use your own sandbox economy, scan the QR code of your sandbox economy and update the `demo-server-config.json` file. The QR contains json configuration.
+Path of `demo-server-config.json` file:
+```
+react-native-demo-app/src/constants/demo-server-config.json
+```
+
+
 ## Install npm modules
 ```
 npm install
