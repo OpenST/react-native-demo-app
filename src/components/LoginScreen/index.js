@@ -255,15 +255,16 @@ class LoginScreen extends PureComponent {
               underlayColor='#fff'>
               <Text style={styles.primaryActionText}>{this.getPrimaryActionButtonText()}</Text>
             </TouchableOpacity>
+
+            <View style={[styles.bottomContainer]}>
+              <Text style={styles.bottomText}>{this.getBottomText()}</Text>
+
+              <Text style={{color:Colors.waterBlue, textAlign:'center', padding: 5}}
+                    onPress={this.onSecondayActionButtonTapped}>{this.getSecondayActionButtonText()}
+              </Text>
+            </View>
           </React.Fragment>
-
-          <View style={[styles.bottomContainer,{flex: 1, justifyContent: "flex-end", alignItems: "center"}, this.state.isKeyboardShown ? {marginTop: sizeHelper.layoutPtToPx(20)} : {}]}>
-            <Text style={styles.bottomText}>{this.getBottomText()}</Text>
-
-            <Text style={{color:Colors.waterBlue, textAlign:'center', padding: 5}}
-                  onPress={this.onSecondayActionButtonTapped}>{this.getSecondayActionButtonText()}
-            </Text>
-          </View>
+          <View style={[{flex: 1,justifyContent: "flex-end"}]}></View>
         </KeyboardAwareScrollView>
       </>
     )

@@ -5,11 +5,11 @@ import sizeHelper from "../../helper/SizeHelper";
 const stylesMap = {
   safeAreaViewContainer: {
     marginHorizontal: sizeHelper.layoutPtToPx(20),
-    marginTop: sizeHelper.layoutPtToPx(20)
+    marginTop: sizeHelper.layoutPtToPx(10)
   },
 
   primaryActionButton: {
-    marginTop: sizeHelper.layoutPtToPx(30),
+    marginTop: sizeHelper.layoutPtToPx(10),
     paddingVertical: sizeHelper.layoutPtToPx(10),
     backgroundColor:Colors.waterBlue,
     borderRadius:sizeHelper.layoutPtToPx(10),
@@ -20,7 +20,7 @@ const stylesMap = {
     color:Colors.white,
     textAlign:'center',
     fontWeight: "bold",
-    fontSize: sizeHelper.fontPtToPx(17),
+    fontSize: sizeHelper.fontPtToPx(16),
   },
 
   secondaryActionButton: {
@@ -31,7 +31,10 @@ const stylesMap = {
   },
 
   bottomContainer: {
-    marginBottom: sizeHelper.layoutPtToPx(20)
+    marginTop: sizeHelper.layoutPtToPx(10),
+    marginBottom: sizeHelper.layoutPtToPx(10),
+    justifyContent: "flex-end", 
+    alignItems: "center"
   },
 
   bottomText: {
