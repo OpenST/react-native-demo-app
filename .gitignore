@@ -44,6 +44,9 @@ buck-out/
 \.buckd/
 *.keystore
 
+#Ignore the demo-server-config
+src/constants/demo-server-config.json
+
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
