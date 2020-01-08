@@ -11,16 +11,38 @@ const stylesMap = {
 
   listComponent: {
     flex: 1,
-    marginLeft: sizeHelper.layoutPtToPx(20),
+    paddingLeft: sizeHelper.layoutPtToPx(20),
     borderBottomWidth: sizeHelper.layoutPtToPx(1),
     borderBottomColor: Colors.whisper,
     paddingVertical: sizeHelper.layoutPtToPx(10)
   },
+    userComponent: {
+    flex: 9,
+    flexDirection: "row",
+      justifyContent: 'center',
+    marginLeft: sizeHelper.layoutPtToPx(5),
+    borderBottomWidth: sizeHelper.layoutPtToPx(1),
+    borderBottomColor: Colors.whisper,
+      paddingVertical: sizeHelper.layoutPtToPx(10),
+      paddingLeft: sizeHelper.layoutPtToPx(10)
+  },
+
 
   heading: {
     color: Colors.valhalla,
-    fontSize: 15,
-    fontWeight: "700"
+    fontSize: 18
+  },
+
+  userNameHeading: {
+    color: '#597a84',
+    fontSize: sizeHelper.layoutPtToPx(16),
+    fontWeight: "bold"
+  },
+
+  userIdsubHeading: {
+    color: '#34445b',
+    fontSize: sizeHelper.layoutPtToPx(13),
+    fontWeight: "normal"
   },
 
   description: {

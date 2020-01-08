@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import {FlatList, Text, View, TouchableWithoutFeedback} from 'react-native';
 
-import inlineStyle from './style'
+import inlineStyle from '../Setting/style'
 import Colors from '../../../src/theme/styles/Colors'
 
 import AppLoader from '../CommonComponent/AppLoader'
@@ -11,7 +11,7 @@ import {SwitchActions} from "react-navigation";
 import {appProvider} from "../../helper/AppProvider";
 import {OstWalletSettings} from "@ostdotcom/ost-wallet-sdk-react-native";
 import {DEFAULT_SESSION_KEY_EXPIRY_TIME, DEFAULT_SPENDING_LIMIT} from "../../constants/AppConfig";
-
+import CommonComponents from "../helpers/CommonComponents";
 
 class Settings extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -116,6 +116,19 @@ class Settings extends PureComponent {
     );
   };
 
+  renderHeader() {
+    const userName = CurrentUser.getUserName();
+    const ostUserId = CurrentUser.getUserId();
+
+    return(<View style={inlineStyle.userComponent}>
+      {CommonComponents.getCircularView(userName.charAt(0))}
+      <View style={{flex: 3, justifyContent: "center"}}>
+        <Text style={inlineStyle.userNameHeading}>{userName}</Text>
+        <Text style={inlineStyle.userIdsubHeading}>{ostUserId}</Text>
+      </View>
+    </View>);
+  }
+
   render() {
     return (
       <>
@@ -124,6 +137,7 @@ class Settings extends PureComponent {
           <FlatList
             onRefresh={this.onRefresh}
             data={this.state.list}
+            ListHeaderComponent={this.renderHeader}
             refreshing={this.state.refreshing}
             renderItem={this._renderItem}
             keyExtractor={this._keyExtractor}

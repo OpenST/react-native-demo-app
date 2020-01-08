@@ -6,6 +6,7 @@ import {appProvider} from "../../helper/AppProvider";
 import sizeHelper from "../../helper/SizeHelper";
 import AppLoader from "../CommonComponent/AppLoader";
 import CurrentUser from "../../models/CurrentUser";
+import CommonComponents from "../helpers/CommonComponents";
 
 class UsersScreen extends PureComponent {
   static navigationOptions = ({ navigation, navigationOptions }) => {
@@ -223,7 +224,7 @@ class UsersScreen extends PureComponent {
         this.onSend(item);
       }}>
         <View style={inlineStyle.userComponent}>
-          {this.getCircularView(item.username && item.username.charAt(0))}
+          {CommonComponents.getCircularView(item.username && item.username.charAt(0))}
           {this.getUserDetailsView(item)}
           {this.getSendButton(item)}
         </View>
