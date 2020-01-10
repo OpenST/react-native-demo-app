@@ -19,6 +19,7 @@ import ost_sdk_theme_config from '../../theme/ostsdk/ost-sdk-theme-config';
 import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
 import ost_sdk_content_config from '../../theme/ostsdk/ost-sdk-content-config';
 import ost_sdk_settings_config from '../../theme/ostsdk/ost-sdk-settings-config';
+import ost_sdk_transaction_config from '../../theme/ostsdk/ost-sdk-transaction-config';
 
 import CurrentUser from "../../models/CurrentUser";
 
@@ -29,7 +30,7 @@ import {LoginScreenViewModel} from "../LoginScreen/LoginScreenViewModel";
 import WalletScreen from "../WalletScreen";
 
 import sizeHelper from "../../helper/SizeHelper";
-import {OstWalletSettings} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
+import {OstWalletSettings, OstTransactionHelper} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
 
 
 
@@ -51,6 +52,8 @@ class IntroScreen extends PureComponent {
     OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
     OstWalletSdkUI.setContentConfig(ost_sdk_content_config);
     OstWalletSettings.setMasterConfig(ost_sdk_settings_config);
+    console.log("transaction config: +===========", ost_sdk_transaction_config);
+    OstTransactionHelper.setTxConfig(ost_sdk_transaction_config);
   };
 
   componentDidMount() {
