@@ -328,7 +328,7 @@ class WalletScreen extends PureComponent {
 
   getDateString(date){
     return ('0' + date.getUTCDate()).slice(-2) +
-      '/' + ('0' + date.getUTCMonth()).slice(-2) +
+      '/' + ('0' + (date.getUTCMonth() + 1)).slice(-2) + // date.getUTCMonth() method returns 0 indexed months
       '/' + date.getUTCFullYear() +
       ' ' + ('0' + date.getUTCHours()).slice(-2) +
       ':' + ('0' + date.getUTCMinutes()).slice(-2) +
