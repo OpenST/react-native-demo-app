@@ -347,7 +347,12 @@ export default {
       "text": "Initializing..."
     }
   },
-  "authorize_device_via_qr": {
+  "scan_qr_to_authorize_device": {
+    "scan_qr": {
+      "title_label": {
+        "text": "Scan QR Code to authorize device"
+      }
+    },
     "verify_device": {
       "lead_label": {
         "text": "Authorize New Device"
@@ -381,7 +386,12 @@ export default {
     }
   },
 
-  "execute_transaction_via_qr": {
+  "scan_qr_to_execute_transaction": {
+    "scan_qr": {
+      "title_label": {
+        "text": "Scan QR Code to execute transaction"
+      }
+    },
     "verify_transaction": {
       "lead_label": {
         "text": "Transaction Details"
@@ -402,5 +412,48 @@ export default {
     "initial_loader": {
       "text": "Initializing..."
     }
+  },
+
+  "scan_qr_to_authorize_session": {
+    "scan_qr": {
+      "title_label": {
+        "text": "Scan QR Code to authorize session"
+      }
+    },
+    "verify_session": {
+      "lead_label": {
+        "text": "Authorize Session"
+      },
+      "accept_button": {
+        "text": "Authorize Session"
+      },
+      "reject_button": {
+        "text": "Cancel"
+      }
+    },
+    "get_pin": {
+      "title_label": {
+        "text": "Authorize Session"
+      },
+      "lead_label": {
+        "text": "Enter your 6-digit PIN to authorize session"
+      },
+      "info_label":{
+        "text":  ""
+      },
+      "terms_and_condition_label": {
+        "text": ""
+      }
+    },
+    "loader": {
+      "text": "Authorizing Session..."
+    },
+    "initial_loader": {
+      "text": "Verifying Session..."
+    },
+    "acknowledge": {
+      "text": "Waiting for confirmation..."
+    }
   }
+
 }

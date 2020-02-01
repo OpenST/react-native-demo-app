@@ -326,6 +326,7 @@ class OstMockLoaderViewController: UIViewController, OstWorkflowLoader {
   workflowConfig: [String : Any],
   loaderCompletionDelegate: OstLoaderCompletionDelegate) {
     
+    print("error: ", error.userInfo);
     if (isUserCancelled(error: error)) {
       closeLoader()
       loaderCompletionDelegate.dismissWorkflow();

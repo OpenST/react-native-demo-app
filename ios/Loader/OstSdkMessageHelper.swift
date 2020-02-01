@@ -137,6 +137,8 @@ extension OstWorkflowType {
       return "UPDATE_BIOMETRIC_PREFERENCE"
     case .executeTransaction:
       return "EXECUTE_TRANSACTION"
+    case .authorizeSessionWithQRCode:
+      return "AUTHORIZE_SESSION_WITH_QR_CODE"
     default:
       return "ACTIVATE_USER"
     }
