@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Pin the domain stagingost.com and ost.com-->
+    <!-- Official Android N API -->
+    <base-config cleartextTrafficPermitted="true" />
+    <domain-config>
+        <domain includeSubdomains="true">stagingpepo.com</domain>
+        <pin-set>
+            <pin digest="SHA-256">93m2RcpFNG6qGhj6NKDplTVTL7jcqAnkd69kelXSxxI=</pin>
+            <pin digest="SHA-256">5i3RtbkFS7nt/4viEcyy7PdCO58byAt54uQ8gSuccjg=</pin>
+            <pin digest="SHA-256">KupuWHThXgu73zCS0XD67PIkVGxl0FAH9sKrNRA+T/w=</pin>
+            <pin digest="SHA-256">8uSMBSa5X2xQ2bHvkFif3SB4v7Kpsds+f9hYQJJ95qg=</pin>
+            <pin digest="SHA-256">7LpmFlRSq6cS/+XRRanI8tKCBTTSkBSMYBqKtMVD+lo=</pin>
+        </pin-set>
+        <trustkit-config enforcePinning="true">
+        </trustkit-config>
+    </domain-config>
+    <domain-config>
+        <domain includeSubdomains="true">sandboxpepo.com</domain>
+        <pin-set>
+            <pin digest="SHA-256">6cN2gRsHMiv4iDmgoQoG49RTbm1Ec44hNBNQS0f0SnA=</pin>
+            <pin digest="SHA-256">/oaFmxrP6EZ4Qi7B1+hjcQcyZ9Atf9hKJ1QEKzoMdbQ=</pin>
+            <!--deactivate-->
+            <pin digest="SHA-256">vQXjff8/gFlJ3u+GtTw1vMfmOGD+HfQAbUhPMLYFjS4=</pin>
+            <pin digest="SHA-256">rxifILU6WUJ5WvsbiTr+q2uLD3wkjsokyRpqEe/u6ck=</pin>
+            <pin digest="SHA-256">DYo5lqgDZl75OmwvtxvNkpDMfeoDcyVaZi1rANPi4GA=</pin>
+            <pin digest="SHA-256">ImWdHMV2ca7NG/Gl542B/RXBXuiT+CF93UZl+jqowGI=</pin>
+        </pin-set>
+        <trustkit-config enforcePinning="true">
+        </trustkit-config>
+    </domain-config>
+    <domain-config>
+        <domain includeSubdomains="true">pepo.com</domain>
+        <pin-set>
+            <pin digest="SHA-256">ky8nCk4FQhMGlsodEkZAtJsKgf6pGBHCVE0EThWZog8=</pin>
+            <pin digest="SHA-256">AcAc8wzZwwW7PQ9hdEwubX1YshNI5FF495tRJxkpYLw=</pin>
+            <pin digest="SHA-256">fAeYjyy5PcAEYkvlxLqQqleSup1huF4ZKNfftmfSmsQ=</pin>
+            <pin digest="SHA-256">AC09ehpGZCY0nd9gZDM7ah4Fi+13wsVl4A9QBuxEdo4=</pin>
+            <pin digest="SHA-256">P+kBO3agvFcJWWtwknvbODfmogOW1m8yE12wvmAHyTY=</pin>
+        </pin-set>
+        <trustkit-config enforcePinning="true">
+        </trustkit-config>
+    </domain-config>
+    <domain-config>
+        <domain includeSubdomains="false">api.ost.com</domain>
+        <pin-set>
+            <!--Production-->
+            <pin digest="SHA-256">s4vrk6by0cqKQ9p/mFOakoi0daivc7Le8q7fUuuo4/U=</pin>
+            <pin digest="SHA-256">MvVeCJ2tAuJZmbqoXMqSNP2mKh+VjGiljvqWytjzasU=</pin>
+            <pin digest="SHA-256">J+0IGhy08mkHR1Z1WbdrHEdHhXRohrdLHUYORlWGafA=</pin>
+            <pin digest="SHA-256">aF+lKYb0WChlCTx5uPBw5ZWze/98vAXSzBBIrVSZWJE=</pin>
+            <pin digest="SHA-256">efgWbb0q/zHFLub1SY5QpoQVlZp33QpLOj0EmhoK8tI=</pin>
+
+            <!--Staging-->
+            <!--<pin digest="SHA-256">VMqNElFr41WvPqW6DcYoVXGjW7u85pF2dGpuyxaAPAk=</pin>-->
+            <!--<pin digest="SHA-256">EB5U//Yqir8uZ9UgM+sVXBoOi+daBWlrjO1543RvDmk=</pin>-->
+        </pin-set>
+        <trustkit-config enforcePinning="true">
+        </trustkit-config>
+    </domain-config>
+</network-security-config>

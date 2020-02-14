@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import com.pepo2.bridge.NativePackage;
 import com.ost.walletsdk.ui.OstWalletUI;
+import com.datatheorem.android.trustkit.TrustKit;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -47,6 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this); // Remove this line if you don't want Flipper enabled
+    TrustKit.initializeWithNetworkSecurityConfiguration(getApplicationContext());
     OstWalletUI.setLoaderManager(customloader.src.OstMockLoaderManager.getInstance());
   }
 
