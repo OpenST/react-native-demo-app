@@ -1,38 +1,27 @@
 {
   "ACTIVATE_USER": {
-    "SUCCESS_MESSAGE": "User activated"
   },
   "ADD_SESSION": {
-    "SUCCESS_MESSAGE": "Session added"
   },
   "GET_DEVICE_MNEMONICS": {
   },
   "PERFORM_QR_ACTION": {
-    "SUCCESS_MESSAGE": "Workflow completed!"
   },
   "AUTHORIZE_DEVICE_WITH_QR_CODE": {
-    "SUCCESS_MESSAGE": "Device authorized"
   },
   "AUTHORIZE_DEVICE_WITH_MNEMONICS": {
-    "SUCCESS_MESSAGE": "Device authorized"
   },
   "INITIATE_DEVICE_RECOVERY": {
-    "SUCCESS_MESSAGE": "Recovery initiated"
   },
   "ABORT_DEVICE_RECOVERY": {
-    "SUCCESS_MESSAGE": "Aborted recovery"
   },
   "RESET_PIN": {
-    "SUCCESS_MESSAGE": "PIN has been successfully reset"
   },
   "LOGOUT_ALL_SESSIONS": {
-    "SUCCESS_MESSAGE": "User Activated Successfully"
   },
   "UPDATE_BIOMETRIC_PREFERENCE": {
-    "SUCCESS_MESSAGE": "Biometric updated"
   },
   "EXECUTE_TRANSACTION": {
-    "SUCCESS_MESSAGE": "Tranasction executed"
   },
   "__DEFAULT_CONTEXT": {
     "USER_UNAUTHORIZED": "Device is not authorized. Please authorize device again.",
