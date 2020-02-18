@@ -92,7 +92,7 @@ class Settings extends PureComponent {
     }
 
     if( cellData.cellType === 'redeemableSkus' ){
-      this.props.navigation.push("RedeemableSkusScreen");
+      this.props.navigation.push("RedeemableSkusScreen", {'ostUserId': CurrentUser.getUserId()});
       return
     }
 
