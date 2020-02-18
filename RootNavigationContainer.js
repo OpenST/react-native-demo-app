@@ -18,6 +18,7 @@ import SendTokens from './src/components/SendTokens'
 import WalletScreen from './src/components/WalletScreen/index'
 import UserScreen from "./src/components/UsersScreen";
 import NavigationService from "./src/services/NavigationService";
+import RedeemableSkusScreen from '@ostdotcom/ost-wallet-sdk-react-native/js/RedeemableSkus';
 
 
 const customTabHiddenRoutes = [
@@ -80,7 +81,8 @@ const WalletStack = createStackNavigator(
 const SettingStack = createStackNavigator(
   {
     SettingScreen: SettingScreen,
-    WalletSettingScreen: OstWalletSettingsComponent
+    WalletSettingScreen: OstWalletSettingsComponent,
+    RedeemableSkusScreen: RedeemableSkusScreen
   },
   {
     ...modalStackConfig

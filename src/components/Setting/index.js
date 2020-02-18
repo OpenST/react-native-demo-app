@@ -53,6 +53,7 @@ class Settings extends PureComponent {
     let cells = [];
 
     cells.push(this._buildOstWalletSettingsData());
+    cells.push(this._buildOstRedeemableSkusData());
     cells.push(this._buildLogoutData());
 
     this.setState({
@@ -68,6 +69,14 @@ class Settings extends PureComponent {
     }
   }
 
+  _buildOstRedeemableSkusData() {
+    return {
+      "cellType": "redeemableSkus",
+      "heading": "RedeemableSkus",
+      "description": "Redeem options"
+    }
+  }
+
   _buildLogoutData() {
     return {
       "cellType": "logout",
@@ -79,6 +88,11 @@ class Settings extends PureComponent {
   onSettingItemTapped = (cellData) => {
     if ( cellData.cellType === 'walletSetting' ) {
       this.props.navigation.push("WalletSettingScreen", {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()});
+      return
+    }
+
+    if( cellData.cellType === 'redeemableSkus' ){
+      this.props.navigation.push("RedeemableSkusScreen");
       return
     }
 
