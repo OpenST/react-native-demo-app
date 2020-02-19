@@ -81,7 +81,7 @@ const SettingStack = createStackNavigator(
   {
     SettingScreen: SettingScreen,
     WalletSettingScreen: OstWalletSettingsComponent,
-    RedeemableSkusScreen: OstRedeemableSkuDetails,
+    RedeemableSkusScreen: OstRedeemableSkus,
     RedeemableSkuDetails: OstRedeemableSkuDetails
   },
   {
