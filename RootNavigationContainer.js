@@ -10,7 +10,7 @@ import Colors from "./src/theme/styles/Colors";
 import {Root} from "native-base";
 
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {OstWalletSettingsComponent} from '@ostdotcom/ost-wallet-sdk-react-native';
+import {OstWalletSettingsComponent, RedeemableSkusScreen, RedeemableSkuDetails} from '@ostdotcom/ost-wallet-sdk-react-native';
 import IntroScreen from './src/components/IntroScreen'
 import LoginScreen from './src/components/LoginScreen'
 import SettingScreen from './src/components/Setting'
@@ -18,7 +18,6 @@ import SendTokens from './src/components/SendTokens'
 import WalletScreen from './src/components/WalletScreen/index'
 import UserScreen from "./src/components/UsersScreen";
 import NavigationService from "./src/services/NavigationService";
-import RedeemableSkusScreen from '@ostdotcom/ost-wallet-sdk-react-native/js/RedeemableSkus';
 
 
 const customTabHiddenRoutes = [
@@ -82,7 +81,8 @@ const SettingStack = createStackNavigator(
   {
     SettingScreen: SettingScreen,
     WalletSettingScreen: OstWalletSettingsComponent,
-    RedeemableSkusScreen: RedeemableSkusScreen
+    RedeemableSkusScreen: RedeemableSkusScreen,
+    RedeemableSkuDetails: RedeemableSkuDetails
   },
   {
     ...modalStackConfig
