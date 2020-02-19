@@ -27,12 +27,24 @@ import AppLoader from "../CommonComponent/AppLoader";
 import {appProvider} from "../../helper/AppProvider";
 
 import {LoginScreenViewModel} from "../LoginScreen/LoginScreenViewModel";
-import WalletScreen from "../WalletScreen";
 
 import sizeHelper from "../../helper/SizeHelper";
 import {OstWalletSettings, OstTransactionHelper} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
 
+import { OstRedemableCustomConfig } from '@ostdotcom/ost-wallet-sdk-react-native';
 
+OstRedemableCustomConfig.setConfig({
+    common: {
+        backArrow: null, 
+        walletIcon: null,
+        storeIcon: null,
+    },
+    skuListScreen: {
+        header: null,
+        description: "You can use your DCT Tokens to redeem amazing products and services." 
+    },
+    skuDetailsScreen: { }  
+});
 
 class IntroScreen extends PureComponent {
   static navigationOptions = ({navigation, navigationOptions}) => {
