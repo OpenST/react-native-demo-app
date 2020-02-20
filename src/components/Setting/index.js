@@ -87,12 +87,14 @@ class Settings extends PureComponent {
 
   onSettingItemTapped = (cellData) => {
     if ( cellData.cellType === 'walletSetting' ) {
-      this.props.navigation.push("WalletSettingScreen", {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()});
+      this.props.navigation.push("WalletSettingScreen",
+       {'ostUserId': CurrentUser.getUserId(), 'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()});
       return
     }
 
     if( cellData.cellType === 'redeemableSkus' ){
-      this.props.navigation.push("RedeemableSkusScreen", {'ostUserId': CurrentUser.getUserId()});
+      this.props.navigation.push("RedeemableSkusScreen", {'ostUserId': CurrentUser.getUserId() ,
+                                                        'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()});
       return
     }
 
