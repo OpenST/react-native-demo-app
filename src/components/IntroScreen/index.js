@@ -14,6 +14,9 @@ import {OstWalletSdk, OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-nati
 import styles from './style'
 import ostLog from '../../assets/ostLogoBlue.png'
 import ostIntroImage from '../../assets/ostIntroImage.png'
+import Logo from '../../assets/decryptLogo.png';
+import WalletIcon from '../../assets/wallet_icon.png';
+import BackArrow from '../../assets/BackActive.png';
 
 import ost_sdk_theme_config from '../../theme/ostsdk/ost-sdk-theme-config';
 import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
@@ -35,12 +38,12 @@ import { OstRedemableCustomConfig } from '@ostdotcom/ost-wallet-sdk-react-native
 
 OstRedemableCustomConfig.setConfig({
     common: {
-        backArrow: null, 
-        walletIcon: null,
-        storeIcon: null,
+        backArrow: BackArrow, 
+        walletIcon: WalletIcon,
+        storeIcon: Logo,
     },
     skuListScreen: {
-        header: null,
+        header: "Demo App Store",
         description: "You can use your DCT Tokens to redeem amazing products and services." 
     },
     skuDetailsScreen: { }  
