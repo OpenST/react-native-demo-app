@@ -10,7 +10,7 @@ import Colors from "./src/theme/styles/Colors";
 import {Root} from "native-base";
 
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {OstWalletSettingsComponent} from '@ostdotcom/ost-wallet-sdk-react-native';
+import OstWalletSettingsComponent from "./src/components/CustomWalletSettingsComponent";
 import IntroScreen from './src/components/IntroScreen'
 import LoginScreen from './src/components/LoginScreen'
 import SettingScreen from './src/components/Setting'
