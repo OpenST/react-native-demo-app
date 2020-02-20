@@ -19,11 +19,9 @@ export default {
   },
 
   "native_select": {
-    "alignment":"left",
-   "size":15,
-   "system_font_weight":"regular",
-   "color":"#484848",
-   "border_radius": 0
+    "size":15,
+    "system_font_weight":"regular",
+    "color":"#484848"
   },
 
   "text_field": {
