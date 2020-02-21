@@ -11,8 +11,7 @@ export default {
   },
 
   "navigation_bar_header": {
-    "tint_color": '#ffffff',
-    "title": 'My own Store'
+    "tint_color": '#ffffff'
   },
 
   "b1": {
@@ -23,7 +22,7 @@ export default {
     "size":15,
     "system_font_weight":"regular",
     "color":"#484848",
-    "borderColor:": "blue"
+    "border_color:": "blue"
   },
 
   "icons": {
