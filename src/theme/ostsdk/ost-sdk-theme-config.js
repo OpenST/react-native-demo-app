@@ -11,7 +11,8 @@ export default {
   },
 
   "navigation_bar_header": {
-    "tint_color": '#ffffff'
+    "tint_color": '#ffffff',
+    "title": 'My own Store'
   },
 
   "b1": {

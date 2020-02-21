@@ -94,7 +94,8 @@ class Settings extends PureComponent {
 
     if( cellData.cellType === 'redeemableSkus' ){
       this.props.navigation.push("RedeemableSkusScreen", {'ostUserId': CurrentUser.getUserId() ,
-                                                        'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate()});
+                                                        'ostWalletUIWorkflowCallback': appProvider.getOstSdkUIDelegate(),
+                                                        'navTitle': 'My Store'});
       return
     }
 
