@@ -43,10 +43,13 @@ OstRedemableCustomConfig.setConfig({
         storeIcon: Logo,
     },
     skuListScreen: {
+        navHeader: "Demo App Store",
         header: "Demo App Store",
         description: "You can use your DCT Tokens to redeem amazing products and services." 
     },
-    skuDetailsScreen: { }  
+    skuDetailsScreen: { 
+      navHeader: "Demo App Store Details",
+    }  
 });
 
 class IntroScreen extends PureComponent {
