@@ -26,19 +26,6 @@ export default {
     "borderColor:": "blue"
   },
 
-  "text_field": {
-    "size":15,
-    "placeholder":{ 
-      "size":15,
-      "alignment":"left",
-      "system_font_weight":"regular",
-      "color":"#888888"
-    },
-    "background_color":"#ffffff",
-    "system_font_weight":"regular",
-    "color":"#484848"
-  },
-
   "icons": {
     "close": {
       "tint_color": "#ffffff"
