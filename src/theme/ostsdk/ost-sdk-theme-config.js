@@ -21,8 +21,7 @@ export default {
   "form_field": {
     "size":15,
     "system_font_weight":"regular",
-    "color":"#484848",
-    "border_color:": "blue"
+    "color":"#484848"
   },
 
   "icons": {
