@@ -18,10 +18,11 @@ export default {
     "border_radius": 20
   },
 
-  "native_select": {
+  "form_field": {
     "size":15,
     "system_font_weight":"regular",
-    "color":"#484848"
+    "color":"#484848",
+    "borderColor:": "blue"
   },
 
   "text_field": {
