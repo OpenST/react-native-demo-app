@@ -15,7 +15,7 @@ export default {
   },
 
   "b1": {
-    "border_radius": 20
+
   },
 
   "form_field": {
