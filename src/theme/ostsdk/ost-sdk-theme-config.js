@@ -15,14 +15,24 @@ export default {
     "tint_color": '#ffffff'
   },
 
+  "h1": {
+    "font": "Roboto_medium"
+  },
+
+  "h2": {
+    "font": "Roboto_medium"
+  },
+
   "b1": {
 
   },
 
   "form_field": {
     "size":15,
-    "system_font_weight":"regular",
-    "color":"#484848"
+    "system_font_weight":"semi_bold",
+    "color":"#484848",
+    "alignment": "left",
+    "font": "Roboto_medium"
   },
 
   "icons": {
@@ -51,5 +61,9 @@ export default {
     "color": "#0F9D58",
     "system_font_weight": "regular",
     "alignment": "left",
+  },
+
+  "fonts": {
+    "Roboto_medium": "fonts/AntDesign.ttf"
   }
 }
