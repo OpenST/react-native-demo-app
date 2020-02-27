@@ -1,4 +1,5 @@
-import colors from '../styles/Colors'
+import colors from '../styles/Colors';
+import BackArrow from '../../assets/BackActive.png';
 
 export default {
 
@@ -29,7 +30,8 @@ export default {
       "tint_color": "#ffffff"
     },
     "back":{
-      "tint_color": "#ffffff"
+      "tint_color": "#ffffff",
+      "source": BackArrow
     }
   },
 

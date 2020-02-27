@@ -14,15 +14,13 @@ import {OstWalletSdk, OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-nati
 import styles from './style'
 import ostLog from '../../assets/ostLogoBlue.png'
 import ostIntroImage from '../../assets/ostIntroImage.png'
-import Logo from '../../assets/decryptLogo.png';
-import WalletIcon from '../../assets/wallet_icon.png';
-import BackArrow from '../../assets/BackActive.png';
 
 import ost_sdk_theme_config from '../../theme/ostsdk/ost-sdk-theme-config';
 import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
 import ost_sdk_content_config from '../../theme/ostsdk/ost-sdk-content-config';
 import ost_sdk_settings_config from '../../theme/ostsdk/ost-sdk-settings-config';
 import ost_sdk_transaction_config from '../../theme/ostsdk/ost-sdk-transaction-config';
+import ost_sdk_redemption_config from "../../theme/ostsdk/ost-sdk-redemption-config";
 
 import CurrentUser from "../../models/CurrentUser";
 
@@ -35,22 +33,6 @@ import sizeHelper from "../../helper/SizeHelper";
 import {OstWalletSettings, OstTransactionHelper} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
 
 import { OstRedemableCustomConfig } from '@ostdotcom/ost-wallet-sdk-react-native';
-
-OstRedemableCustomConfig.setConfig({
-    common: {
-        backArrow: BackArrow, 
-        walletIcon: WalletIcon,
-        storeIcon: Logo,
-    },
-    skuListScreen: {
-        navHeader: "Demo App Store",
-        header: "Demo App Store",
-        description: "You can use your DCT Tokens to redeem amazing products and services." 
-    },
-    skuDetailsScreen: { 
-      navHeader: "Demo App Store Details",
-    }  
-});
 
 class IntroScreen extends PureComponent {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -70,8 +52,8 @@ class IntroScreen extends PureComponent {
     OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
     OstWalletSdkUI.setContentConfig(ost_sdk_content_config);
     OstWalletSettings.setMasterConfig(ost_sdk_settings_config);
-    console.log("transaction config: +===========", ost_sdk_transaction_config);
     OstTransactionHelper.setTxConfig(ost_sdk_transaction_config);
+    OstRedemableCustomConfig.setConfig(ost_sdk_redemption_config);
   };
 
   componentDidMount() {
