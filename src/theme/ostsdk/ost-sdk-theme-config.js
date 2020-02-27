@@ -16,11 +16,11 @@ export default {
   },
 
   "h1": {
-    "font": "Roboto_medium"
+    
   },
 
   "h2": {
-    "font": "Roboto_medium"
+    
   },
 
   "b1": {
@@ -31,8 +31,7 @@ export default {
     "size":15,
     "system_font_weight":"semi_bold",
     "color":"#484848",
-    "alignment": "left",
-    "font": "Roboto_medium"
+    "alignment": "left"
   },
 
   "icons": {
