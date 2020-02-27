@@ -8,6 +8,7 @@ export default {
         storeIcon: Logo,
     },
     skuListScreen: {
+        navHeader: "My store",
         header: "Demo App Store",
         description: "You can use your DCT Tokens to redeem amazing products and services." 
     },

@@ -16,7 +16,7 @@ export default {
   },
 
   "h1": {
-    
+    "color":"red"
   },
 
   "h2": {
@@ -63,6 +63,6 @@ export default {
   },
 
   "fonts": {
-    "Roboto_medium": "fonts/AntDesign.ttf"
+    "Lato-LightItalic": "fonts/Lato-LightItalic.ttf"
   }
 }
