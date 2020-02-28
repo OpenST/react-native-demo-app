@@ -16,7 +16,7 @@ export default {
   },
 
   "h1": {
-    "color":"red"
+    
   },
 
   "h2": {
