@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import Colors from "../../theme/styles/Colors";
 import inlineStyle from "../WalletScreen/styles";
-import {FlatList, Image, Text, View, Linking, TouchableOpacity} from "react-native";
+import {FlatList, Image, Linking, Text, TouchableOpacity, View} from "react-native";
 import walletBgCurve from '../../assets/wallet_bg_curve.png'
 import {appProvider} from "../../helper/AppProvider";
 import CurrentUser from "../../models/CurrentUser";
@@ -46,6 +46,36 @@ class WalletScreen extends PureComponent {
   componentDidMount() {
     this.subscribeToEvents();
     this.onComponentDidMount();
+		if (Platform.OS === 'android') {
+			Linking.getInitialURL().then(url => {
+				const decodeUrl = decodeURIComponent(url);
+
+				const paramsObj = this.getKeysFromParams(decodeUrl);
+
+				const addSessionPayload = paramsObj.add_session_qr_payload;
+
+				if (addSessionPayload) {
+					let uiCallback = appProvider.getOstSdkUIDelegate();
+					OstWalletSdkUI.authorizeSessionWithQRPayload(CurrentUser.getUserId(), addSessionPayload, uiCallback);
+				}
+				console.log("LINKING : ", decodeUrl || "data not found" );
+			  //this.navigate(url);
+			});
+		} else {
+			console.log("LINKING");
+		  // Linking.addEventListener('url', this.handleOpenURL);
+		}
+  }
+
+  getKeysFromParams(url) {
+		let regex = /[?&]([^=#]+)=([^&#]*)/g,
+			params = {},
+			match
+		;
+		while (match = regex.exec(url)) {
+			params[match[1]] = match[2];
+		}
+		return params;
   }
 
   subscribeToEvents() {
