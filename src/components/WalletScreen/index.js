@@ -12,6 +12,7 @@ import tokenSentIcon from '../../assets/token_sent_icon.png'
 import PriceOracle from "../../services/PriceOracle";
 import {OstWalletSdkUI} from '@ostdotcom/ost-wallet-sdk-react-native';
 import AppToast from "../CommonComponent/AppToast";
+import LinkingService from '../../helper/LinkingService'
 
 class WalletScreen extends PureComponent {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -44,39 +45,31 @@ class WalletScreen extends PureComponent {
   }
 
   componentDidMount() {
-    this.subscribeToEvents();
-    this.onComponentDidMount();
-		if (Platform.OS === 'android') {
-			Linking.getInitialURL().then(url => {
-				const decodeUrl = decodeURIComponent(url);
+    const oThis = this;
+    oThis.subscribeToEvents();
+    oThis.onComponentDidMount();
 
-				const paramsObj = this.getKeysFromParams(decodeUrl);
+    LinkingService.setEventReceiver(oThis.navigate);
 
-				const addSessionPayload = paramsObj.add_session_qr_payload;
-
-				if (addSessionPayload) {
-					let uiCallback = appProvider.getOstSdkUIDelegate();
-					OstWalletSdkUI.authorizeSessionWithQRPayload(CurrentUser.getUserId(), addSessionPayload, uiCallback);
-				}
-				console.log("LINKING : ", decodeUrl || "data not found" );
-			  //this.navigate(url);
-			});
-		} else {
-			console.log("LINKING");
-		  // Linking.addEventListener('url', this.handleOpenURL);
-		}
+    let url = LinkingService.getLatReceivedURL();
+    if (url) {
+      const params = LinkingService.getKeysFromParams(url);
+      oThis.navigate(url, params);
+      LinkingService.removeLatReceivedURL();
+    }
   }
 
-  getKeysFromParams(url) {
-		let regex = /[?&]([^=#]+)=([^&#]*)/g,
-			params = {},
-			match
-		;
-		while (match = regex.exec(url)) {
-			params[match[1]] = match[2];
-		}
-		return params;
-  }
+  navigate(url, params) {
+
+    const addSessionPayload = params.add_session_qr_payload;
+
+    if (addSessionPayload) {
+      let uiCallback = appProvider.getOstSdkUIDelegate();
+      OstWalletSdkUI.authorizeSessionWithQRPayload(CurrentUser.getUserId(), String(addSessionPayload), uiCallback);
+    }
+    console.log("WalletScreen : LINKING : url : ", url, "params : ", params );
+  };
+
 
   subscribeToEvents() {
     const { navigation } = this.props;
@@ -95,7 +88,7 @@ class WalletScreen extends PureComponent {
     if (shouldFetchTx) {
       this.props.navigation.setParams({fetchTransaction: false});
       this.fetchData();
-	}
+    }
   }
 
   async onComponentDidMount() {
@@ -111,15 +104,15 @@ class WalletScreen extends PureComponent {
       })
     }
 
-		await this.preFetchChainId();
+    await this.preFetchChainId();
   }
 
   async preFetchChainId() {
-		this.chainId = 0;
-		const token = await CurrentUser.getOstToken();
-		if (token && token.auxiliary_chains && token.auxiliary_chains[0] && token.auxiliary_chains[0].chain_id) {
-			this.chainId = token.auxiliary_chains[0].chain_id;
-		}
+    this.chainId = 0;
+    const token = await CurrentUser.getOstToken();
+    if (token && token.auxiliary_chains && token.auxiliary_chains[0] && token.auxiliary_chains[0].chain_id) {
+      this.chainId = token.auxiliary_chains[0].chain_id;
+    }
   }
 
   fetchData() {
@@ -127,12 +120,12 @@ class WalletScreen extends PureComponent {
       ///TODO: Show error in toast.
     });
     const oThis = this;
-		CurrentUser.getOstToken().then(function(token) {
-		  oThis.tokenDecimal = token.decimals || 18;
-			oThis.onRefresh();
+    CurrentUser.getOstToken().then(function(token) {
+      oThis.tokenDecimal = token.decimals || 18;
+      oThis.onRefresh();
     }).catch(function() {
-			oThis.tokenDecimal = 18;
-			oThis.onRefresh();
+      oThis.tokenDecimal = 18;
+      oThis.onRefresh();
     })
   }
 
@@ -148,8 +141,8 @@ class WalletScreen extends PureComponent {
           .then(()=>{
             return resolve();
           }).catch(()=>{
-            return reject(res);
-          })
+          return reject(res);
+        })
       }, (ostError) => {
         console.log(ostError);
         return reject(ostError);
@@ -244,16 +237,16 @@ class WalletScreen extends PureComponent {
   render() {
     return (
       <React.Fragment>
-      <View style={inlineStyle.walletComponent}>
-        <View style={inlineStyle.walletWrapStyle}>
-          <Image style={inlineStyle.walletScreenStyle} source={walletBgCurve}/>
-          <View style={inlineStyle.walletBalanceStyle}>
-            <Text style={inlineStyle.tokenTextStyle}>{this.getTokenBalance()}</Text>
-            <Text style={inlineStyle.fiatTextStyle}>{this.getTokenFiatBalance()}</Text>
+        <View style={inlineStyle.walletComponent}>
+          <View style={inlineStyle.walletWrapStyle}>
+            <Image style={inlineStyle.walletScreenStyle} source={walletBgCurve}/>
+            <View style={inlineStyle.walletBalanceStyle}>
+              <Text style={inlineStyle.tokenTextStyle}>{this.getTokenBalance()}</Text>
+              <Text style={inlineStyle.fiatTextStyle}>{this.getTokenFiatBalance()}</Text>
+            </View>
           </View>
+          <Text style={inlineStyle.heading}>TRANSACTION HISTORY</Text>
         </View>
-        <Text style={inlineStyle.heading}>TRANSACTION HISTORY</Text>
-      </View>
         <FlatList
           style={inlineStyle.flatListStyle}
           onRefresh={this.onRefresh}
@@ -337,23 +330,23 @@ class WalletScreen extends PureComponent {
 
   getTxnDetailsView(item) {
     return (<TouchableOpacity
-			onPress={ () => { this.onTxnTap(item) } }>
+      onPress={ () => { this.onTxnTap(item) } }>
       <View style={{flex: 8, justifyContent: "center"}}>
-      {
-        this.getTxnText(item)
-      }
-      {
-        this.getDateTimeStamp(item.timestamp * 1000)
-      }
-    </View>
+        {
+          this.getTxnText(item)
+        }
+        {
+          this.getDateTimeStamp(item.timestamp * 1000)
+        }
+      </View>
     </TouchableOpacity>);
 
   }
 
-	onTxnTap(item) {
-		const viewEndPoint = appProvider.getViewApiEndpoint();
-		const url = viewEndPoint + "transaction/tx-" + this.chainId + "-" + item.txnHash;
-		Linking.openURL(url);
+  onTxnTap(item) {
+    const viewEndPoint = appProvider.getViewApiEndpoint();
+    const url = viewEndPoint + "transaction/tx-" + this.chainId + "-" + item.txnHash;
+    Linking.openURL(url);
   }
 
   getDateString(date){
@@ -370,7 +363,7 @@ class WalletScreen extends PureComponent {
     let textColor;
     let valueString = parseFloat(PriceOracle.fromDecimal(item.amount, this.tokenDecimal)).toFixed(2).toString();
     if (isNaN(valueString)) {
-			valueString = "0.00";
+      valueString = "0.00";
     }
     if (item.in) {
       textColor = Colors.darkerBlue;

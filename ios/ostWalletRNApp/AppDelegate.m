@@ -12,6 +12,7 @@
 #import <React/RCTRootView.h>
 #import "ostWalletRNAPP-Swift.h"
 #import <OstWalletSdk/OstWalletSdk-Swift.h>
+#import <React/RCTLinkingManager.h>
 
 @implementation AppDelegate
 
@@ -43,6 +44,14 @@
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity
+ restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler
+{
+ return [RCTLinkingManager application:application
+                  continueUserActivity:userActivity
+                    restorationHandler:restorationHandler];
 }
 
 @end

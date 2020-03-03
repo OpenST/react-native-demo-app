@@ -125,6 +125,7 @@
 		4BC8FB43239A9604008F3D80 /* OstSdkMessages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = OstSdkMessages.json; sourceTree = "<group>"; };
 		4BCEAA48239E86E200292E40 /* NativeHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NativeHelper.h; path = ostWalletRNApp/NativeHelper.h; sourceTree = "<group>"; };
 		4BCEAA49239E86E200292E40 /* NativeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NativeHelper.m; path = ostWalletRNApp/NativeHelper.m; sourceTree = "<group>"; };
+		4BE1FA32240D56720086DC92 /* ostWalletRNApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = ostWalletRNApp.entitlements; path = ostWalletRNApp/ostWalletRNApp.entitlements; sourceTree = "<group>"; };
 		5FC2C839D3DB2933CAEBE633 /* libPods-ostWalletRNAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ostWalletRNAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		73D642DC1EB49DFC96A7FB38 /* Pods-ostWalletRNApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ostWalletRNApp-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-ostWalletRNApp-tvOSTests/Pods-ostWalletRNApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		78FB43FBED5F615F968323B1 /* Pods-ostWalletRNApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ostWalletRNApp.debug.xcconfig"; path = "Target Support Files/Pods-ostWalletRNApp/Pods-ostWalletRNApp.debug.xcconfig"; sourceTree = "<group>"; };
@@ -194,6 +195,7 @@
 		13B07FAE1A68108700A75B9A /* ostWalletRNApp */ = {
 			isa = PBXGroup;
 			children = (
+				4BE1FA32240D56720086DC92 /* ostWalletRNApp.entitlements */,
 				4BCEAA48239E86E200292E40 /* NativeHelper.h */,
 				4BCEAA49239E86E200292E40 /* NativeHelper.m */,
 				4BC8FB38239A93AC008F3D80 /* Loader */,
@@ -834,6 +836,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ostWalletRNApp/ostWalletRNApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = N83K86W6P4;
@@ -849,7 +852,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.ostwallet;
 				PRODUCT_NAME = ostWalletRNApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "Loader/ostWalletRNApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -865,6 +868,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = ostWalletRNApp/ostWalletRNApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N83K86W6P4;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -879,7 +883,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ost.demoapp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ost.ostwallet;
 				PRODUCT_NAME = ostWalletRNApp;
 				SWIFT_OBJC_BRIDGING_HEADER = "Loader/ostWalletRNApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
