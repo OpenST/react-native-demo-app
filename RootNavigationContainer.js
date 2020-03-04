@@ -10,7 +10,7 @@ import Colors from "./src/theme/styles/Colors";
 import {Root} from "native-base";
 
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {OstWalletSettingsComponent} from '@ostdotcom/ost-wallet-sdk-react-native';
+import {OstWalletSettingsComponent, OstRedeemableSkus, OstRedeemableSkuDetails } from '@ostdotcom/ost-wallet-sdk-react-native';
 import IntroScreen from './src/components/IntroScreen'
 import LoginScreen from './src/components/LoginScreen'
 import SettingScreen from './src/components/Setting'
@@ -80,7 +80,9 @@ const WalletStack = createStackNavigator(
 const SettingStack = createStackNavigator(
   {
     SettingScreen: SettingScreen,
-    WalletSettingScreen: OstWalletSettingsComponent
+    WalletSettingScreen: OstWalletSettingsComponent,
+    RedeemableSkusScreen: OstRedeemableSkus,
+    RedeemableSkuDetails: OstRedeemableSkuDetails
   },
   {
     ...modalStackConfig

@@ -20,6 +20,7 @@ import ost_wallet_sdk_config from "../../theme/ostsdk/ost-wallet-sdk-config";
 import ost_sdk_content_config from '../../theme/ostsdk/ost-sdk-content-config';
 import ost_sdk_settings_config from '../../theme/ostsdk/ost-sdk-settings-config';
 import ost_sdk_transaction_config from '../../theme/ostsdk/ost-sdk-transaction-config';
+import ost_sdk_redemption_config from "../../theme/ostsdk/ost-sdk-redemption-config";
 
 import CurrentUser from "../../models/CurrentUser";
 
@@ -27,12 +28,11 @@ import AppLoader from "../CommonComponent/AppLoader";
 import {appProvider} from "../../helper/AppProvider";
 
 import {LoginScreenViewModel} from "../LoginScreen/LoginScreenViewModel";
-import WalletScreen from "../WalletScreen";
 
 import sizeHelper from "../../helper/SizeHelper";
 import {OstWalletSettings, OstTransactionHelper} from "@ostdotcom/ost-wallet-sdk-react-native/js/index";
 
-
+import { OstRedemableCustomConfig } from '@ostdotcom/ost-wallet-sdk-react-native';
 
 class IntroScreen extends PureComponent {
   static navigationOptions = ({navigation, navigationOptions}) => {
@@ -52,8 +52,8 @@ class IntroScreen extends PureComponent {
     OstWalletSdkUI.setThemeConfig(ost_sdk_theme_config);
     OstWalletSdkUI.setContentConfig(ost_sdk_content_config);
     OstWalletSettings.setMasterConfig(ost_sdk_settings_config);
-    console.log("transaction config: +===========", ost_sdk_transaction_config);
     OstTransactionHelper.setTxConfig(ost_sdk_transaction_config);
+    OstRedemableCustomConfig.setConfig(ost_sdk_redemption_config);
   };
 
   componentDidMount() {

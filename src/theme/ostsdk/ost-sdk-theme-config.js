@@ -1,4 +1,5 @@
-import colors from '../styles/Colors'
+import colors from '../styles/Colors';
+import BackArrow from '../../assets/BackActive.png';
 
 export default {
 
@@ -14,12 +15,32 @@ export default {
     "tint_color": '#ffffff'
   },
 
+  "h1": {
+    
+  },
+
+  "h2": {
+    
+  },
+
+  "b1": {
+
+  },
+
+  "form_field": {
+    "size":15,
+    "system_font_weight":"semi_bold",
+    "color":"#484848",
+    "alignment": "left"
+  },
+
   "icons": {
     "close": {
       "tint_color": "#ffffff"
     },
     "back":{
-      "tint_color": "#ffffff"
+      "tint_color": "#ffffff",
+      "source": BackArrow
     }
   },
 
@@ -39,5 +60,9 @@ export default {
     "color": "#0F9D58",
     "system_font_weight": "regular",
     "alignment": "left",
+  },
+
+  "fonts": {
+    "Lato-LightItalic": "fonts/Lato-LightItalic.ttf"
   }
 }

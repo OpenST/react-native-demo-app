@@ -12,6 +12,7 @@ import java.util.List;
 import com.pepo2.bridge.NativePackage;
 import com.ost.walletsdk.ui.OstWalletUI;
 import com.datatheorem.android.trustkit.TrustKit;
+import com.ostwalletrnsdk.OstWalletRnSdkPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -28,7 +29,8 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           packages.add(new NativePackage());
           // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
+           packages.add(new OstWalletRnSdkPackage() );
+
           return packages;
         }
 
