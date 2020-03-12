@@ -1,0 +1,5 @@
+name: client-sdk-demo
+title: Ost Client (Mobile Wallet) SDK Demo (React Native)
+version: '1.0'
+nav:
+- modules/ROOT/nav.adoc
