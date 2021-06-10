@@ -842,10 +842,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^13.0.0"
 
-"@ostdotcom/ost-wallet-sdk-react-native@2.3.12-beta.1":
-  version "2.3.12-beta.1"
-  resolved "https://registry.yarnpkg.com/@ostdotcom/ost-wallet-sdk-react-native/-/ost-wallet-sdk-react-native-2.3.12-beta.1.tgz#73855453fb9d20260f6bbc6df23a422d5ae64899"
-  integrity sha512-lzIlRc3WuLyA0CwqN4gY361Tle81HS00rPtT56QR9C0sm1nJDdwRan+J25ApvTBI9IzZgHZw4vZ8nn2IeKM4UA==
+"@ostdotcom/ost-wallet-sdk-react-native@2.3.12":
+  version "2.3.12"
+  resolved "https://registry.yarnpkg.com/@ostdotcom/ost-wallet-sdk-react-native/-/ost-wallet-sdk-react-native-2.3.12.tgz#cbbff50b71358d095e0ff3333d8c0a0c3234b51c"
+  integrity sha512-hAC71NSdsWUxM6a3ANx4EeUiN1dEx6TyHLVNLhbWzX1ZwW/6uqqmVHhuDOL3N6o3d41prR7abLieVXqvOnNtrQ==
 
 "@react-native-community/cli-debugger-ui@^3.0.0":
   version "3.0.0"
@@ -2949,9 +2949,9 @@ getpass@^0.1.1:
     assert-plus "^1.0.0"
 
 glob-parent@^5.0.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.0.tgz#5f4c1d1e748d30cd73ad2944b3577a81b081e8c2"
-  integrity sha512-qjtRgnIVmOfnKUE3NJAQEdk+lKrxfw8t5ke7SXtfMTHcjsBfOfWXCQfdb30zfDoZQ2IRSIiidmjtbHZPZ++Ihw==
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/glob-parent/-/glob-parent-5.1.2.tgz#869832c58034fe68a4093c17dc15e8340d8401c4"
+  integrity sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==
   dependencies:
     is-glob "^4.0.1"
 
@@ -4157,7 +4157,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash.merge@^4.6.2:
+lodash.merge@4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
@@ -5461,7 +5461,7 @@ react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6, react-is
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
   integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
-react-native-android-open-settings@^1.3.0:
+react-native-android-open-settings@1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/react-native-android-open-settings/-/react-native-android-open-settings-1.3.0.tgz#c6257f3c88ada62945fffe887933a2a828adf45d"
   integrity sha512-h4FTWRtTLRVNS7RK4Bg2gAXe8G5bFZL8Jtmfk2rG2a/N/wJR+v1rAY2BxRkC48lQTqwQCIAQRbWgLVkJ8XmaLQ==
